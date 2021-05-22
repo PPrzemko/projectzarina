@@ -93,11 +93,11 @@ namespace projectzarina {
 
             if(json.success == "true") {
                 // Jo, hat funktioniert
-                string token = json.token;
-
+                string token = json.unique_token;
+                
                 var Config = new Settings();
                 Config.updateValue("token", token);
-
+                Console.WriteLine("token: " + token);
                 // Wenn halt richtig ist amk, muss dann auf MainWindow umgeschalten werden.
                 // Umschalten auf MainWindow.cs
                 var MainWindow = new MainWindow();
@@ -108,16 +108,12 @@ namespace projectzarina {
                 // No, hat nicht funktioniert
                 // Im Programm anzeigen lassen, dass etwas nicht funktioniert hat.
                 string feedback = json.errorMessage;
+
             }
 
             // {"success":"true","message":"Valid login attempt.","unique_token":"65b476da358aaad8a078c8bc13d7a74d","valid_until":"2021-06-21","created":"2021-05-22"}
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-            var MainWindow = new MainWindow();
-            MainWindow.Show();
-            this.Close();
-        }
+      
     }
 }

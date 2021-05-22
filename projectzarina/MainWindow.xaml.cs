@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Net.Http;
 using System.IO;
+using Newtonsoft.Json;
 
 namespace projectzarina {
     
@@ -68,7 +69,7 @@ namespace projectzarina {
         private readonly HttpClient client = new HttpClient();
         private async void uploadImage(string file) {
 
-            string url = "http://zarina.visualstatic.net/zarina/api/forms/upload?application=" + application;
+            string url = "http://zarina.visualstatic.net/zarina/api/forms/upload" + application;
 
             var Config = new Settings();
             var screenshotPath = Config.getValue("ScreenshotPath");
@@ -94,15 +95,65 @@ namespace projectzarina {
 
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Button_Click(object sender, RoutedEventArgs e){
+            logout();
+        }
+
+
+        private async void logout()
         {
+
             var Config = new Settings();
-            Config.updateValue("token", "");
+            string token = Config.getValue("token");
+
+            if (token != "")
+            {
+                // "Angemeldet" => Anmeldung vorher prüfen mittels Validierung (auth/validate)
+                string url = "http://zarina.visualstatic.net/zarina/api/auth/destroy?application=" + application;
+
+                HttpClient client = new HttpClient();
+                var values = new Dictionary<string, string> {
+                    { "token", token },
+                };
+
+                // DEBUG
+                // Console.WriteLine("token: " + token);
+
+                var content = new FormUrlEncodedContent(values);
+                var response = await client.PostAsync(url, content);
+                var result = response.Content.ReadAsStringAsync().Result;
+
+                // DEBUG
+                // Console.WriteLine("result: " + result);
+
+
+                dynamic json = JsonConvert.DeserializeObject(result);
+
+                if (json.success == "true")
+                {
+                    // Jo, Token ist noch valide.
+                    // Weiterleitung auf MainWindow.cs, da noch angemeldet.
+                    var LoginScreen = new LoginScreen();
+                    LoginScreen.Show();
+                    this.Close();
+
+                    Config.updateValue("token", "");
+                }
+                // ANDERNFALLS: No, Session Key existiert nicht mehr, User muss abgemeldet sein.
+                // LoginScreen verbleibt weiterhin offen, gibt dem User die Möglichkeit sich nochmal zu authentifizieren oder als Gast fortzufahren.
 
 
 
 
+
+                
+            }
 
         }
+
+
+
+
+
     }
 }
