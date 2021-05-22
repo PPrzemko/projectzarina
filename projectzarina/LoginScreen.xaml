@@ -8,13 +8,13 @@
         Title="LoginScreen" Height="450" Width="800">
     <Grid>
         <Grid.Background>
-            <ImageBrush ImageSource="background.png"/>
+            <ImageBrush ImageSource="images/background.png"/>
         </Grid.Background>
         <Rectangle Fill="#1A1A1A" HorizontalAlignment="Left" Height="224" Margin="95,142,0,0" Stroke="Black" VerticalAlignment="Top" Width="488"/>
-        <Button Content="Login" HorizontalAlignment="Left" Margin="472,317,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
+        <Button x:Name="LoginButton" Content="Login" HorizontalAlignment="Left" Margin="472,317,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
         <Label Content="email" HorizontalAlignment="Left" Margin="140,186,0,0" VerticalAlignment="Top" Width="90" Foreground="#FFD8C389"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="261,186,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="emailorusername" HorizontalAlignment="Left" Height="23" Margin="261,186,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TextChanged="emailorusername_TextChanged"/>
         <Label Content="pw" HorizontalAlignment="Left" Margin="140,221,0,0" VerticalAlignment="Top" Width="89" Foreground="#FFD8C389"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="261,221,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <PasswordBox x:Name="password" HorizontalAlignment="Left" Margin="261,221,0,0" VerticalAlignment="Top" Width="120" Height="23"/>
     </Grid>
 </Window>

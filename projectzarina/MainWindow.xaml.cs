@@ -27,7 +27,28 @@ namespace projectzarina
         {
             InitializeComponent();
             TextScreenshotPath.Text = LoadXml.LoadScreenshotPath();
-            FSW();
+
+
+
+            try
+            {
+                string watchedPath = LoadXml.LoadScreenshotPath();
+                // watchedPath = @"C:\Program Files (x86)\Steam\userdata\2263d59406\760\remote\381210\screenshots\test\amk\fsdfsf";
+                FileSystemWatcher watcher = new FileSystemWatcher(watchedPath);
+                watcher.Filter = "*.jpg";
+
+                watcher.Created += new FileSystemEventHandler(Watcher_Created);
+
+                watcher.EnableRaisingEvents = true;
+            }
+            catch (System.ArgumentException e)
+            {
+                Console.WriteLine("Something went wrong.");
+                Console.WriteLine(e.Message);
+            }
+
+
+
         }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -53,27 +74,7 @@ namespace projectzarina
 
         }
 
-        public void FSW()
-        {
-            // I Dont know how "try" "catch" works but it seams to be working lol
-            try
-            {
-                string watchedPath = LoadXml.LoadScreenshotPath();
-                // watchedPath = @"C:\Program Files (x86)\Steam\userdata\2263d59406\760\remote\381210\screenshots\test\amk\fsdfsf";
-                FileSystemWatcher watcher = new FileSystemWatcher(watchedPath);
-                watcher.Filter = "*.jpg";
-
-                watcher.Created += new FileSystemEventHandler(Watcher_Created);
-
-                watcher.EnableRaisingEvents = true;
-            }
-            catch (System.ArgumentException e)
-            {
-                Console.WriteLine("Something went wrong.");
-                Console.WriteLine(e.Message);
-            }
-        }
-
+      
         public void Watcher_Created(object sender, FileSystemEventArgs e)
         {
             string filename = Path.GetFileName(e.FullPath);
