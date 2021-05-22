@@ -9,8 +9,12 @@
         WindowStyle="None"
         ResizeMode="NoResize"
         Background="#2B2B2B"
+       
             >
     <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="/images/well.png" Stretch="Fill" />
+        </Grid.Background>
         <Grid.RowDefinitions>
             <RowDefinition Height="25"/>
             <RowDefinition/>
