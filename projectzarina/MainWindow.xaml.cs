@@ -14,117 +14,95 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Net.Http;
 using System.IO;
-using Path = System.IO.Path;
 
-namespace projectzarina
-{
-    /// <summary>
-    /// Interaktionslogik für MainWindow.xaml
-    /// </summary>
-    public partial class MainWindow : Window
-    {
-        public MainWindow()
-        {
+namespace projectzarina {
+    
+    public partial class MainWindow : Window {
+
+        protected string application = "E1eJ3E4whf2mGC5aMdQ2L5CIUHPW9n33";
+
+        public MainWindow() {
+
             InitializeComponent();
-            TextScreenshotPath.Text = LoadXml.LoadScreenshotPath();
+            var Config = new Settings();
+            var screenshotPath = Config.getValue("ScreenshotPath");
 
+            try {
 
-
-            try
-            {
-                string watchedPath = LoadXml.LoadScreenshotPath();
-                // watchedPath = @"C:\Program Files (x86)\Steam\userdata\2263d59406\760\remote\381210\screenshots\test\amk\fsdfsf";
-                FileSystemWatcher watcher = new FileSystemWatcher(watchedPath);
+                FileSystemWatcher watcher = new FileSystemWatcher(screenshotPath);
                 watcher.Filter = "*.jpg";
-
                 watcher.Created += new FileSystemEventHandler(Watcher_Created);
-
                 watcher.EnableRaisingEvents = true;
-            }
-            catch (System.ArgumentException e)
-            {
-                Console.WriteLine("Something went wrong.");
+
+            } catch (System.ArgumentException e) {
                 Console.WriteLine(e.Message);
             }
-
-
-
-        }
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            PathSelect();
+            
         }
 
+        public void Watcher_Created(object sender, FileSystemEventArgs e) {
 
-        private void BtnSaveSettings(object sender, RoutedEventArgs e)
-        {
-            SaveUserSettings();
+            string filename = System.IO.Path.GetFileName(e.FullPath);
+            Console.WriteLine("Erstellt: " + filename);
+            uploadImage(filename);
+
         }
 
-
-
-        public void PathSelect()
-        {
+        private void assignPath(object sender, RoutedEventArgs e) {
             System.Windows.Forms.FolderBrowserDialog openFileDlg = new System.Windows.Forms.FolderBrowserDialog();
 
             openFileDlg.SelectedPath = @"C:\Program Files (x86)\Steam\userdata\";
             openFileDlg.ShowDialog();
             var result = openFileDlg.SelectedPath;
             TextScreenshotPath.Text = result;
-
         }
 
-      
-        public void Watcher_Created(object sender, FileSystemEventArgs e)
-        {
-            string filename = Path.GetFileName(e.FullPath);
-            Console.WriteLine("Erstellt: " + filename);
-            SendPost(filename);
+        private void saveSettings(object sender, RoutedEventArgs e) {
+            string screenshotPath = TextScreenshotPath.Text + @"\";
+            
+            var Config = new Settings();
+            Config.updateValue("ScreenshotPath", screenshotPath);
+
         }
 
         private readonly HttpClient client = new HttpClient();
-        private async void SendPost(string file)
-        {
-            string url = "http://zarina.visualstatic.net/zarina/api/forms/upload?application=E1eJ3E4whf2mGC5aMdQ2L5CIUHPW9n33";
+        private async void uploadImage(string file) {
 
+            string url = "http://zarina.visualstatic.net/zarina/api/forms/upload?application=" + application;
 
-            //read file into upfilebytes array
-            var upfilebytes = File.ReadAllBytes(LoadXml.LoadScreenshotPath() + file);
+            var Config = new Settings();
+            var screenshotPath = Config.getValue("ScreenshotPath");
+
+            // read file into upfilebytes array
+            var upfilebytes = File.ReadAllBytes(screenshotPath + file);
             
-            //create new HttpClient and MultipartFormDataContent and add our file, and StudentId
+            // create new HttpClient and MultipartFormDataContent and add our file, and StudentId
             HttpClient client = new HttpClient();
             MultipartFormDataContent content = new MultipartFormDataContent();
             ByteArrayContent baContent = new ByteArrayContent(upfilebytes);
             content.Add(baContent, "file", "uploadedImage.jpg");
 
 
-            //upload MultipartFormDataContent content async and store response in response var
+            // upload MultipartFormDataContent content async and store response in response var
             var response = await client.PostAsync(url, content);
 
-            //read response result as a string async into json var
-            var responsestr = response.Content.ReadAsStringAsync().Result;
+            // read response result as a string async into json var
+            var result = response.Content.ReadAsStringAsync().Result;
 
-            //debug
-            Console.WriteLine(responsestr);
+            // DEBUG
+            Console.WriteLine(result);
 
         }
 
-        public void SaveUserSettings()
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                SettingData userData = new SettingData();
-                userData.ScreenshotPath = TextScreenshotPath.Text + @"\";
-                SaveXml.SaveData(userData, "UserSettings.xml");
-                SaveMessage.Visibility = Visibility.Visible;
-               
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            var Config = new Settings();
+            Config.updateValue("token", "");
+
+
+
+
+
         }
-
-
     }
 }
