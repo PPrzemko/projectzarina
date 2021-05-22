@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using System.Net.Http;
 using System.IO;
 using Newtonsoft.Json;
+using Microsoft.Toolkit.Uwp.Notifications;
 
 namespace projectzarina {
     
@@ -28,14 +29,14 @@ namespace projectzarina {
             var Config = new Settings();
             var screenshotPath = Config.getValue("ScreenshotPath");
 
-            try {
+            TextScreenshotPath.Text = screenshotPath;
 
+            try {
                 FileSystemWatcher watcher = new FileSystemWatcher(screenshotPath);
                 watcher.Filter = "*.jpg";
                 watcher.Created += new FileSystemEventHandler(Watcher_Created);
                 watcher.EnableRaisingEvents = true;
-
-            } catch (System.ArgumentException e) {
+            } catch(System.ArgumentException e) {
                 Console.WriteLine(e.Message);
             }
             
@@ -58,31 +59,46 @@ namespace projectzarina {
             TextScreenshotPath.Text = result;
         }
 
-        private void saveSettings(object sender, RoutedEventArgs e) {
+        /**
+         * Button to save the path for the Steam screenshots
+         */
+        private void saveScreenshotPath(object sender, RoutedEventArgs e) {
             string screenshotPath = TextScreenshotPath.Text + @"\";
             
             var Config = new Settings();
             Config.updateValue("ScreenshotPath", screenshotPath);
-
         }
 
-        private readonly HttpClient client = new HttpClient();
+
+
+
+        /**
+         * Autmatic Image upload after FSW
+         */
         private async void uploadImage(string file) {
 
-            string url = "http://zarina.visualstatic.net/zarina/api/forms/upload" + application;
+            string url = "http://zarina.visualstatic.net/zarina/api/forms/upload?application=" + application;
 
             var Config = new Settings();
             var screenshotPath = Config.getValue("ScreenshotPath");
+            var token = Config.getValue("token");
+
+            var values = new Dictionary<string, string> {
+                { "token", token },
+            };
+
 
             // read file into upfilebytes array
             var upfilebytes = File.ReadAllBytes(screenshotPath + file);
-            
-            // create new HttpClient and MultipartFormDataContent and add our file, and StudentId
+
+            // create new HttpClient combine picture and string into single content "codeproject.com/Questions/1228835/How-to-post-file-and-data-to-api-using-httpclient"
             HttpClient client = new HttpClient();
             MultipartFormDataContent content = new MultipartFormDataContent();
             ByteArrayContent baContent = new ByteArrayContent(upfilebytes);
-            content.Add(baContent, "file", "uploadedImage.jpg");
+            HttpContent Dictionary = new FormUrlEncodedContent(values);
 
+            content.Add(baContent, "file", "uploadedImage.jpg");
+            content.Add(Dictionary, "token");
 
             // upload MultipartFormDataContent content async and store response in response var
             var response = await client.PostAsync(url, content);
@@ -92,23 +108,25 @@ namespace projectzarina {
 
             // DEBUG
             Console.WriteLine(result);
-
+       
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e){
+
+
+        /**
+         * Button to logout and delete Session Token in XML and DB
+         */
+        private void logoutButton(object sender, RoutedEventArgs e) {
             logout();
         }
 
-
-        private async void logout()
-        {
-
+        private async void logout() {
             var Config = new Settings();
             string token = Config.getValue("token");
 
-            if (token != "")
-            {
-                // "Angemeldet" => Anmeldung vorher prüfen mittels Validierung (auth/validate)
+            if(token != "") {
+
+                // token in DB löschen
                 string url = "http://zarina.visualstatic.net/zarina/api/auth/destroy?application=" + application;
 
                 HttpClient client = new HttpClient();
@@ -116,44 +134,42 @@ namespace projectzarina {
                     { "token", token },
                 };
 
-                // DEBUG
-                // Console.WriteLine("token: " + token);
-
                 var content = new FormUrlEncodedContent(values);
-                var response = await client.PostAsync(url, content);
-                var result = response.Content.ReadAsStringAsync().Result;
+                await client.PostAsync(url, content);
 
-                // DEBUG
-                // Console.WriteLine("result: " + result);
+                // Weiterleitung auf Login & Token in XML löschen
+                Config.updateValue("token", "");
 
+                var LoginScreen = new LoginScreen();
+                LoginScreen.Show();
+                this.Close();
 
-                dynamic json = JsonConvert.DeserializeObject(result);
-
-                if (json.success == "true")
-                {
-                    // Jo, Token ist noch valide.
-                    // Weiterleitung auf MainWindow.cs, da noch angemeldet.
-                    var LoginScreen = new LoginScreen();
-                    LoginScreen.Show();
-                    this.Close();
-
-                    Config.updateValue("token", "");
-                }
-                // ANDERNFALLS: No, Session Key existiert nicht mehr, User muss abgemeldet sein.
-                // LoginScreen verbleibt weiterhin offen, gibt dem User die Möglichkeit sich nochmal zu authentifizieren oder als Gast fortzufahren.
-
-
-
-
-
-                
             }
-
         }
 
 
 
 
 
+
+
+
+
+
+
+
+
+
+                            // notification test 
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            // Requires Microsoft.Toolkit.Uwp.Notifications NuGet package version 7.0 or greater
+            new ToastContentBuilder()
+                .AddArgument("action", "viewConversation")
+                .AddArgument("conversationId", 9813)
+                .AddText("Andrew sent you a picture")
+                .AddText("Check this out, The Enchantments in Washington!")
+                .Show(); // Not seeing the Show() method? Make sure you have version 7.0, and if you're using .NET 5, your TFM must be net5.0-windows10.0.17763.0 or greater
+        }
     }
 }
