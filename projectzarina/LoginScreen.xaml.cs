@@ -29,12 +29,19 @@ namespace projectzarina {
 
         // Benutzer klickt auf "Login"
         private void Button_Click(object sender, RoutedEventArgs e) {
-            string user = emailorusername.Text;
-            string passwd = password.Password;
-            postLogin(user, passwd);
+            //string user = emailorusername.Text;
+            //string passwd = password.Password;
+            //postLogin(user, passwd);
         }
 
 
+        // DragnDrop funktion
+        private void Grid_MouseDown(object sender, MouseButtonEventArgs e){
+            if(e.LeftButton == MouseButtonState.Pressed){
+                DragMove();
+            }
+
+        }
         private async void validateLogin() {
 
             var Config = new Settings();
@@ -114,6 +121,9 @@ namespace projectzarina {
             // {"success":"true","message":"Valid login attempt.","unique_token":"65b476da358aaad8a078c8bc13d7a74d","valid_until":"2021-06-21","created":"2021-05-22"}
         }
 
-      
+        private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+
+        }
     }
 }

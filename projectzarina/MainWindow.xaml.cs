@@ -159,18 +159,6 @@ namespace projectzarina {
         }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
                             // notification test 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
