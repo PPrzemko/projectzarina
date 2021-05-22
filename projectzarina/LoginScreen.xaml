@@ -64,6 +64,14 @@
                        HorizontalAlignment="Center"
                        FontFamily="fonts/#Roboto-Regular"
                        />
+            <Button x:Name="ExitProgramm"    Content="X"
+                       Foreground="RED"
+                       Background="Gray"
+                       Grid.Column="11"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center"
+                       FontFamily="fonts/#Roboto-Regular" Margin="12,4,12,3" Width="51" Click="ExitProgramm_Click"
+                       />
         </Grid>
         <StackPanel Grid.Row="2"
                     VerticalAlignment="Center"
@@ -84,13 +92,14 @@
                 FontSize="25"
                 FontWeight="Medium"
                 FontFamily="fonts/#Roboto-Regular"
-                ><Run Text="Make"/><Run Text=" ever"/><Run Text="&#x9;"/></TextBlock>
+                Text="Make"/>
                 <TextBlock
                 Foreground="white"
                 FontSize="25"
                 FontWeight="Medium"
                 FontFamily="fonts/#Roboto-Regular"
-                ><Run Text="ma"/><Run Text="tc"/><Run Text="h"/></TextBlock>
+                Text="every Match"
+                />
                 <TextBlock Text="count"
                 Foreground="white"
                 FontSize="25"
@@ -123,7 +132,7 @@
                 FontFamily="fonts/#Roboto-Regular"
                 TextAlignment="Center"
                 Text="Username or Email"/>
-                <TextBox Margin="141,0,144,0" Height="21"/>
+                <TextBox x:Name="emailorusername" Margin="141,0,144,0" Height="21"/>
 
 
 
@@ -134,10 +143,9 @@
                 FontFamily="fonts/#Roboto-Regular"
                 TextAlignment="Center"
                 Text="Password"/>
-                <PasswordBox Height="21" Margin="141,0,144,0"/>
+                <PasswordBox x:Name="password" Height="21" Margin="141,0,144,0"/>
 
-
-
+                <Button Content="Sign In" Margin="60" VerticalAlignment="Top" Width="169" Click="Button_Click" Background="#FF93855B" Height="42" FontSize="20" FontWeight="Bold"/>
 
 
 
@@ -149,6 +157,7 @@
                 TextWrapping="Wrap"
                 Margin="0,150,0,0"
                 />
+
             </StackPanel>
 
         </Grid>
