@@ -108,6 +108,8 @@ namespace projectzarina {
 
             // DEBUG
             // Console.WriteLine(result);
+
+            //Windows notification
             new ToastContentBuilder()
                 .AddArgument("action", "viewConversation")
                 .AddArgument("conversationId", 9813)
