@@ -18,7 +18,7 @@ using Newtonsoft.Json;
 using Microsoft.Toolkit.Uwp.Notifications;
 
 namespace projectzarina {
-    
+
     public partial class MainWindow : Window {
 
         protected string application = "E1eJ3E4whf2mGC5aMdQ2L5CIUHPW9n33";
@@ -36,10 +36,10 @@ namespace projectzarina {
                 watcher.Filter = "*.jpg";
                 watcher.Created += new FileSystemEventHandler(Watcher_Created);
                 watcher.EnableRaisingEvents = true;
-            } catch(System.ArgumentException e) {
+            } catch (System.ArgumentException e) {
                 Console.WriteLine(e.Message);
             }
-            
+
         }
 
         public void Watcher_Created(object sender, FileSystemEventArgs e) {
@@ -64,7 +64,7 @@ namespace projectzarina {
          */
         private void saveScreenshotPath(object sender, RoutedEventArgs e) {
             string screenshotPath = TextScreenshotPath.Text + @"\";
-            
+
             var Config = new Settings();
             Config.updateValue("ScreenshotPath", screenshotPath);
         }
@@ -107,9 +107,18 @@ namespace projectzarina {
             var result = response.Content.ReadAsStringAsync().Result;
 
             // DEBUG
-            Console.WriteLine(result);
-       
+            // Console.WriteLine(result);
+            new ToastContentBuilder()
+                .AddArgument("action", "viewConversation")
+                .AddArgument("conversationId", 9813)
+                .AddText("Your Stats have been updated")
+                .AddText(file + " has been uploaded")
+                .Show(); // Not seeing the Show() method? Make sure you have version 7.0, and if you're using .NET 5, your TFM must be net5.0-windows10.0.17763.0 or greater
+
         }
+
+
+
 
 
 
