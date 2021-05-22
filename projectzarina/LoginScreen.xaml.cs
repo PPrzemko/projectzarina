@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Newtonsoft.Json;
 
 namespace projectzarina
 {
@@ -68,6 +69,33 @@ namespace projectzarina
             //debug
             Console.WriteLine(responsestr);
 
+            dynamic magic = JsonConvert.DeserializeObject(responsestr);
+            string token = magic.unique_token; 
+            
+
+            try
+            {
+                SettingData userData = new SettingData();
+                userData.token = token;
+                userData.ScreenshotPath = LoadXml.LoadScreenshotPath();
+                Console.WriteLine(token);
+                Console.WriteLine(LoadXml.LoadScreenshotPath());
+                SaveXml.SaveData(userData, "UserSettings.xml");
+                
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            
+
+
+
+
+
+
+            //{"success":"true","message":"Valid login attempt.","unique_token":"65b476da358aaad8a078c8bc13d7a74d","valid_until":"2021-06-21","created":"2021-05-22"}
         }
     }
 }

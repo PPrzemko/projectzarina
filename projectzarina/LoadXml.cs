@@ -13,18 +13,25 @@ namespace projectzarina
         {
             var xmlDoc = new XmlDocument();
             xmlDoc.Load("UserSettings.xml");
-            xmlDoc.DocumentElement.SelectSingleNode("SettingData/ScreenshotPath");
+            xmlDoc.DocumentElement.SelectSingleNode("/SettingData/ScreenshotPath");
             string ScreenshotPath = xmlDoc.InnerText;
             return ScreenshotPath;
         }
-
-        public static string LoadLastUpdatedFile()
+        public static string LoadToken()
         {
             var xmlDoc = new XmlDocument();
             xmlDoc.Load("UserSettings.xml");
-            xmlDoc.DocumentElement.SelectSingleNode("SettingData/LastCreatedFile");
-            string lastCreatedFile = xmlDoc.InnerText;
-            return lastCreatedFile;
+            xmlDoc.DocumentElement.SelectSingleNode("/SettingData/token");
+            string token = xmlDoc.InnerText;
+            return token;
         }
+
+      
+      
+
+
+
+
+
     }
 }
