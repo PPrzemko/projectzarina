@@ -27,7 +27,6 @@ namespace projectzarina
         {
             InitializeComponent();
             TextScreenshotPath.Text = LoadXml.LoadScreenshotPath();
-            //MonitorAndAbuse.FSW();
             FSW();
         }
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -46,7 +45,8 @@ namespace projectzarina
         public void PathSelect()
         {
             System.Windows.Forms.FolderBrowserDialog openFileDlg = new System.Windows.Forms.FolderBrowserDialog();
-            
+
+            openFileDlg.SelectedPath = @"C:\Program Files (x86)\Steam\userdata\";
             openFileDlg.ShowDialog();
             var result = openFileDlg.SelectedPath;
             TextScreenshotPath.Text = result;
@@ -55,17 +55,23 @@ namespace projectzarina
 
         public void FSW()
         {
-            string watchedPath = @"C:\Program Files (x86)\Steam\userdata\191883757\760\remote\381210\screenshots\thumbnails";
+            // I Dont know how "try" "catch" works but it seams to be working lol
+            try
+            {
+                string watchedPath = LoadXml.LoadScreenshotPath();
+                // watchedPath = @"C:\Program Files (x86)\Steam\userdata\2263d59406\760\remote\381210\screenshots\test\amk\fsdfsf";
+                FileSystemWatcher watcher = new FileSystemWatcher(watchedPath);
+                watcher.Filter = "*.jpg";
 
-            FileSystemWatcher watcher = new FileSystemWatcher(watchedPath);
+                watcher.Created += new FileSystemEventHandler(Watcher_Created);
 
-            watcher.Filter = "*.jpg";
-
-            watcher.Created += new FileSystemEventHandler(Watcher_Created);
-
-            watcher.EnableRaisingEvents = true;
-
-
+                watcher.EnableRaisingEvents = true;
+            }
+            catch (System.ArgumentException e)
+            {
+                Console.WriteLine("Something went wrong.");
+                Console.WriteLine(e.Message);
+            }
         }
 
         public void Watcher_Created(object sender, FileSystemEventArgs e)
@@ -88,7 +94,7 @@ namespace projectzarina
             HttpClient client = new HttpClient();
             MultipartFormDataContent content = new MultipartFormDataContent();
             ByteArrayContent baContent = new ByteArrayContent(upfilebytes);
-            content.Add(baContent, "file-upload-input", "uploadedImage.jpg");
+            content.Add(baContent, "file", "uploadedImage.jpg");
 
 
             //upload MultipartFormDataContent content async and store response in response var
@@ -110,7 +116,7 @@ namespace projectzarina
                 userData.ScreenshotPath = TextScreenshotPath.Text + @"\";
                 SaveXml.SaveData(userData, "UserSettings.xml");
                 SaveMessage.Visibility = Visibility.Visible;
-
+               
             }
             catch (Exception ex)
             {
