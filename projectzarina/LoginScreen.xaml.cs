@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,6 +26,28 @@ namespace projectzarina {
 
             // Prüfen, ob Benutzer (noch) angemeldet ist.
             validateLogin();
+
+
+
+
+            // connection check
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://zarina.visualstatic.net");
+            request.Timeout = 15000;
+            request.Method = "HEAD"; // As per Lasse's comment
+            try
+            {
+                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                {
+                    bool lol = response.StatusCode == HttpStatusCode.OK;
+                    //Console.WriteLine(lol);
+                    ErrorBox.Text = "";
+                }
+            }
+            catch (WebException)
+            {
+                ErrorBox.Text = "Seams like our servers are down. Check your internet connection or contact support";
+            }
+
         }
 
         // Benutzer klickt auf "Login"
@@ -43,7 +66,11 @@ namespace projectzarina {
             }
 
         }
-        private async void validateLogin() {
+
+
+
+
+private async void validateLogin() {
 
             var Config = new Settings();
             string token = Config.getValue("token");

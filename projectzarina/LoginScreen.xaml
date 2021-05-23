@@ -68,18 +68,24 @@
                        HorizontalAlignment="Center"
                        FontFamily="fonts/#Roboto-Regular"
                        />
-            <Button x:Name="ExitProgramm"    Content="X"
+            <Button x:Name="ExitProgramm"    Content="exit"
                        Foreground="RED"
                        Background="Gray"
+                       BorderBrush="Blue"
                        Grid.Column="11"
                        VerticalAlignment="Center"
                        HorizontalAlignment="Center"
                        FontFamily="fonts/#Roboto-Regular" Margin="12,4,12,3" Width="51" Click="ExitProgramm_Click"
                        />
+
+
+
+
+
         </Grid>
         <StackPanel Grid.Row="2"
                     VerticalAlignment="Center"
-                    Margin="60">
+                    Margin="50,-80,50,0">
             <StackPanel Orientation="Horizontal"
                         Margin="0,0,0,20">
                 <Image Width="330" Height="100"
@@ -117,6 +123,14 @@
                 FontFamily="fonts/#Roboto-Regular"
                 TextWrapping="Wrap"
                 Margin="0,10,0,0"
+                />
+                <TextBlock x:Name="ErrorBox" Text=""
+                Foreground="#E84225"
+                FontSize="12"
+                FontWeight="Medium"
+                FontFamily="fonts/#Roboto-Regular"
+                TextWrapping="Wrap"
+                Margin="0,20,0,0"
                 />
 
             </StackPanel>
