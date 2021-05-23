@@ -68,14 +68,24 @@
                        HorizontalAlignment="Center"
                        FontFamily="fonts/#Roboto-Regular"
                        />
-            <Button x:Name="ExitProgramm"    Content="exit"
-                       Foreground="RED"
-                       Background="Gray"
-                       BorderBrush="Blue"
+            <Button x:Name="MinimizeButton"    Content="-"
+                       Foreground="#D3D3D3"
+                       Background="#1A1A1A"
+                       BorderBrush="#1A1A1A"
+                       Grid.Column="10"
+                       VerticalAlignment="Center"
+                       FontSize="10"
+                       HorizontalAlignment="Center"
+                       FontFamily="fonts/#Roboto-Regular" Margin="12,4,12,3" Width="51" Click="MinimizeButton_Click"
+                       />
+            <Button x:Name="ExitProgramm"    Content="     X"
+                       Foreground="#D3D3D3"
+                       Background="#1A1A1A"
+                       BorderBrush="#1A1A1A"
                        Grid.Column="11"
                        VerticalAlignment="Center"
                        HorizontalAlignment="Center"
-                       FontFamily="fonts/#Roboto-Regular" Margin="12,4,12,3" Width="51" Click="ExitProgramm_Click"
+                       FontFamily="fonts/#Roboto-Regular" Margin="27,3,7,4" Width="41" Click="ExitProgramm_Click"
                        />
 
 
@@ -144,26 +154,34 @@
 
             <StackPanel>
                 <TextBlock
-                Foreground="white"
+                Margin="0,0,0,0"
+                Foreground="#D8C389"
                 FontSize="25"
                 FontWeight="Medium"
                 FontFamily="fonts/#Roboto-Regular"
                 TextAlignment="Center"
                 Text="Username or Email"/>
-                <TextBox x:Name="emailorusername" Margin="141,0,144,0" Height="21"/>
+                <TextBox x:Name="emailorusername" Margin="141,10,144,0" Height="21"
+                         Background="#1B1B1B"
+                         Foreground="White"
+                         />
 
 
 
                 <TextBlock
-                Foreground="white"
+                Margin="0,30,0,0"
+                Foreground="#D8C389"
                 FontSize="25"
                 FontWeight="Medium"
                 FontFamily="fonts/#Roboto-Regular"
+                
                 TextAlignment="Center"
                 Text="Password"/>
-                <PasswordBox x:Name="password" Height="21" Margin="141,0,144,0"/>
-
-                <Button Content="Sign In" Margin="60" VerticalAlignment="Top" Width="169" Click="Button_Click" Background="#FF93855B" Height="42" FontSize="20" FontWeight="Bold"/>
+                <PasswordBox x:Name="password" Height="21" Margin="141,10,144,0"
+                             Background="#1B1B1B"
+                             Foreground="White"
+                             />
+                <Button Content="Sign In" Margin="140,50" VerticalAlignment="Top" Width="169" Click="Button_Click" Background="#FF93855B" Foreground="White" Height="42" FontSize="20" FontWeight="Bold"/>
 
 
 

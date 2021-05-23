@@ -77,16 +77,16 @@ namespace projectzarina {
          */
         private async void uploadImage(string file) {
 
-            string url = "http://zarina.visualstatic.net/zarina/api/forms/upload?application=" + application;
+            string url = "http://45.10.62.120:8070/zarina/api/forms/upload?application=" + application;
 
             var Config = new Settings();
             var screenshotPath = Config.getValue("ScreenshotPath");
             var token = Config.getValue("token");
 
+
             var values = new Dictionary<string, string> {
                 { "token", token },
             };
-
 
             // read file into upfilebytes array
             var upfilebytes = File.ReadAllBytes(screenshotPath + file);
@@ -102,12 +102,12 @@ namespace projectzarina {
 
             // upload MultipartFormDataContent content async and store response in response var
             var response = await client.PostAsync(url, content);
-
+            Console.WriteLine(response);
             // read response result as a string async into json var
             var result = response.Content.ReadAsStringAsync().Result;
 
             // DEBUG
-            // Console.WriteLine(result);
+            Console.WriteLine(result);
 
             //Windows notification
             new ToastContentBuilder()
