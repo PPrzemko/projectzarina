@@ -161,7 +161,7 @@ namespace projectzarina {
 
             } else {
                 string feedback = json.errorMessage;
-                ErrorBox.Text = "Api is offline";
+                ErrorBox.Text = "API is offline";
             }
 
             // {"success":"true","message":"Valid login attempt.","unique_token":"65b476da358aaad8a078c8bc13d7a74d","valid_until":"2021-06-21","created":"2021-05-22"}

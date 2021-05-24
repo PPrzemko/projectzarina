@@ -9,6 +9,7 @@
         WindowStyle="None"
         ResizeMode="NoResize"
         Background="#2B2B2B"
+        Icon="images/well.png"
        
             >
     <Grid>
