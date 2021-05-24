@@ -14,12 +14,16 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Newtonsoft.Json;
+using System.IO;
+using System.Xml.Linq;
+
+
 
 namespace projectzarina {
 
     public partial class LoginScreen : Window {
         
-        protected string application = "E1eJ3E4whf2mGC5aMdQ2L5CIUHPW9n33";
+        protected string application = "MdhfE1eJ2L59n3mG3EPWQ23CIw4C5aUH";
 
         public LoginScreen() {
             InitializeComponent();
@@ -28,7 +32,7 @@ namespace projectzarina {
             validateLogin();
 
             // connection check
-            HttpWebRequest request = (HttpWebRequest) WebRequest.Create("http://45.10.62.120:8070");
+            HttpWebRequest request = (HttpWebRequest) WebRequest.Create("https://visualstatic.net");
             request.Timeout = 15000;
             request.Method = "HEAD";
             try {
@@ -39,7 +43,29 @@ namespace projectzarina {
                 ErrorBox.Text = "Seems like our servers are down. Check your internet connection or contact support";
             }
 
+            // Checks for XML if not there creates it 
+            //string gems = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+            if (!File.Exists("UserSettings.xml"))
+            {
+                //System.IO.Directory.CreateDirectory(@"C:\Users\Public");
+
+                XDocument doc123 = new XDocument(
+                                             new XElement("SettingData",
+                                             new XElement("token"),
+                                             new XElement("ScreenshotPath")
+                                             ));
+                doc123.Save("UserSettings.xml");
+
+
+
+            }
         }
+
+
+
+
+
+
 
         // Benutzer klickt auf "Login"
         private void Button_Click(object sender, RoutedEventArgs e) {
@@ -56,10 +82,10 @@ namespace projectzarina {
 
             var Config = new Settings();
             string token = Config.getValue("token");
-
             if(token != "") {
+                Console.WriteLine("token: " + token);
                 // "Angemeldet" => Anmeldung vorher prüfen mittels Validierung (auth/validate)
-                string url = "http://45.10.62.120:8070/zarina/api/auth/validate?application=" + application;
+                string url = "https://zarina.visualstatic.net/api/auth/validate?application=" + application;
 
                 HttpClient client = new HttpClient();
                 var values = new Dictionary<string, string> {
@@ -78,23 +104,21 @@ namespace projectzarina {
 
                 // TryCatch if API bwoke
                
-                   try{
-                       dynamic json = JsonConvert.DeserializeObject(result);
-                       if (json.success == "true")
-                       {
-                           // Jo, Token ist noch valide.
-                           // Weiterleitung auf MainWindow.cs, da noch angemeldet.
-                           var MainWindow = new MainWindow();
-                           MainWindow.Show();
-                           this.Close();
+                try{
+                    dynamic json = JsonConvert.DeserializeObject(result);
+                    if (json.success == "true")
+                    {
+                        var MainWindow = new MainWindow();
+                        MainWindow.Show();
+                        this.Close();
                     }
                     else{
-                        ErrorBox.Text = "Api is offline";
+                        ErrorBox.Text = "API is offline";
                     }
-                   }
-                   catch(Exception){
-                       ErrorBox.Text = "Api is offline";
-                   }
+                }
+                catch(Exception){
+                    ErrorBox.Text = "API is offline";
+                }
                    
                 
                 // ANDERNFALLS: No, Session Key existiert nicht mehr, User muss abgemeldet sein.
@@ -106,7 +130,7 @@ namespace projectzarina {
 
 
         private async void postLogin(string user, string passwd) {
-            string url = "http://45.10.62.120:8070/zarina/api/auth/signin?application=" + application;
+            string url = "https://zarina.visualstatic.net/api/auth/signin?application=" + application;
 
             HttpClient client = new HttpClient();
             var values = new Dictionary<string, string> {

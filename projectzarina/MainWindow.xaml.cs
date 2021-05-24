@@ -21,7 +21,7 @@ namespace projectzarina {
 
     public partial class MainWindow : Window {
 
-        protected string application = "E1eJ3E4whf2mGC5aMdQ2L5CIUHPW9n33";
+        protected string application = "MdhfE1eJ2L59n3mG3EPWQ23CIw4C5aUH";
 
         public MainWindow() {
 
@@ -77,7 +77,7 @@ namespace projectzarina {
          */
         private async void uploadImage(string file) {
 
-            string url = "http://45.10.62.120:8070/zarina/api/forms/upload?application=" + application;
+            string url = "https://zarina.visualstatic.net/api/forms/upload?application=" + application;
 
             var Config = new Settings();
             var screenshotPath = Config.getValue("ScreenshotPath");
@@ -85,7 +85,7 @@ namespace projectzarina {
 
 
             var values = new Dictionary<string, string> {
-                { "token", token },
+                { "", token },
             };
 
             // read file into upfilebytes array
@@ -138,7 +138,7 @@ namespace projectzarina {
             if(token != "") {
 
                 // token in DB löschen
-                string url = "http://zarina.visualstatic.net/zarina/api/auth/destroy?application=" + application;
+                string url = "https://zarina.visualstatic.net/api/auth/destroy?application=" + application;
 
                 HttpClient client = new HttpClient();
                 var values = new Dictionary<string, string> {
