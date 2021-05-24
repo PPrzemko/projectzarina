@@ -79,48 +79,53 @@ namespace projectzarina {
 
 
         private async void validateLogin() {
+            if (File.Exists("UserSettings.xml")){
+                var Config = new Settings();
+                string token = Config.getValue("token");
 
-            var Config = new Settings();
-            string token = Config.getValue("token");
-            if(token != "") {
-                Console.WriteLine("token: " + token);
-                // "Angemeldet" => Anmeldung vorher prüfen mittels Validierung (auth/validate)
-                string url = "https://zarina.visualstatic.net/api/auth/validate?application=" + application;
+                if (token != "")
+                {
+                    Console.WriteLine("token: " + token);
+                    // "Angemeldet" => Anmeldung vorher prüfen mittels Validierung (auth/validate)
+                    string url = "https://zarina.visualstatic.net/api/auth/validate?application=" + application;
 
-                HttpClient client = new HttpClient();
-                var values = new Dictionary<string, string> {
+                    HttpClient client = new HttpClient();
+                    var values = new Dictionary<string, string> {
                     { "token", token },
                 };
 
-                // DEBUG
-                // Console.WriteLine("token: " + token);
+                    // DEBUG
+                    // Console.WriteLine("token: " + token);
 
-                var content = new FormUrlEncodedContent(values);
-                var response = await client.PostAsync(url, content);
-                var result = response.Content.ReadAsStringAsync().Result;
+                    var content = new FormUrlEncodedContent(values);
+                    var response = await client.PostAsync(url, content);
+                    var result = response.Content.ReadAsStringAsync().Result;
 
-                // DEBUG
-                // Console.WriteLine("result: " + result);
+                    // DEBUG
+                    // Console.WriteLine("result: " + result);
 
-                // TryCatch if API bwoke
-               
-                try{
-                    dynamic json = JsonConvert.DeserializeObject(result);
-                    if (json.success == "true")
+                    // TryCatch if API bwoke
+
+                    try
                     {
-                        var MainWindow = new MainWindow();
-                        MainWindow.Show();
-                        this.Close();
+                        dynamic json = JsonConvert.DeserializeObject(result);
+                        if (json.success == "true")
+                        {
+                            var MainWindow = new MainWindow();
+                            MainWindow.Show();
+                            this.Close();
+                        }
+                        else
+                        {
+                            ErrorBox.Text = "API is offline";
+                        }
                     }
-                    else{
+                    catch (Exception)
+                    {
                         ErrorBox.Text = "API is offline";
                     }
-                }
-                catch(Exception){
-                    ErrorBox.Text = "API is offline";
-                }
-                   
-                
+
+             }
                 // ANDERNFALLS: No, Session Key existiert nicht mehr, User muss abgemeldet sein.
                 // LoginScreen verbleibt weiterhin offen, gibt dem User die Möglichkeit sich nochmal zu authentifizieren oder als Gast fortzufahren.
 
