@@ -1,23 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using Newtonsoft.Json;
 using System.IO;
 using System.Xml.Linq;
-
-
+using System.Threading;
 
 namespace projectzarina {
 
@@ -26,13 +15,14 @@ namespace projectzarina {
         protected string application = "MdhfE1eJ2L59n3mG3EPWQ23CIw4C5aUH";
 
         public LoginScreen() {
+
             InitializeComponent();
 
-            // Prüfen, ob Benutzer (noch) angemeldet ist.
+            // Prüfen, ob Benutzer (noch) angemeldet ist
             validateLogin();
-
+            /*       
             // connection check
-            HttpWebRequest request = (HttpWebRequest) WebRequest.Create("https://visualstatic.net");
+            HttpWebRequest request = (HttpWebRequest) WebRequest.Create("https://bing.com");
             request.Timeout = 15000;
             request.Method = "HEAD";
             try {
@@ -42,6 +32,8 @@ namespace projectzarina {
             } catch(WebException) {
                 ErrorBox.Text = "Seems like our servers are down. Check your internet connection or contact support";
             }
+            */
+
 
             // Checks for XML if not there creates it 
             //string gems = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
@@ -56,12 +48,32 @@ namespace projectzarina {
                                              ));
                 doc123.Save("UserSettings.xml");
 
-
+                
 
             }
+           
         }
+       
 
+        void OpenNewOrRestoreWindow<T>() where T : Window, new()
+        {
+            bool isWindowOpen = false;
 
+            foreach (Window w in Application.Current.Windows)
+            {
+                if (w is T)
+                {
+                    isWindowOpen = true;
+                    w.Activate();
+                }
+            }
+
+            if (!isWindowOpen)
+            {
+                T newwindow = new T();
+                newwindow.Show();
+            }
+        }
 
 
 

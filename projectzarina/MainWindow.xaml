@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:projectzarina"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Zarina" Height="450" Width="800">
     <Grid x:Name="Text12" Background="#FF3F3F3F">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="299*"/>
