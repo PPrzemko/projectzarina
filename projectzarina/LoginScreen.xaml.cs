@@ -7,21 +7,31 @@ using Newtonsoft.Json;
 using System.IO;
 using System.Xml.Linq;
 using System.Threading;
+using System.Xml;
+using System.Reflection;
 
 namespace projectzarina {
 
     public partial class LoginScreen : Window {
-        
+
+
+        /*
+         * Future API get for opensource gitignore
+         * 
+        var Config = new Config();
+        string apikey = Config.getAPI();
+        */
         protected string application = "MdhfE1eJ2L59n3mG3EPWQ23CIw4C5aUH";
 
         public LoginScreen() {
 
             InitializeComponent();
 
-            // Prüfen, ob Benutzer (noch) angemeldet ist
+            // Checks if user has valid token in UserSettings.xml
             validateLogin();
+
+            // connection check no longer working because of Windows Defender detecting it
             /*       
-            // connection check
             HttpWebRequest request = (HttpWebRequest) WebRequest.Create("https://bing.com");
             request.Timeout = 15000;
             request.Method = "HEAD";
@@ -35,12 +45,17 @@ namespace projectzarina {
             */
 
 
-            // Checks for XML if not there creates it 
-            //string gems = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+
+            /*
+             * Checks for UserSettings.xml creates new one if there is none
+             */
             if (!File.Exists("UserSettings.xml"))
             {
-                //System.IO.Directory.CreateDirectory(@"C:\Users\Public");
-
+                /* Removed old XML because of insufficient rights
+                 * 
+                 * System.IO.Directory.CreateDirectory(@"C:\Users\Public");
+                 * string gems = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+                 */
                 XDocument doc123 = new XDocument(
                                              new XElement("SettingData",
                                              new XElement("token"),
@@ -51,30 +66,10 @@ namespace projectzarina {
                 
 
             }
-           
+
         }
        
-
-        void OpenNewOrRestoreWindow<T>() where T : Window, new()
-        {
-            bool isWindowOpen = false;
-
-            foreach (Window w in Application.Current.Windows)
-            {
-                if (w is T)
-                {
-                    isWindowOpen = true;
-                    w.Activate();
-                }
-            }
-
-            if (!isWindowOpen)
-            {
-                T newwindow = new T();
-                newwindow.Show();
-            }
-        }
-
+      
 
 
 
@@ -92,8 +87,8 @@ namespace projectzarina {
 
         private async void validateLogin() {
             if (File.Exists("UserSettings.xml")){
-                var Config = new Settings();
-                string token = Config.getValue("token");
+                var SettingXML = new Settings();
+                string token = SettingXML.getValue("token");
 
                 if (token != "")
                 {
@@ -164,8 +159,8 @@ namespace projectzarina {
             if(json.success == "true") {
                 string token = json.unique_token;
                 
-                var Config = new Settings();
-                Config.updateValue("token", token);
+                var SettingXML = new Settings();
+                SettingXML.updateValue("token", token);
                 Console.WriteLine("token: " + token);
                 var MainWindow = new MainWindow();
                 MainWindow.Show();

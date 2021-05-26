@@ -26,17 +26,18 @@ namespace projectzarina {
         public MainWindow() {
 
             InitializeComponent();
-            var Config = new Settings();
-            var screenshotPath = Config.getValue("ScreenshotPath");
 
+            // get ScreenshotPath
+            var SettingXML = new Settings();
+            var screenshotPath = SettingXML.getValue("ScreenshotPath");
             TextScreenshotPath.Text = screenshotPath;
-
-            try {
+            // listing on path for new file. try for wrong path argument
+            try{
                 FileSystemWatcher watcher = new FileSystemWatcher(screenshotPath);
                 watcher.Filter = "*.jpg";
                 watcher.Created += new FileSystemEventHandler(Watcher_Created);
                 watcher.EnableRaisingEvents = true;
-            } catch (System.ArgumentException e) {
+            }catch (System.ArgumentException e) {
                 Console.WriteLine(e.Message);
             }
 
@@ -47,7 +48,6 @@ namespace projectzarina {
             string filename = System.IO.Path.GetFileName(e.FullPath);
             Console.WriteLine("Erstellt: " + filename);
             uploadImage(filename);
-
         }
 
         private void assignPath(object sender, RoutedEventArgs e) {
@@ -65,8 +65,8 @@ namespace projectzarina {
         private void saveScreenshotPath(object sender, RoutedEventArgs e) {
             string screenshotPath = TextScreenshotPath.Text + @"\";
 
-            var Config = new Settings();
-            Config.updateValue("ScreenshotPath", screenshotPath);
+            var SettingXML = new Settings();
+            SettingXML.updateValue("ScreenshotPath", screenshotPath);
         }
 
 
@@ -76,12 +76,12 @@ namespace projectzarina {
          * Autmatic Image upload after FSW
          */
         private async void uploadImage(string file) {
-
+            
             string url = "https://zarina.visualstatic.net/api/forms/upload?application=" + application;
 
-            var Config = new Settings();
-            var screenshotPath = Config.getValue("ScreenshotPath");
-            var token = Config.getValue("token");
+            var SettingXML = new Settings();
+            var screenshotPath = SettingXML.getValue("ScreenshotPath");
+            var token = SettingXML.getValue("token");
 
 
             var values = new Dictionary<string, string> {
@@ -108,6 +108,8 @@ namespace projectzarina {
 
             // DEBUG
             Console.WriteLine(result);
+      
+
 
             //Windows notification
             new ToastContentBuilder()
@@ -132,12 +134,12 @@ namespace projectzarina {
         }
 
         private async void logout() {
-            var Config = new Settings();
-            string token = Config.getValue("token");
+            var SettingXML = new Settings();
+            string token = SettingXML.getValue("token");
 
             if(token != "") {
 
-                // token in DB löschen
+                // delete token in db
                 string url = "https://zarina.visualstatic.net/api/auth/destroy?application=" + application;
 
                 HttpClient client = new HttpClient();
@@ -149,7 +151,7 @@ namespace projectzarina {
                 await client.PostAsync(url, content);
 
                 // Weiterleitung auf Login & Token in XML löschen
-                Config.updateValue("token", "");
+                SettingXML.updateValue("token", "");
 
                 var LoginScreen = new LoginScreen();
                 LoginScreen.Show();
@@ -159,16 +161,37 @@ namespace projectzarina {
         }
 
 
-                            // notification test 
-        private void Button_Click(object sender, RoutedEventArgs e)
+
+
+        // Dragon Drop Funktion
+        private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            // Requires Microsoft.Toolkit.Uwp.Notifications NuGet package version 7.0 or greater
-            new ToastContentBuilder()
-                .AddArgument("action", "viewConversation")
-                .AddArgument("conversationId", 9813)
-                .AddText("Andrew sent you a picture")
-                .AddText("Check this out, The Enchantments in Washington!")
-                .Show(); // Not seeing the Show() method? Make sure you have version 7.0, and if you're using .NET 5, your TFM must be net5.0-windows10.0.17763.0 or greater
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                DragMove();
+            }
+
         }
+
+        // Exit Button
+        private void ExitProgramm_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        // Minimize Button
+        private void MinimizeButton_Click(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState.Minimized;
+        }
+
+        
+        
+        
+
+
+
+
+
     }
 }

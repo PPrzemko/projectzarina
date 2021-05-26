@@ -14,10 +14,14 @@ namespace projectzarina {
         private string parent = "/SettingData/";
 
         public Settings() {}
+        
 
+
+        /*
+         * Getting Values from Usersetting.xml file
+         */
         public string getValue(string node) {
             try {
-
                 var xdoc = XDocument.Load(this.path);
                 var result = xdoc.XPathSelectElement("/" + this.parent + node);
 
@@ -32,6 +36,10 @@ namespace projectzarina {
             }
         }
 
+
+        /*
+         * Updating Values in UserSettings.xml file 
+         */
         public void updateValue(string node, string value) {
             try {
                 var xmlDoc = new XmlDocument();

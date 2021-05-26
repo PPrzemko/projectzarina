@@ -9,11 +9,11 @@ using System.Windows;
 
 namespace projectzarina
 {
-    /// <summary>
-    /// Interaktionslogik für "App.xaml"
-    /// </summary>
     public partial class App : Application
     {
+        /*
+         * Stops user from opening more than one window
+         */
         private static Mutex _mutex = null;
 
         protected override void OnStartup(StartupEventArgs e)

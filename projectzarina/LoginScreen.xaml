@@ -89,10 +89,6 @@
                        FontFamily="fonts/#Roboto-Regular" Margin="27,3,7,4" Width="41" Click="ExitProgramm_Click"
                        />
 
-
-
-
-
         </Grid>
         <StackPanel Grid.Row="2"
                     VerticalAlignment="Center"
