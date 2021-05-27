@@ -31,8 +31,14 @@ namespace projectzarina {
             var SettingXML = new Settings();
             var screenshotPath = SettingXML.getValue("ScreenshotPath");
             TextScreenshotPath.Text = screenshotPath;
-            // listing on path for new file. try for wrong path argument
-            try{
+            var Notification = SettingXML.getValue("Notification");
+            int Notification2 = Int16.Parse(Notification);
+            if (Notification2 == 1){
+                NotificationCheckbox.IsChecked = true;
+            }
+                // listing on path for new file. try for wrong path argument
+                try
+                {
                 FileSystemWatcher watcher = new FileSystemWatcher(screenshotPath);
                 watcher.Filter = "*.jpg";
                 watcher.Created += new FileSystemEventHandler(Watcher_Created);
@@ -63,10 +69,19 @@ namespace projectzarina {
          * Button to save the path for the Steam screenshots
          */
         private void saveScreenshotPath(object sender, RoutedEventArgs e) {
-            string screenshotPath = TextScreenshotPath.Text + @"\";
 
+            // SaveScreenshotPath
+            string screenshotPath = TextScreenshotPath.Text + @"\";
             var SettingXML = new Settings();
             SettingXML.updateValue("ScreenshotPath", screenshotPath);
+
+            // Save Notification Status
+            if(NotificationCheckbox.IsChecked == true){
+                SettingXML.updateValue("Notification", "1");
+            }
+            else if(NotificationCheckbox.IsChecked == false){
+                SettingXML.updateValue("Notification", "0");
+            }
         }
 
 
@@ -83,10 +98,16 @@ namespace projectzarina {
             var screenshotPath = SettingXML.getValue("ScreenshotPath");
             var token = SettingXML.getValue("token");
 
-
+            // dictionary mit einem eintrag hinbekommen 
+            // fehler : =c9398accfb4bd3673b8e84e78f1c2c76
             var values = new Dictionary<string, string> {
-                { "", token },
-            };
+                            { "lol", token },
+
+                        };
+          
+            //Console.WriteLine("das hier token amk " + content);
+
+            
 
             // read file into upfilebytes array
             var upfilebytes = File.ReadAllBytes(screenshotPath + file);
@@ -100,6 +121,8 @@ namespace projectzarina {
             content.Add(baContent, "file", "uploadedImage.jpg");
             content.Add(Dictionary, "token");
 
+           
+
             // upload MultipartFormDataContent content async and store response in response var
             var response = await client.PostAsync(url, content);
             Console.WriteLine(response);
@@ -108,20 +131,25 @@ namespace projectzarina {
 
             // DEBUG
             Console.WriteLine(result);
-      
+
 
 
             //Windows notification
+
+            string notification = SettingXML.getValue("Notification");
+            int notification2 = Int16.Parse(notification);
+            if (notification2 == 1) {
             new ToastContentBuilder()
                 .AddArgument("action", "viewConversation")
                 .AddArgument("conversationId", 9813)
                 .AddText("Your Stats have been updated")
                 .AddText(file + " has been uploaded")
-                .Show(); // Not seeing the Show() method? Make sure you have version 7.0, and if you're using .NET 5, your TFM must be net5.0-windows10.0.17763.0 or greater
-
+                .Show();
+            }
+            
         }
 
-
+       
 
 
 

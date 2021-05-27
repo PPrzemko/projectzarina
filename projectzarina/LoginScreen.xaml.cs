@@ -59,11 +59,13 @@ namespace projectzarina {
                 XDocument doc123 = new XDocument(
                                              new XElement("SettingData",
                                              new XElement("token"),
-                                             new XElement("ScreenshotPath")
+                                             new XElement("ScreenshotPath"),
+                                             new XElement("Notification")
                                              ));
                 doc123.Save("UserSettings.xml");
 
-                
+                var SettingXML = new Settings();
+                SettingXML.updateValue("Notification", "1");
 
             }
 
