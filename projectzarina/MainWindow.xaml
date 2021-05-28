@@ -10,6 +10,20 @@
         ResizeMode="NoResize"
         Background="#2B2B2B"
         Icon="images/well.png">
+    <Window.Resources>
+
+
+
+
+
+
+
+
+
+
+
+
+    </Window.Resources>
     <Grid>
         <Grid.Background>
             <ImageBrush ImageSource="/images/well.png" Stretch="Fill" />
@@ -42,39 +56,15 @@
                 <ColumnDefinition Width="75*"/>
                 <ColumnDefinition Width="75*"/>
             </Grid.ColumnDefinitions>
-            <TextBlock Text="Dashboard"
-                       Foreground="White"
-                       Grid.Column="0"
-                       VerticalAlignment="Center"
-                       HorizontalAlignment="Center"
-                       FontFamily="fonts/#Roboto-Regular"
-                       FontWeight="Medium"
-                       />
-            <Button x:Name="MinimizeButton"    Content="-"
-                       Foreground="#D3D3D3"
-                       Background="#1A1A1A"
-                       BorderBrush="#1A1A1A"
-                       Grid.Column="11"
-                       VerticalAlignment="Center"
-                       FontSize="10"
-                       HorizontalAlignment="Center"
-                       FontFamily="fonts/#Roboto-Regular" Margin="12,5,12,4" Width="51" Click="MinimizeButton_Click"
-                       />
-            <Button x:Name="ExitProgramm"    Content="     X"
-                       Foreground="#D3D3D3"
-                       Background="#1A1A1A"
-                       BorderBrush="#1A1A1A"
-                       Grid.Column="12"
-                       VerticalAlignment="Center"
-                       HorizontalAlignment="Center"
-                       FontFamily="fonts/#Roboto-Regular" Margin="27,3,7,4" Width="41" Click="ExitProgramm_Click"
-                       />
+            <TextBlock Text="Dashboard" Foreground="White" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="fonts/#Roboto-Regular" FontWeight="Medium"/>
+            <Button x:Name="MinimizeButton" Content="-" Foreground="#D3D3D3" Background="#1A1A1A" BorderBrush="#1A1A1A" Grid.Column="11" VerticalAlignment="Center" FontSize="10" HorizontalAlignment="Center" FontFamily="fonts/#Roboto-Regular" Margin="12,5,12,4" Width="51" Click="MinimizeButton_Click"/>
+            <Button x:Name="ExitProgramm" Content="X" Foreground="#D3D3D3" Background="#1A1A1A" BorderBrush="#1A1A1A" Grid.Column="12" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="fonts/#Roboto-Regular" Margin="27,3,7,4" Width="41" Click="ExitProgramm_Click"/>
         </Grid>
 
-        <Button Content="Assign Path" HorizontalAlignment="Left" Margin="194,89,0,0" Grid.Row="1" VerticalAlignment="Top" Width="74" Click="assignPath" Foreground="White" Background="{x:Null}" BorderBrush="White"/>
-        <TextBox x:Name="TextScreenshotPath" HorizontalAlignment="Left" Height="38" Margin="331,84,0,0" Grid.Row="1" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="439" Background="#1B1B1B" Foreground="White"/>
-        <Button x:Name="Button_SaveSettings" Content="SaveSettings" HorizontalAlignment="Left" Margin="366,169,0,0" Grid.Row="1" VerticalAlignment="Top" Width="76" Click="saveScreenshotPath" Foreground="White" Background="{x:Null}" BorderBrush="White"/>
-        <Label x:Name="SaveMessage" Content="Data Saved Successfully" HorizontalAlignment="Left" Margin="352,127,0,0" Grid.Row="1" VerticalAlignment="Top" Foreground="White" Visibility="Hidden"/>
+        <Button x:Name="nameassignPath" Content="Assign Path" HorizontalAlignment="Left" Margin="194,89,0,0" Grid.Row="1" VerticalAlignment="Top" Width="74" Click="assignPath" Foreground="White" Background="{x:Null}" BorderBrush="White" />
+        <TextBox x:Name="TextScreenshotPath" HorizontalAlignment="Left" Height="38" Margin="331,84,0,0" Grid.Row="1" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="439" Background="#1B1B1B" Foreground="White" IsEnabled="False"/>
+        <Button x:Name="Button_SaveSettings" Content="SaveSettings" HorizontalAlignment="Left" Margin="694,177,0,0" Grid.Row="1" VerticalAlignment="Top" Width="76" Click="saveScreenshotPath" Foreground="White" Background="{x:Null}" BorderBrush="White"/>
+        <Label x:Name="SaveMessage" Content="" HorizontalAlignment="Left" Margin="331,127,0,0" Grid.Row="1" VerticalAlignment="Top" Foreground="White" Width="439"/>
         <Button Content="Logout" HorizontalAlignment="Left" Margin="797,23,0,0" Grid.Row="1" VerticalAlignment="Top" Width="74" Click="logoutButton" Foreground="White" Background="{x:Null}" BorderBrush="White"/>
         <TextBox x:Name="test" HorizontalAlignment="Left" Height="189" Margin="231,219,0,0" Grid.Row="1" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="572" Foreground="White" Background="{x:Null}" BorderBrush="White"/>
         <CheckBox x:Name="NotificationCheckbox" Content="Notifications" HorizontalAlignment="Left" Margin="194,133,0,0" Grid.Row="1" VerticalAlignment="Top" Height="20" Width="91" Foreground="White"/>
@@ -85,21 +75,3 @@
     </Grid>
 </Window>
 
-
-
-<!---
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="299*"/>
-            <ColumnDefinition Width="107*"/>
-            <ColumnDefinition Width="386*"/>
-        </Grid.ColumnDefinitions>
-        <Button Content="Assign Path" HorizontalAlignment="Left" Margin="114,50,0,0" VerticalAlignment="Top" Width="93" Click="assignPath" Height="23"/>
-        <TextBox x:Name="TextScreenshotPath" HorizontalAlignment="Left" Height="23" Margin="212,50,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="559" Grid.ColumnSpan="3"></TextBox>
-        <Button x:Name="Button_SaveSettings" Content="Save Path" HorizontalAlignment="Left" Margin="114,90,0,0" VerticalAlignment="Top" Width="93" Height="23" Click="saveScreenshotPath"/>
-        <Label x:Name="SaveMessage" Content="Data Saved Successfully" HorizontalAlignment="Left" Margin="236,88,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.037,0.309" Width="154" Visibility="Hidden" Grid.ColumnSpan="2"/>
-        <TextBox x:Name="DebugLable" HorizontalAlignment="Left" Height="189" Margin="114,197,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="541" IsEnabled="False" Grid.ColumnSpan="3"/>
-        <Button Content="Logout" HorizontalAlignment="Left" Margin="290,366,0,0" VerticalAlignment="Top" Width="75" Click="logoutButton" Grid.Column="2" />
-
-    </Grid>
-</Window> !-->
