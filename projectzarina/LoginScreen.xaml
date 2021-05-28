@@ -174,11 +174,11 @@
                 
                 TextAlignment="Center"
                 Text="Password"/>
-                <PasswordBox x:Name="password" Height="21" Margin="141,10,144,0"
+                <PasswordBox  x:Name="password" Height="21" Margin="141,10,144,0"
                              Background="#1B1B1B"
                              Foreground="White"
                              />
-                <Button Content="Sign In" Margin="140,50" VerticalAlignment="Top" Width="169" Click="Button_Click" Background="#FF93855B" Foreground="White" Height="42" FontSize="20" FontWeight="Bold"/>
+                <Button IsDefault="True" Content="Sign In" Margin="140,50" VerticalAlignment="Top" Width="169" Click="Button_Click" Background="#FF93855B" Foreground="White" Height="42" FontSize="20" FontWeight="Bold"/>
 
 
 

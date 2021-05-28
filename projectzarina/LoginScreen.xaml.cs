@@ -9,20 +9,15 @@ using System.Xml.Linq;
 using System.Threading;
 using System.Xml;
 using System.Reflection;
+using System.Net;
+using Windows.UI.Xaml.Input;
 
 namespace projectzarina {
 
     public partial class LoginScreen : Window {
 
-
-        /*
-         * Future API get for opensource gitignore
-         * 
-        var Config = new Config();
-        string apikey = Config.getAPI();
-        */
         protected string application = "MdhfE1eJ2L59n3mG3EPWQ23CIw4C5aUH";
-
+        protected bool openonce = true;
         public LoginScreen() {
 
             InitializeComponent();
@@ -70,9 +65,6 @@ namespace projectzarina {
             }
 
         }
-       
-      
-
 
 
 
@@ -124,10 +116,6 @@ namespace projectzarina {
                             MainWindow.Show();
                             this.Close();
                         }
-                        else
-                        {
-                            ErrorBox.Text = "API is offline";
-                        }
                     }
                     catch (Exception)
                     {
@@ -141,7 +129,7 @@ namespace projectzarina {
             }
 
         }
-
+        
 
         private async void postLogin(string user, string passwd) {
             string url = "https://zarina.visualstatic.net/api/auth/signin?application=" + application;
@@ -158,9 +146,10 @@ namespace projectzarina {
 
             dynamic json = JsonConvert.DeserializeObject(result);
 
-            if(json.success == "true") {
+            if (json.success == "true")
+            {
                 string token = json.unique_token;
-                
+
                 var SettingXML = new Settings();
                 SettingXML.updateValue("token", token);
                 Console.WriteLine("token: " + token);
@@ -168,11 +157,10 @@ namespace projectzarina {
                 MainWindow.Show();
                 this.Close();
 
-            } else {
-                string feedback = json.errorMessage;
-                ErrorBox.Text = "API is offline";
             }
-
+            else{
+                string feedback = json.errorMessage;
+            }
             // {"success":"true","message":"Valid login attempt.","unique_token":"65b476da358aaad8a078c8bc13d7a74d","valid_until":"2021-06-21","created":"2021-05-22"}
         }
 
@@ -196,5 +184,8 @@ namespace projectzarina {
         private void MinimizeButton_Click(object sender, RoutedEventArgs e) {
             WindowState = WindowState.Minimized;
         }
+      
+
+
     }
 }

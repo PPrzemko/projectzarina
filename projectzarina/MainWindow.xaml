@@ -62,7 +62,7 @@
         </Grid>
 
         <Button x:Name="nameassignPath" Content="Assign Path" HorizontalAlignment="Left" Margin="194,89,0,0" Grid.Row="1" VerticalAlignment="Top" Width="74" Click="assignPath" Foreground="White" Background="{x:Null}" BorderBrush="White" />
-        <TextBox x:Name="TextScreenshotPath" HorizontalAlignment="Left" Height="38" Margin="331,84,0,0" Grid.Row="1" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="439" Background="#1B1B1B" Foreground="White" IsEnabled="False"/>
+        <TextBox x:Name="TextScreenshotPath" HorizontalAlignment="Left" Height="38" Margin="331,84,0,0" Grid.Row="1" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="439" Background="#1B1B1B" Foreground="White" IsEnabled="True"/>
         <Button x:Name="Button_SaveSettings" Content="SaveSettings" HorizontalAlignment="Left" Margin="694,177,0,0" Grid.Row="1" VerticalAlignment="Top" Width="76" Click="saveScreenshotPath" Foreground="White" Background="{x:Null}" BorderBrush="White"/>
         <Label x:Name="SaveMessage" Content="" HorizontalAlignment="Left" Margin="331,127,0,0" Grid.Row="1" VerticalAlignment="Top" Foreground="White" Width="439"/>
         <Button Content="Logout" HorizontalAlignment="Left" Margin="797,23,0,0" Grid.Row="1" VerticalAlignment="Top" Width="74" Click="logoutButton" Foreground="White" Background="{x:Null}" BorderBrush="White"/>

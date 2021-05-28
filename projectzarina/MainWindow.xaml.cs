@@ -92,7 +92,7 @@ namespace projectzarina {
         private void assignPath(object sender, RoutedEventArgs e) {
             System.Windows.Forms.FolderBrowserDialog openFileDlg = new System.Windows.Forms.FolderBrowserDialog();
 
-            openFileDlg.SelectedPath = @"C:\Program Files (x86)\Steam\userdata\226359406\760\remote\381210\screenshots";
+            //openFileDlg.SelectedPath = @"C:\Program Files (x86)\Steam\userdata\226359406\760\remote\381210\screenshots";
             openFileDlg.ShowDialog();
             var result = openFileDlg.SelectedPath;
             TextScreenshotPath.Text = result;
@@ -123,8 +123,10 @@ namespace projectzarina {
                 SaveMessage.Content = "Path has been updated. Please restart Application";
             }
             else{
-                SaveMessage.Content = "There is nothing to save";
+                SaveMessage.Content = "There is nothing to save1";
             }
+
+
             if (NotificationCheckbox.IsChecked == true & XMLNotification == 0){
                 SettingXML.updateValue("Notification", "1");
                 if (currentXMLpath != screenshotPath){
@@ -134,21 +136,21 @@ namespace projectzarina {
                     SaveMessage.Content = "You will now receive Notification.";
                 }
                    
-            }
-            else if (NotificationCheckbox.IsChecked == false & XMLNotification == 1){
+            }else if (NotificationCheckbox.IsChecked == false & XMLNotification == 1){
                 SettingXML.updateValue("Notification", "0");
-                if (currentXMLpath != screenshotPath)
-                {
-                    SaveMessage.Content = "You will no longer receive Notification. Path has been updated. Please restart Application";
-                }
-                else
-                {
-                    SaveMessage.Content = "You will no longer receive Notification.";
-                }
+                    if (currentXMLpath != screenshotPath)
+                    {
+                        SaveMessage.Content = "You will no longer receive Notification. Path has been updated. Please restart Application";
+                    }
+                    else
+                    {
+                        SaveMessage.Content = "You will no longer receive Notification.";
+                    }
             }
-            else{
-                SaveMessage.Content = "There is nothing to save";
-            }
+            /* else if(currentXMLpath != screenshotPath)
+            {
+                SaveMessage.Content = "There is nothing to save2";
+            } */
 
 
 
