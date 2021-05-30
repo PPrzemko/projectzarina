@@ -66,7 +66,7 @@
         <Button x:Name="Button_SaveSettings" Content="SaveSettings" HorizontalAlignment="Left" Margin="694,177,0,0" Grid.Row="1" VerticalAlignment="Top" Width="76" Click="saveScreenshotPath" Foreground="White" Background="{x:Null}" BorderBrush="White"/>
         <Label x:Name="SaveMessage" Content="" HorizontalAlignment="Left" Margin="331,127,0,0" Grid.Row="1" VerticalAlignment="Top" Foreground="White" Width="439"/>
         <Button Content="Logout" HorizontalAlignment="Left" Margin="797,23,0,0" Grid.Row="1" VerticalAlignment="Top" Width="74" Click="logoutButton" Foreground="White" Background="{x:Null}" BorderBrush="White"/>
-        <TextBox x:Name="test" HorizontalAlignment="Left" Height="189" Margin="231,219,0,0" Grid.Row="1" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="572" Foreground="White" Background="{x:Null}" BorderBrush="White"/>
+        <TextBox x:Name="test" HorizontalAlignment="Left" Height="138" Margin="304,270,0,0" Grid.Row="1" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="499" Foreground="White" Background="{x:Null}" BorderBrush="White"/>
         <CheckBox x:Name="NotificationCheckbox" Content="Notifications" HorizontalAlignment="Left" Margin="194,133,0,0" Grid.Row="1" VerticalAlignment="Top" Height="20" Width="91" Foreground="White"/>
 
 

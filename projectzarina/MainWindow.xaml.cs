@@ -18,43 +18,51 @@ using Newtonsoft.Json;
 using Microsoft.Toolkit.Uwp.Notifications;
 
 namespace projectzarina {
-
+    
     public partial class MainWindow : Window {
 
         protected string application = "MdhfE1eJ2L59n3mG3EPWQ23CIw4C5aUH";
         protected bool restartRequired = false;
 
+
+        /// <summary>
+        /// MainWindow
+        /// </summary>
         public MainWindow() {
+            try
+            {
+                InitializeComponent();
 
-            InitializeComponent();
+                // get ScreenshotPath
+                var SettingXML = new Settings();
+                int Notification = Int16.Parse(SettingXML.getValue("Notification"));
+                if (Notification == 1)
+                {
+                    NotificationCheckbox.IsChecked = true;
+                }
 
-            // get ScreenshotPath
-            var SettingXML = new Settings();
-            
+                createFSW();
 
-            int Notification = Int16.Parse(SettingXML.getValue("Notification"));
-            if (Notification == 1){
-                NotificationCheckbox.IsChecked = true;
-            }
-
-
-
-            createFSW();
-
+            }catch (Exception ex){
+                this.LogError(ex);}
         }
 
+
+      /// <summary>
+      /// 
+      /// </summary>
         private void createFSW() {
-            
-            Settings SettingXML = new Settings();
+            try{
+                Settings SettingXML = new Settings();
 
-            var screenshotPath = SettingXML.getValue("ScreenshotPath");
-            string path = screenshotPath + @"\";
-            TextScreenshotPath.Text = path;
+                var screenshotPath = SettingXML.getValue("ScreenshotPath");
+                string path = screenshotPath + @"\";
+                TextScreenshotPath.Text = path;
 
-            Console.WriteLine("first check of scP: " + path);
+                Console.WriteLine("first check of scP: " + path);
             
-            // listing on path for new file. try for wrong path argument
-            try {
+                // listing on path for new file. try for wrong path argument
+            
                 FileSystemWatcher watcher = new FileSystemWatcher(path);
 
                 watcher.Filter = "*.jpg";
@@ -62,82 +70,113 @@ namespace projectzarina {
 
                 watcher.EnableRaisingEvents = true;
 
-                Console.WriteLine("new fsw on: " + path);
-            } catch (System.ArgumentException e) {
-                Console.WriteLine(e.Message);
+                // DEBUG
+                // Console.WriteLine("new fsw on: " + path);
+            } catch (System.ArgumentException ex) {
+                // DEBUG
+                // Console.WriteLine(ex.Message);
+                this.LogError(ex);
             }
 
 
         }
 
 
-        DateTime lastRead = DateTime.MinValue;
+
+       
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        //DateTime lastRead = DateTime.MinValue;
         public void OnCreated(object sender, FileSystemEventArgs e) {
+            try { 
+                if(this.restartRequired) return;
             
-            if(this.restartRequired) return;
-            
 
-            Settings xml = new Settings();
+                Settings xml = new Settings();
 
-            string filename = System.IO.Path.GetFileName(e.FullPath);
-            Console.WriteLine("Erstellt: " + filename);
-            Console.WriteLine("FullPath: " + e.FullPath);
+                string filename = System.IO.Path.GetFileName(e.FullPath);
+                Console.WriteLine("Erstellt: " + filename);
+                Console.WriteLine("FullPath: " + e.FullPath);
 
-            string fullPath = e.FullPath;
-            uploadImage(filename, fullPath);
-
-            // else discard the (duplicated) OnChanged event            
+                string fullPath = e.FullPath;
+                uploadImage(filename, fullPath);
+            }catch (Exception ex){
+                this.LogError(ex);
+            }
         }
 
+        /// <summary>
+        /// Set Path function on MainWindow
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void assignPath(object sender, RoutedEventArgs e) {
-            System.Windows.Forms.FolderBrowserDialog openFileDlg = new System.Windows.Forms.FolderBrowserDialog();
+            try{
+                System.Windows.Forms.FolderBrowserDialog openFileDlg = new System.Windows.Forms.FolderBrowserDialog();
 
-            //openFileDlg.SelectedPath = @"C:\Program Files (x86)\Steam\userdata\226359406\760\remote\381210\screenshots";
-            openFileDlg.ShowDialog();
-            var result = openFileDlg.SelectedPath;
-            TextScreenshotPath.Text = result;
+                //openFileDlg.SelectedPath = @"C:\Program Files (x86)\Steam\userdata\226359406\760\remote\381210\screenshots";
+                openFileDlg.ShowDialog();
+                var result = openFileDlg.SelectedPath;
+                TextScreenshotPath.Text = result;
+            }catch(Exception ex){ 
+                this.LogError(ex);}
         }
 
-        /**
-         * Button to save the path for the Steam screenshots
-         */
-        private void saveScreenshotPath(object sender, RoutedEventArgs e) {
-            var SettingXML = new Settings();
-            int XMLNotification = Int16.Parse(SettingXML.getValue("Notification"));
-            string currentXMLpath = SettingXML.getValue("ScreenshotPath") + @"\";
+        /// <summary>
+        /// Saves ScreenshotPath and notificationconfig to XML
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void saveScreenshotPath(object sender, RoutedEventArgs e)
+        {
+            try{ 
+                var SettingXML = new Settings();
+                int XMLNotification = Int16.Parse(SettingXML.getValue("Notification"));
+                string currentXMLpath = SettingXML.getValue("ScreenshotPath") + @"\";
 
-            string screenshotPath = TextScreenshotPath.Text;
+                string screenshotPath = TextScreenshotPath.Text;
 
-            /*
-             * Save Screenshot path and Notification status. set output accordingly
-             * 
-             * 
-             */
-            if (currentXMLpath != screenshotPath){
-                SettingXML.updateValue("ScreenshotPath", screenshotPath);
-                createFSW();
-                this.restartRequired = true;
-                Button_SaveSettings.IsEnabled = false;
-                nameassignPath.IsEnabled = false;
-                NotificationCheckbox.IsEnabled = false;
-                SaveMessage.Content = "Path has been updated. Please restart Application";
-            }
-            else{
-                SaveMessage.Content = "There is nothing to save1";
-            }
-
-
-            if (NotificationCheckbox.IsChecked == true & XMLNotification == 0){
-                SettingXML.updateValue("Notification", "1");
-                if (currentXMLpath != screenshotPath){
-                    SaveMessage.Content = "You will now receive Notification. Path has been updated. Please restart Application";
+                /*
+                    * Save Screenshot path and Notification status. set output accordingly
+                    * 
+                    * 
+                    */
+                if (currentXMLpath != screenshotPath)
+                {
+                    SettingXML.updateValue("ScreenshotPath", screenshotPath);
+                    createFSW();
+                    this.restartRequired = true;
+                    Button_SaveSettings.IsEnabled = false;
+                    nameassignPath.IsEnabled = false;
+                    NotificationCheckbox.IsEnabled = false;
+                    SaveMessage.Content = "Path has been updated. Please restart Application";
                 }
-                else{
-                    SaveMessage.Content = "You will now receive Notification.";
+                else
+                {
+                    SaveMessage.Content = "There is nothing to save1";
                 }
-                   
-            }else if (NotificationCheckbox.IsChecked == false & XMLNotification == 1){
-                SettingXML.updateValue("Notification", "0");
+
+
+                if (NotificationCheckbox.IsChecked == true & XMLNotification == 0)
+                {
+                    SettingXML.updateValue("Notification", "1");
+                    if (currentXMLpath != screenshotPath)
+                    {
+                        SaveMessage.Content = "You will now receive Notification. Path has been updated. Please restart Application";
+                    }
+                    else
+                    {
+                        SaveMessage.Content = "You will now receive Notification.";
+                    }
+
+                }
+                else if (NotificationCheckbox.IsChecked == false & XMLNotification == 1)
+                {
+                    SettingXML.updateValue("Notification", "0");
                     if (currentXMLpath != screenshotPath)
                     {
                         SaveMessage.Content = "You will no longer receive Notification. Path has been updated. Please restart Application";
@@ -146,32 +185,29 @@ namespace projectzarina {
                     {
                         SaveMessage.Content = "You will no longer receive Notification.";
                     }
-            }
-            /* else if(currentXMLpath != screenshotPath)
-            {
-                SaveMessage.Content = "There is nothing to save2";
-            } */
+                }
+                    /* else if(currentXMLpath != screenshotPath)
+                    {
+                        SaveMessage.Content = "There is nothing to save2";
+                    } */
 
 
-
-
-
-
-
-
-
-
-
+            }catch (Exception ex){
+            this.LogError(ex);}
         }
-
-        
-
-
-        /**
-         * Autmatic Image upload after FSW
-         */
-        private async void uploadImage(string file, string fullPath) {
             
+
+
+
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="file"> filename from OnCreated(from FSW) </param>
+        /// <param name="fullPath"> Gets Path from OnCreated</param>
+        private async void uploadImage(string file, string fullPath) {
+            try{ 
             string url = "https://zarina.visualstatic.net/api/forms/upload?application=" + application;
 
             var config = new Settings();
@@ -217,46 +253,62 @@ namespace projectzarina {
                     .AddText(file + " has been uploaded")
                     .Show();
             }
-            
+
+            string time = DateTime.Now.ToString("HH:mm tt");
+
+
+            await test.Dispatcher.BeginInvoke((Action)(() => test.AppendText( time + ":  " + file + " has been submitted to your statistics" + Environment.NewLine)));
+            await test.Dispatcher.BeginInvoke((Action)(() => test.ScrollToEnd()));
+            }catch (Exception ex){
+                this.LogError(ex);}
         }
 
-       
 
 
 
 
-        /**
-         * Button to logout and delete Session Token in XML and DB
-         */
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void logoutButton(object sender, RoutedEventArgs e) {
             logout();
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="url">args will be passed when starting this program</param>
         private async void logout() {
-            var SettingXML = new Settings();
-            string token = SettingXML.getValue("token");
+            try{
+                var SettingXML = new Settings();
+                string token = SettingXML.getValue("token");
 
-            if(token != "") {
+                if(token != "") {
 
-                // delete token in db
-                string url = "https://zarina.visualstatic.net/api/auth/destroy?application=" + application;
+                    // delete token in db
+                    string url = "https://zarina.visualstatic.net/api/auth/destroy?application=" + application;
 
-                HttpClient client = new HttpClient();
-                var values = new Dictionary<string, string> {
-                    { "token", token },
-                };
+                    HttpClient client = new HttpClient();
+                    var values = new Dictionary<string, string> {
+                        { "token", token },
+                    };
 
-                var content = new FormUrlEncodedContent(values);
-                await client.PostAsync(url, content);
+                    var content = new FormUrlEncodedContent(values);
+                    await client.PostAsync(url, content);
 
-                // Weiterleitung auf Login & Token in XML löschen
-                SettingXML.updateValue("token", "");
+                    // Weiterleitung auf Login & Token in XML löschen
+                    SettingXML.updateValue("token", "");
 
-                var LoginScreen = new LoginScreen();
-                LoginScreen.Show();
-                this.Close();
+                    var LoginScreen = new LoginScreen();
+                    LoginScreen.Show();
+                    this.Close();
 
-            }
+                }
+            }catch (Exception ex){
+                this.LogError(ex);}
         }
 
 
@@ -264,25 +316,58 @@ namespace projectzarina {
 
         // Dragon Drop Funktion
         private void Grid_MouseDown(object sender, MouseButtonEventArgs e) {
-            if (e.LeftButton == MouseButtonState.Pressed) {
-                DragMove();
-            }
-
+            try{
+                if (e.LeftButton == MouseButtonState.Pressed) {
+                    DragMove();
+                }
+            }catch (Exception ex){
+                this.LogError(ex);}
         }
 
         // Exit Button
         private void ExitProgramm_Click(object sender, RoutedEventArgs e) {
-            this.Close();
+            try{
+                this.Close();
+            }catch (Exception ex){
+                this.LogError(ex);}
         }
 
         // Minimize Button
         private void MinimizeButton_Click(object sender, RoutedEventArgs e) {
-            WindowState = WindowState.Minimized;
+            try{
+                WindowState = WindowState.Minimized;
+             }catch (Exception ex){
+                this.LogError(ex);}
         }
+        
 
-        
-        
-        
+        /// <summary>
+        /// catches every exception and logs it to a file
+        /// </summary>
+        /// <param name="ex"> handed from any catch Exception</param>
+        private void LogError(Exception ex)
+        {
+            string message = string.Format("Time: {0}", DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss tt"));
+            message += Environment.NewLine;
+            message += "-----------------------------------------------------------";
+            message += Environment.NewLine;
+            message += string.Format("Message: {0}", ex.Message);
+            message += Environment.NewLine;
+            message += string.Format("StackTrace: {0}", ex.StackTrace);
+            message += Environment.NewLine;
+            message += string.Format("Source: {0}", ex.Source);
+            message += Environment.NewLine;
+            message += string.Format("TargetSite: {0}", ex.TargetSite.ToString());
+            message += Environment.NewLine;
+            message += "-----------------------------------------------------------";
+            message += Environment.NewLine;
+            string path = @"ErrorLog.txt";
+            using (StreamWriter writer = new StreamWriter(path, true))
+            {
+                writer.WriteLine(message);
+                writer.Close();
+            }
+        }
 
 
 
