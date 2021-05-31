@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:projectzarina"
         mc:Ignorable="d"
-        Title="LoginScreen" Height="400" Width="900"
+        Title="LoginScreen" Height="357" Width="741"
         WindowStyle="None"
         ResizeMode="NoResize"
         Background="#2B2B2B"
@@ -89,20 +89,20 @@
                        HorizontalAlignment="Center"
                        FontFamily="fonts/#Roboto-Regular" Margin="27,3,7,4" Width="41" Click="ExitProgramm_Click"
                        />
-           
+
 
         </Grid>
 
-        
 
-            <!--  this is not a good place for text block.
+
+        <!--  this is not a good place for text block.
           the text block is beneath the rectangle  
           so it would not be seen  -->
-            <!--<TextBlock Grid.Column="1"  Text="Some Text"/>-->
+        <!--<TextBlock Grid.Column="1"  Text="Some Text"/>-->
 
-            
 
-     
+
+
 
 
 
@@ -111,21 +111,34 @@
 
 
         <!-- small adjustment to pic with margin-->
-        <Grid Grid.Row="1" Grid.ColumnSpan="2" Margin="0,0,394,0">
+        <Grid Grid.Row="1" Grid.ColumnSpan="2" Margin="0,0,276,0">
             <Grid.Background>
                 <!-- BackgroundImageBlightCut-->
                 <ImageBrush ImageSource="/images/backgroundnew.png" Stretch="UniformToFill"></ImageBrush>
             </Grid.Background>
-            <StackPanel Grid.Row="2"
+            <StackPanel
                 VerticalAlignment="Center"
-                        Margin="50,0,50,0">
+                        Margin="55,56,0,26" Height="282">
                 <StackPanel>
                     <TextBlock
                         Foreground="white"
                         FontSize="35"
                         FontWeight="Medium"
                         FontFamily="/projectzarina;component/fonts/#Poppins"
-                    ><Span Foreground="#FFF3F3F3"><Run Text="The Largest"/></Span><LineBreak/><Span Foreground="#FFF3F3F3"><Run Text="Community"/></Span><LineBreak/><Span Foreground="#FFF3F3F3"><Run Text="Statistics DB"/></Span></TextBlock>
+                        Text="The Largest"></TextBlock>
+                    <TextBlock
+                        Margin="0,-16,0,-15"
+                        Foreground="white"
+                        FontSize="35"
+                        FontWeight="Medium"
+                        FontFamily="/projectzarina;component/fonts/#Poppins"
+                        Text="Community"></TextBlock>
+                    <TextBlock
+                        Foreground="white"
+                        FontSize="35"
+                        FontWeight="Medium"
+                        FontFamily="/projectzarina;component/fonts/#Poppins"
+                        Text="Statistics DB"></TextBlock>
 
                     <TextBlock
                         Foreground="white"
@@ -133,7 +146,7 @@
                         FontWeight="Medium"
                         FontFamily="/projectzarina;component/fonts/#Roboto Medium"
                         Margin="0,10,0,0"
-                    ><Run Foreground="#FFD8C389" FontSize="12" Text="SOFTWARE IS UP TO "/><Run Foreground="#FFD8C389" Text="DATE"/></TextBlock>
+                    ><Run Foreground="#FFD8C389" FontSize="12" Text="SOFTWARE IS UP TO "/><Run Foreground="#FFD8C389" FontSize="16" Text="DATE"/></TextBlock>
 
 
                     <TextBlock
@@ -142,7 +155,7 @@
                         FontWeight="Medium"
                         FontFamily="/projectzarina;component/fonts/#Roboto"
                         TextWrapping="Wrap"
-                        Margin="0,10,0,0"
+                        Margin="0,10,50,0"
                     ><Span Foreground="#FF9F9F9F"><Run Text="Statistics collector made for the game &quot;Dead by Daylight&quot;.  Uploading end screen images allows the processor to automatically read all necessary information in order to save every perks, addons and items used into a database for further analysis."/></Span></TextBlock>
                     <TextBlock x:Name="ErrorBox" Text=""
                         Foreground="#E84225"
@@ -167,37 +180,56 @@
               Grid.RowSpan="2"
               Margin="0,26,0,0">
 
-            <StackPanel>
+            <StackPanel Margin="69,0,0,0">
                 <TextBlock
-                Margin="0,0,0,0"
+                Margin="0,50,0,15"
                 Foreground="#D8C389"
                 FontSize="25"
-                FontWeight="Medium"
                 FontFamily="fonts/#Roboto-Regular"
                 TextAlignment="Center"
-                Text="Username or Email"/>
-                <TextBox x:Name="emailorusername" Margin="141,10,144,0" Height="21"
+                Text="SIGN IN"
+                HorizontalAlignment="Left"
+                />
+                <TextBlock
+                Margin="0,0,0,5"
+                Foreground="#8A8A8A"
+                HorizontalAlignment="Left"
+                FontSize="12"
+                FontWeight="Medium"
+                FontFamily="fonts/#Roboto-Regular"
+                TextAlignment="Center" Height="16"
+                ><Span Foreground="#FF8A8A8A"><Run Text="USERNAME OR E-MAIL"/></Span><LineBreak/><Run Text=""/></TextBlock>
+                <TextBox x:Name="emailorusername" Margin="0,0,0,20" Height="21"
                          Background="#1B1B1B"
                          Foreground="White"
+                         HorizontalAlignment="Left" Width="157"
                          />
 
 
 
                 <TextBlock
-                Margin="0,30,0,0"
-                Foreground="#D8C389"
-                FontSize="25"
+                Margin="0,0,0,5"
+                Foreground="#8A8A8A"
                 FontWeight="Medium"
                 FontFamily="fonts/#Roboto-Regular"
-                
+                HorizontalAlignment="Left"
                 TextAlignment="Center"
-                Text="Password"/>
-                <PasswordBox  x:Name="password" Height="21" Margin="141,10,144,0"
+                Text="PASSWORD"/>
+                <PasswordBox  x:Name="password" Height="25" Margin="0,0,0,0"
                              Background="#1B1B1B"
                              Foreground="White"
+                              HorizontalAlignment="Left" Width="157"
+                              
                              />
-                <Button IsDefault="True" Content="Sign In" Margin="140,50" VerticalAlignment="Top" Width="169" Click="Button_Click" Background="#FF93855B" Foreground="White" Height="42" FontSize="20" FontWeight="Bold"/>
-
+                <Button IsDefault="True" Content="SIGN IN" Margin="0,20,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Click="Button_Click" Background="#FF93855B" Foreground="Black" Height="31" FontWeight="Bold" Width="157"/>
+                <TextBlock
+                Margin="0,20,0,0"
+                Foreground="#8A8A8A"
+                FontWeight="Medium"
+                FontFamily="fonts/#Roboto-Regular"
+                HorizontalAlignment="Left"
+                TextAlignment="Center"
+                Text="CONTINUE AS GUEST" Width="157" FontSize="10"/>
             </StackPanel>
 
         </Grid>

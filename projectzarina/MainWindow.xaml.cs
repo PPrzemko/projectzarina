@@ -208,57 +208,57 @@ namespace projectzarina {
         /// <param name="fullPath"> Gets Path from OnCreated</param>
         private async void uploadImage(string file, string fullPath) {
             try{ 
-            string url = "https://zarina.visualstatic.net/api/forms/upload?application=" + application;
+                string url = "https://zarina.visualstatic.net/api/forms/upload?application=" + application;
 
-            var config = new Settings();
-            string token = config.getValue("token");
+                var config = new Settings();
+                string token = config.getValue("token");
 
 
-            // read file into upfilebytes array 
+                // read file into upfilebytes array 
 
-            Console.WriteLine("token: " + token);
-            Console.WriteLine("FullPath 2: " + fullPath);
+                Console.WriteLine("token: " + token);
+                Console.WriteLine("FullPath 2: " + fullPath);
                 
-            var upfilebytes = File.ReadAllBytes(fullPath);
+                var upfilebytes = File.ReadAllBytes(fullPath);
 
-            // create new HttpClient combine picture and string into single content "codeproject.com/Questions/1228835/How-to-post-file-and-data-to-api-using-httpclient"
-            HttpClient client = new HttpClient();
-            MultipartFormDataContent content = new MultipartFormDataContent();
-            ByteArrayContent baContent = new ByteArrayContent(upfilebytes);
-            StringContent stringContent = new StringContent(token);
+                // create new HttpClient combine picture and string into single content "codeproject.com/Questions/1228835/How-to-post-file-and-data-to-api-using-httpclient"
+                HttpClient client = new HttpClient();
+                MultipartFormDataContent content = new MultipartFormDataContent();
+                ByteArrayContent baContent = new ByteArrayContent(upfilebytes);
+                StringContent stringContent = new StringContent(token);
 
-            content.Add(baContent, "file", "uploadedImage.jpg");
-            content.Add(stringContent, "token");
-
-
-            // upload MultipartFormDataContent content async and store response in response var
-            var response = await client.PostAsync(url, content);
-            Console.WriteLine(response);
-            // read response result as a string async into json var
-            var result = response.Content.ReadAsStringAsync().Result;
-
-            // DEBUG
-            // Console.WriteLine(result);
+                content.Add(baContent, "file", "uploadedImage.jpg");
+                content.Add(stringContent, "token");
 
 
+                // upload MultipartFormDataContent content async and store response in response var
+                var response = await client.PostAsync(url, content);
+                Console.WriteLine(response);
+                // read response result as a string async into json var
+                var result = response.Content.ReadAsStringAsync().Result;
 
-            // Windows Notification
-
-            int notification = Int16.Parse(config.getValue("Notification"));
-            if(notification == 1) {
-                new ToastContentBuilder()
-                    .AddArgument("action", "viewConversation")
-                    .AddArgument("conversationId", 9813)
-                    .AddText("Your Stats have been updated")
-                    .AddText(file + " has been uploaded")
-                    .Show();
-            }
-
-            string time = DateTime.Now.ToString("HH:mm tt");
+                // DEBUG
+                // Console.WriteLine(result);
 
 
-            await test.Dispatcher.BeginInvoke((Action)(() => test.AppendText( time + ":  " + file + " has been submitted to your statistics" + Environment.NewLine)));
-            await test.Dispatcher.BeginInvoke((Action)(() => test.ScrollToEnd()));
+
+                // Windows Notification
+
+                int notification = Int16.Parse(config.getValue("Notification"));
+                if(notification == 1) {
+                    new ToastContentBuilder()
+                        .AddArgument("action", "viewConversation")
+                        .AddArgument("conversationId", 9813)
+                        .AddText("Your Stats have been updated")
+                        .AddText(file + " has been uploaded")
+                        .Show();
+                }
+
+                string time = DateTime.Now.ToString("HH:mm tt");
+
+
+                await test.Dispatcher.BeginInvoke((Action)(() => test.AppendText( time + ":  " + file + " has been submitted to your statistics" + Environment.NewLine)));
+                await test.Dispatcher.BeginInvoke((Action)(() => test.ScrollToEnd()));
             }catch (Exception ex){
                 this.LogError(ex);}
         }
