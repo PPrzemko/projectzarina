@@ -88,8 +88,8 @@ namespace projectzarina {
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender"> source of event.</param>
+        /// <param name="e"> contains event data.</param>
         //DateTime lastRead = DateTime.MinValue;
         public void OnCreated(object sender, FileSystemEventArgs e) {
             try { 

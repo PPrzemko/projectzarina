@@ -136,6 +136,7 @@
     </EmbeddedResource>
     <Resource Include="fonts\Roboto-Medium.ttf" />
     <Resource Include="fonts\Roboto-Regular.ttf" />
+    <Resource Include="fonts\Poppins-Bold.ttf" />
     <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -178,6 +179,9 @@
     <PackageReference Include="Newtonsoft.Json">
       <Version>13.0.1</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\backgroundnew.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
