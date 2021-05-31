@@ -4,9 +4,5 @@
              xmlns:local="clr-namespace:projectzarina"
              StartupUri="LoginScreen.xaml">
     <Application.Resources>
-
-        
-        
-
     </Application.Resources>
 </Application>

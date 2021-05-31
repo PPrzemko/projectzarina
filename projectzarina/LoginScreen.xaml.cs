@@ -238,6 +238,9 @@ namespace projectzarina {
             }
         }
 
-      
+        private void CONTINUEASGUEST(object sender, RoutedEventArgs e)
+        {
+            Console.WriteLine("test");
+        }
     }
 }
