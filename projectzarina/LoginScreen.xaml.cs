@@ -156,6 +156,8 @@ namespace projectzarina {
                 var response = await client.PostAsync(url, content);
                 var result = response.Content.ReadAsStringAsync().Result;
 
+
+                // try catch server fehler 500
                 dynamic json = JsonConvert.DeserializeObject(result);
 
                 if (json.success == "true")

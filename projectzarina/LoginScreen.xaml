@@ -180,7 +180,7 @@
               Grid.RowSpan="2"
               Margin="0,26,0,0">
 
-            <StackPanel Margin="69,0,0,0">
+            <StackPanel Margin="110,0,0,0">
                 <TextBlock
                 Margin="0,50,0,15"
                 Foreground="#D8C389"
@@ -199,7 +199,7 @@
                 FontFamily="fonts/#Roboto-Regular"
                 TextAlignment="Center" Height="16"
                 ><Span Foreground="#FF8A8A8A"><Run Text="USERNAME OR E-MAIL"/></Span><LineBreak/><Run Text=""/></TextBlock>
-                <TextBox x:Name="emailorusername" Margin="0,0,0,20" Height="21"
+                <TextBox x:Name="emailorusername" Margin="0,0,0,20" 
                          Background="#1B1B1B"
                          Foreground="White"
                          HorizontalAlignment="Left" Width="157"
@@ -215,7 +215,7 @@
                 HorizontalAlignment="Left"
                 TextAlignment="Center"
                 Text="PASSWORD"/>
-                <PasswordBox  x:Name="password" Height="25" Margin="0,0,0,0"
+                <PasswordBox  x:Name="password" Margin="0,0,0,0"
                              Background="#1B1B1B"
                              Foreground="White"
                               HorizontalAlignment="Left" Width="157"
