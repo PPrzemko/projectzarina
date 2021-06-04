@@ -67,7 +67,7 @@ namespace projectzarina {
                     if(assemblyVersion == currentVersion){
                         UpdateStatus.Text = "SOFTWARE IS UP TO DATE";
                     }
-                    else{
+                    else if (assemblyVersion != currentVersion){
 
 
 
@@ -77,6 +77,9 @@ namespace projectzarina {
 
 
 
+                    }
+                    else {
+                        UpdateStatus.Text = "SOFTWARE VERSION COULD NOT BE CHECKED";
                     }
                 }
                 else{
@@ -91,7 +94,7 @@ namespace projectzarina {
                     if(assemblyVersion == currentVersion){
                         UpdateStatus.Text = "SOFTWARE IS UP TO DATE";
                     }
-                    else{
+                    else if(assemblyVersion != currentVersion){
 
 
 
@@ -104,6 +107,9 @@ namespace projectzarina {
 
 
 
+                    }
+                    else {
+                        UpdateStatus.Text = "SOFTWARE VERSION COULD NOT BE CHECKED";
                     }
                 }
 
