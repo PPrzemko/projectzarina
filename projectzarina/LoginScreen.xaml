@@ -140,13 +140,12 @@
                         FontFamily="/projectzarina;component/fonts/#Poppins"
                         Text="Statistics DB"></TextBlock>
 
-                    <TextBlock
-                        Foreground="white"
-                        FontSize="14"
+                    <TextBlock x:Name="UpdateStatus"
                         FontWeight="Medium"
                         FontFamily="/projectzarina;component/fonts/#Roboto Medium"
                         Margin="0,10,0,0"
-                    ><Run Foreground="#FFD8C389" FontSize="12" Text="SOFTWARE IS UP TO "/><Run Foreground="#FFD8C389" FontSize="16" Text="DATE"/></TextBlock>
+                        Foreground="#FFD8C389" FontSize="14" Text="" />
+
 
 
                     <TextBlock

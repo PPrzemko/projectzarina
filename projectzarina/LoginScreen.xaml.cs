@@ -17,6 +17,7 @@ namespace projectzarina {
     public partial class LoginScreen : Window {
 
         protected string application = "MdhfE1eJ2L59n3mG3EPWQ23CIw4C5aUH";
+        protected string assemblyVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
         public LoginScreen() {
             try
             {
@@ -24,22 +25,7 @@ namespace projectzarina {
 
                 // Checks if user has valid token in UserSettings.xml
                 validateLogin();
-
-                // connection check no longer working because of Windows Defender detecting it
-                /*       
-                HttpWebRequest request = (HttpWebRequest) WebRequest.Create("https://bing.com");
-                request.Timeout = 15000;
-                request.Method = "HEAD";
-                try {
-                    using(HttpWebResponse response = (HttpWebResponse) request.GetResponse()) {
-                        // Funktioniert.
-                    }
-                } catch(WebException) {
-                    ErrorBox.Text = "Seems like our servers are down. Check your internet connection or contact support";
-                }
-                */
-
-
+                var SettingXML = new Settings();
 
                 /*
                  * Checks for UserSettings.xml creates new one if there is none
@@ -55,15 +41,97 @@ namespace projectzarina {
                                                  new XElement("SettingData",
                                                  new XElement("token"),
                                                  new XElement("ScreenshotPath"),
-                                                 new XElement("Notification")
+                                                 new XElement("Notification"),
+                                                 new XElement("InDev")
                                                  ));
                     doc123.Save("UserSettings.xml");
 
-                    var SettingXML = new Settings();
+                   
                     SettingXML.updateValue("Notification", "1");
-
+                    SettingXML.updateValue("InDev", "0");
                 }
-            }catch (Exception ex){
+
+                
+                string url = string.Empty;
+                int InDevStatus = Int16.Parse(SettingXML.getValue("InDev"));
+                if( InDevStatus == 1){
+                    url = "https://update.visualstatic.net/api/zarina/indev";
+                    string currentVersion = string.Empty;
+                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+                    using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                    using (Stream stream = response.GetResponseStream())
+                    using (StreamReader reader = new StreamReader(stream))
+                    {
+                        currentVersion = reader.ReadToEnd();
+                    }
+                    if(assemblyVersion == currentVersion){
+                        UpdateStatus.Text = "SOFTWARE IS UP TO DATE";
+                    }
+                    else{
+
+
+
+
+
+
+
+
+
+                    }
+                }
+                else{
+                    url = "https://update.visualstatic.net/api/zarina/stable";
+                    string currentVersion = string.Empty;
+                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+                    using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                    using (Stream stream = response.GetResponseStream())
+                    using (StreamReader reader = new StreamReader(stream)){
+                        currentVersion = reader.ReadToEnd();
+                    }
+                    if(assemblyVersion == currentVersion){
+                        UpdateStatus.Text = "SOFTWARE IS UP TO DATE";
+                    }
+                    else{
+
+
+
+
+
+
+
+
+
+
+
+
+                    }
+                }
+
+
+
+
+                // relpace update 
+                // File.Move("projectzarina.exe", "projectzarina.tmp");
+                // File.Delete("projectzarina.tmp");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            }
+            catch (Exception ex){
                     this.LogError(ex);}
 
         }
