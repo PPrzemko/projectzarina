@@ -202,7 +202,7 @@ namespace projectzarina {
 
 
         /// <summary>
-        /// 
+        /// Image Upload
         /// </summary>
         /// <param name="file"> filename from OnCreated(from FSW) </param>
         /// <param name="fullPath"> Gets Path from OnCreated</param>
@@ -256,8 +256,11 @@ namespace projectzarina {
 
                 string time = DateTime.Now.ToString("HH:mm tt");
 
-
+                await test.Dispatcher.BeginInvoke((Action)(() => test.AppendText("-----------------------------" + Environment.NewLine)));
                 await test.Dispatcher.BeginInvoke((Action)(() => test.AppendText( time + ":  " + file + " has been submitted to your statistics" + Environment.NewLine)));
+                // DEBUG
+                await test.Dispatcher.BeginInvoke((Action)(() => test.AppendText( result + Environment.NewLine)));
+                await test.Dispatcher.BeginInvoke((Action)(() => test.AppendText("-----------------------------" + Environment.NewLine)));
                 await test.Dispatcher.BeginInvoke((Action)(() => test.ScrollToEnd()));
             }catch (Exception ex){
                 this.LogError(ex);}

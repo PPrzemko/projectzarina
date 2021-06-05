@@ -52,6 +52,11 @@ namespace projectzarina {
                 }
 
                 
+
+                /* Update Check
+                 * Maybe Automatic Updater
+                 * 
+                 */
                 string url = string.Empty;
                 int InDevStatus = Int16.Parse(SettingXML.getValue("InDev"));
                 if( InDevStatus == 1){
@@ -68,13 +73,7 @@ namespace projectzarina {
                         UpdateStatus.Text = "SOFTWARE IS UP TO DATE";
                     }
                     else if (assemblyVersion != currentVersion){
-
-
-
-
-
-
-
+                        UpdateStatus.Text = " INDEV SOFTWARE IS OUTDATED. PLEASE UPDATE to" + currentVersion;
 
 
                     }
@@ -95,7 +94,7 @@ namespace projectzarina {
                         UpdateStatus.Text = "SOFTWARE IS UP TO DATE";
                     }
                     else if(assemblyVersion != currentVersion){
-
+                        UpdateStatus.Text = "SOFTWARE IS OUTDATED. PLEASE UPDATE to " + currentVersion;
 
 
 
