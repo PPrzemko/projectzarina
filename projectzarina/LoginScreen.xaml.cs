@@ -16,99 +16,82 @@ namespace projectzarina {
 
     public partial class LoginScreen : Window {
 
-        protected string application = "MdhfE1eJ2L59n3mG3EPWQ23CIw4C5aUH";
-        protected string assemblyVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+        private string application = "MdhfE1eJ2L59n3mG3EPWQ23CIw4C5aUH";
+        private string assemblyVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+
         public LoginScreen() {
-            try
-            {
+            try {
                 InitializeComponent();
 
                 // Checks if user has valid token in UserSettings.xml
                 validateLogin();
+
                 var SettingXML = new Settings();
 
-                /*
+                /**
                  * Checks for UserSettings.xml creates new one if there is none
                  */
-                if (!File.Exists("UserSettings.xml"))
-                {
-                    /* Removed old XML because of insufficient rights
-                     * 
+                if(!File.Exists("UserSettings.xml")) {
+                    /** 
+                     * Removed old XML because of insufficient rights
                      * System.IO.Directory.CreateDirectory(@"C:\Users\Public");
                      * string gems = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
                      */
-                    XDocument doc123 = new XDocument(
-                                                 new XElement("SettingData",
-                                                 new XElement("token"),
-                                                 new XElement("ScreenshotPath"),
-                                                 new XElement("Notification"),
-                                                 new XElement("InDev")
-                                                 ));
-                    doc123.Save("UserSettings.xml");
 
-                   
+                    XDocument doc123 = new XDocument(
+                            new XElement("SettingData",
+                                new XElement("token"),
+                                new XElement("ScreenshotPath"),
+                                new XElement("Notification"),
+                                new XElement("InDev")
+                            )
+                        );
+
+                    doc123.Save("UserSettings.xml");
                     SettingXML.updateValue("Notification", "1");
                     SettingXML.updateValue("InDev", "0");
+
                 }
 
-                
-
-                /* Update Check
-                 * Maybe Automatic Updater
-                 * 
+                /** 
+                 * Automatic Updater
                  */
                 string url = string.Empty;
                 int InDevStatus = 0;
                 InDevStatus = Int16.Parse(SettingXML.getValue("InDev"));
-                if( InDevStatus == 1){
+                if(InDevStatus == 1){
                     url = "https://update.visualstatic.net/api/zarina/indev";
                     string currentVersion = string.Empty;
-                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-                    using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-                    using (Stream stream = response.GetResponseStream())
-                    using (StreamReader reader = new StreamReader(stream))
-                    {
+                    HttpWebRequest request = (HttpWebRequest) WebRequest.Create(url);
+                    using(HttpWebResponse response = (HttpWebResponse) request.GetResponse())
+                    using(Stream stream = response.GetResponseStream())
+                    using(StreamReader reader = new StreamReader(stream)) {
                         currentVersion = reader.ReadToEnd();
                     }
-                    if(assemblyVersion == currentVersion){
+                    if(assemblyVersion == currentVersion) {
                         UpdateStatus.Text = "SOFTWARE IS UP TO DATE";
-                    }
-                    else if (assemblyVersion != currentVersion){
+
+                    } else if(assemblyVersion != currentVersion) {
                         UpdateStatus.Text = " INDEV SOFTWARE IS OUTDATED. PLEASE UPDATE TO " + currentVersion;
-
-
-                    }
-                    else {
+                    }  else {
                         UpdateStatus.Text = "SOFTWARE VERSION COULD NOT BE CHECKED";
                     }
-                }
-                else{
+                } else{
                     url = "https://update.visualstatic.net/api/zarina/stable";
+
                     string currentVersion = string.Empty;
-                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-                    using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-                    using (Stream stream = response.GetResponseStream())
-                    using (StreamReader reader = new StreamReader(stream)){
+                    HttpWebRequest request = (HttpWebRequest) WebRequest.Create(url);
+                    using(HttpWebResponse response = (HttpWebResponse) request.GetResponse())
+                    using(Stream stream = response.GetResponseStream())
+                    using(StreamReader reader = new StreamReader(stream)) {
                         currentVersion = reader.ReadToEnd();
                     }
+
                     if(assemblyVersion == currentVersion){
                         UpdateStatus.Text = "SOFTWARE IS UP TO DATE";
-                    }
-                    else if(assemblyVersion != currentVersion){
+                    } else if(assemblyVersion != currentVersion){
                         UpdateStatus.Text = "SOFTWARE IS OUTDATED. PLEASE UPDATE TO " + currentVersion;
-
-
-
-
-
-
-
-
-
-
-
-                    }
-                    else {
+                    } else {
                         UpdateStatus.Text = "SOFTWARE VERSION COULD NOT BE CHECKED";
                     }
                 }
@@ -120,60 +103,47 @@ namespace projectzarina {
                 // File.Move("projectzarina.exe", "projectzarina.tmp");
                 // File.Delete("projectzarina.tmp");
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            } catch(Exception ex){
+                this.LogError(ex);
             }
-            catch (Exception ex){
-                    this.LogError(ex);}
 
         }
 
 
 
-        // Benutzer klickt auf "Login"
+        /// <summary>
+        /// User Button click login
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Button_Click(object sender, RoutedEventArgs e) {
-            try{
+            try {
                 string user = emailorusername.Text;
                 string passwd = password.Password;
                 postLogin(user, passwd);
-                // Console.WriteLine("test" + user + passwd);
-            }catch (Exception ex){
-                    this.LogError(ex);}
+
+                // Console.WriteLine("test" + user + passwd); -- DEBUG
+            } catch (Exception ex){
+                this.LogError(ex);
+            }
         }
 
 
-
-
         private async void validateLogin() {
-            try
-            {
-                if (File.Exists("UserSettings.xml")){
+            try {
+                if (File.Exists("UserSettings.xml")) {
                     var SettingXML = new Settings();
                     string token = SettingXML.getValue("token");
 
-                    if (token != "") {
+                    if(token != "") {
                         Console.WriteLine("token: " + token);
                         // "Angemeldet" => Anmeldung vorher prüfen mittels Validierung (auth/validate)
                         string url = "https://zarina.visualstatic.net/api/auth/validate?application=" + application;
 
                         HttpClient client = new HttpClient();
                         var values = new Dictionary<string, string> {
-                        { "token", token },
-                    };
+                            { "token", token },
+                        };
 
                         // DEBUG
                         // Console.WriteLine("token: " + token);
@@ -187,37 +157,36 @@ namespace projectzarina {
 
                         // TryCatch if API bwoke
 
-                        try
-                        {
+                        try {
                             dynamic json = JsonConvert.DeserializeObject(result);
-                            if (json.success == "true")
-                            {
+                            if(json.success == "true") {
                                 var MainWindow = new MainWindow();
                                 MainWindow.Show();
                                 this.Close();
                             }
-                        }
-                        catch (Exception)
-                        {
+                        } catch(Exception) {
                             ErrorBox.Text = "API is offline";
                         }
 
-                    }else if(token == "0"){
+                    } else if(token == "0"){
                         var MainWindow = new MainWindow();
                         MainWindow.Show();
                         this.Close();
                     }
 
                 }
-            }catch (Exception ex){
-                    this.LogError(ex);}
-
+            } catch(Exception ex){
+                this.LogError(ex);
+            }
         }
         
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="passwd"></param>
         private async void postLogin(string user, string passwd) {
-            try
-            {
+            try {
                 string url = "https://zarina.visualstatic.net/api/auth/signin?application=" + application;
 
                 HttpClient client = new HttpClient();
@@ -234,8 +203,7 @@ namespace projectzarina {
                 // try catch server fehler 500
                 dynamic json = JsonConvert.DeserializeObject(result);
 
-                if (json.success == "true")
-                {
+                if(json.success == "true") {
                     string token = json.unique_token;
 
                     var SettingXML = new Settings();
@@ -244,54 +212,50 @@ namespace projectzarina {
                     var MainWindow = new MainWindow();
                     MainWindow.Show();
                     this.Close();
-
-                }
-                else
-                {
+                } else {
                     string feedback = json.errorMessage;
                 }
-            }catch (Exception ex){
-                    this.LogError(ex);}
-                // {"success":"true","message":"Valid login attempt.","unique_token":"65b476da358aaad8a078c8bc13d7a74d","valid_until":"2021-06-21","created":"2021-05-22"}
-                
+            } catch (Exception ex) {
+                    this.LogError(ex);
             }
+
+        }
 
 
         // Dragon Drop Funktion
-        private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            try{
-                if (e.LeftButton == MouseButtonState.Pressed){
+        private void Grid_MouseDown(object sender, MouseButtonEventArgs e) {
+            try {
+                if(e.LeftButton == MouseButtonState.Pressed) {
                     DragMove();
                 }
+            } catch(Exception ex) {
+                this.LogError(ex);
             }
-            catch (Exception ex){
-            this.LogError(ex);}
         }
 
         // Exit Button
         private void ExitProgramm_Click(object sender, RoutedEventArgs e) {
-            try{
+            try {
                 this.Close();
+            } catch(Exception ex) {
+                this.LogError(ex);
             }
-            catch (Exception ex){
-            this.LogError(ex);}
         }
 
         // Minimize Button
         private void MinimizeButton_Click(object sender, RoutedEventArgs e) {
-            try{
+            try {
                 WindowState = WindowState.Minimized;
-            }catch (Exception ex){
-            this.LogError(ex);}
+            } catch (Exception ex) {
+                this.LogError(ex);
+            }
         }
 
         /// <summary>
         /// catches every exception and logs it to a file
         /// </summary>
         /// <param name="ex"> handed from any catch Exception</param>
-        private void LogError(Exception ex)
-        {
+        private void LogError(Exception ex) {
             string message = string.Format("Time: {0}", DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss tt"));
             message += Environment.NewLine;
             message += "-----------------------------------------------------------";
@@ -306,16 +270,20 @@ namespace projectzarina {
             message += Environment.NewLine;
             message += "-----------------------------------------------------------";
             message += Environment.NewLine;
+
             string path = @"ErrorLogLogin.txt";
-            using (StreamWriter writer = new StreamWriter(path, true))
-            {
+            using(StreamWriter writer = new StreamWriter(path, true)) {
                 writer.WriteLine(message);
                 writer.Close();
             }
         }
 
-        private void CONTINUEASGUEST(object sender, RoutedEventArgs e)
-        {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CONTINUEASGUEST(object sender, RoutedEventArgs e) {
             var SettingXML = new Settings();
             SettingXML.updateValue("token", "0");
             var MainWindow = new MainWindow();
