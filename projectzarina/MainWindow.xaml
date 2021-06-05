@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:projectzarina"
         mc:Ignorable="d"
-        Title="Zarina" Height="500" Width="900"
+        Title="Zarina" Height="357" Width="741"
         WindowStyle="None"
         ResizeMode="NoResize"
         Background="#2B2B2B"
@@ -37,37 +37,61 @@
             <!--  <ColumnDefinition Width="299*"/> !-->
 
         </Grid.ColumnDefinitions>
-        <Grid Background="#1A1A1A"
-              Grid.ColumnSpan="2"
+        <Grid Background="#313131"
+              Grid.ColumnSpan="3"
               MouseDown="Grid_MouseDown">
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="100*"/>
-                <ColumnDefinition Width="50*"/>
-                <ColumnDefinition Width="75*"/>
-                <ColumnDefinition Width="75*"/>
-                <ColumnDefinition Width="75*"/>
-                <ColumnDefinition Width="75*"/>
-                <ColumnDefinition Width="75*"/>
-                <ColumnDefinition Width="75*"/>
-                <ColumnDefinition Width="75*"/>
-                <ColumnDefinition Width="75*"/>
-                <ColumnDefinition Width="75*"/>
-                <ColumnDefinition Width="75*"/>
-                <ColumnDefinition Width="75*"/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <TextBlock Text="Dashboard" Foreground="White" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="fonts/#Roboto-Regular" FontWeight="Medium"/>
-            <Button x:Name="MinimizeButton" Content="-" Foreground="#D3D3D3" Background="#1A1A1A" BorderBrush="#1A1A1A" Grid.Column="11" VerticalAlignment="Center" FontSize="10" HorizontalAlignment="Center" FontFamily="fonts/#Roboto-Regular" Margin="12,5,12,4" Width="51" Click="MinimizeButton_Click"/>
-            <Button x:Name="ExitProgramm" Content="X" Foreground="#D3D3D3" Background="#1A1A1A" BorderBrush="#1A1A1A" Grid.Column="12" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="fonts/#Roboto-Regular" Margin="27,3,7,4" Width="41" Click="ExitProgramm_Click"/>
+
+
+
+
+            <Rectangle Grid.Column="11" Grid.RowSpan="1000">
+                <Rectangle.Fill>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#212121" Offset="0" />
+                    </LinearGradientBrush>
+                </Rectangle.Fill>
+            </Rectangle>
+            <Rectangle Grid.Column="10" Grid.RowSpan="1000">
+                <Rectangle.Fill>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#212121" Offset="0" />
+                    </LinearGradientBrush>
+                </Rectangle.Fill>
+            </Rectangle>
+
+
+
+
+
+
+            <Button x:Name="MinimizeButton" Content="-" Foreground="#D3D3D3" Background="{x:Null}" BorderBrush="{x:Null}" Grid.Column="10" VerticalAlignment="Center" FontSize="10" HorizontalAlignment="Center" FontFamily="fonts/#Roboto-Regular" Margin="12,5,12,4" Width="51" Click="MinimizeButton_Click"/>
+            <Button x:Name="ExitProgramm" Content="X" Foreground="#D3D3D3" Background="{x:Null}" BorderBrush="{x:Null}" Grid.Column="11" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="fonts/#Roboto-Regular" Margin="11,3,10,4" Width="41" Click="ExitProgramm_Click"/>
         </Grid>
 
-        <Button x:Name="nameassignPath" Content="Assign Path" HorizontalAlignment="Left" Margin="194,89,0,0" Grid.Row="1" VerticalAlignment="Top" Width="74" Click="assignPath" Foreground="White" Background="{x:Null}" BorderBrush="White" />
-        <TextBox x:Name="TextScreenshotPath" HorizontalAlignment="Left" Height="38" Margin="331,84,0,0" Grid.Row="1" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="439" Background="#1B1B1B" Foreground="White" IsEnabled="True"/>
-        <Button x:Name="Button_SaveSettings" Content="SaveSettings" HorizontalAlignment="Left" Margin="694,177,0,0" Grid.Row="1" VerticalAlignment="Top" Width="76" Click="saveScreenshotPath" Foreground="White" Background="{x:Null}" BorderBrush="White"/>
-        <Label x:Name="SaveMessage" Content="" HorizontalAlignment="Left" Margin="331,127,0,0" Grid.Row="1" VerticalAlignment="Top" Foreground="White" Width="439"/>
-        <Button Content="Logout" HorizontalAlignment="Left" Margin="797,23,0,0" Grid.Row="1" VerticalAlignment="Top" Width="74" Click="logoutButton" Foreground="White" Background="{x:Null}" BorderBrush="White"/>
-        <TextBox x:Name="test" HorizontalAlignment="Left" Height="138" Margin="304,270,0,0" Grid.Row="1" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="499" Foreground="White" Background="{x:Null}" BorderBrush="White"/>
-        <CheckBox x:Name="NotificationCheckbox" Content="Notifications" HorizontalAlignment="Left" Margin="194,133,0,0" Grid.Row="1" VerticalAlignment="Top" Height="20" Width="91" Foreground="White"/>
+        <Button x:Name="nameassignPath" Content="BROWSE" HorizontalAlignment="Left" Margin="584,254,0,0" Grid.Row="1" VerticalAlignment="Top" Width="60" Click="assignPath" Foreground="White" Background="#363636" BorderBrush="{x:Null}" Height="38" />
+        <TextBox x:Name="TextScreenshotPath" HorizontalAlignment="Left" Height="38" Margin="176,254,0,0" Grid.Row="1" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="390" Background="#1B1B1B" Foreground="White" IsEnabled="True"/>
+        <Button x:Name="Button_SaveSettings" Content="SAVE" HorizontalAlignment="Left" Margin="649,252,0,0" Grid.Row="1" VerticalAlignment="Top" Width="82" Click="saveScreenshotPath" Foreground="Black" Background="#BDAD81" BorderBrush="{x:Null}" FontFamily="/projectzarina;component/fonts/#Roboto" Height="40"/>
+        <Label x:Name="SaveMessage" Content="" HorizontalAlignment="Left" Margin="146,213,0,0" Grid.Row="1" VerticalAlignment="Top" Foreground="White" Width="439"/>
+        <Button Content="Logout" HorizontalAlignment="Left" Margin="632,55,0,0" Grid.Row="1" VerticalAlignment="Top" Width="74" Click="logoutButton" Foreground="White" Background="{x:Null}" BorderBrush="White"/>
+        <TextBox x:Name="test" HorizontalAlignment="Left" Height="123" Margin="19,85,0,0" Grid.Row="1" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="687" Foreground="White" Background="#202020" BorderBrush="#4E4E4E" RenderTransformOrigin="0.353,0.123"/>
+        <CheckBox x:Name="NotificationCheckbox" Content="Notify me on successful&#xD;&#xA;screenshot submission" HorizontalAlignment="Left" Margin="19,254,0,0" Grid.Row="1" VerticalAlignment="Top" Height="46" Width="152" Foreground="White" Checked="NotificationCheckbox_Checked"/>
+        <Label Content="ACTIVITY LOG" HorizontalAlignment="Left" Margin="69,38,0,0" Grid.Row="1" VerticalAlignment="Top" Foreground="#D8C389" FontSize="28" FontFamily="/projectzarina;component/fonts/#Roboto"/>
+        <Label Content="NOTIFICATIONS" HorizontalAlignment="Left" Margin="19,224,0,0" Grid.Row="1" VerticalAlignment="Top" FontFamily="/projectzarina;component/fonts/#Roboto" FontSize="11" Foreground="#8A8A8A"/>
 
 
 

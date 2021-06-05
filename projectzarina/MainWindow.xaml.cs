@@ -372,9 +372,9 @@ namespace projectzarina {
             }
         }
 
+        private void NotificationCheckbox_Checked(object sender, RoutedEventArgs e)
+        {
 
-
-
-
+        }
     }
 }

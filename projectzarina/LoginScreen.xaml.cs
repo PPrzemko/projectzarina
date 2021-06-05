@@ -58,7 +58,8 @@ namespace projectzarina {
                  * 
                  */
                 string url = string.Empty;
-                int InDevStatus = Int16.Parse(SettingXML.getValue("InDev"));
+                int InDevStatus = 0;
+                InDevStatus = Int16.Parse(SettingXML.getValue("InDev"));
                 if( InDevStatus == 1){
                     url = "https://update.visualstatic.net/api/zarina/indev";
                     string currentVersion = string.Empty;
@@ -73,7 +74,7 @@ namespace projectzarina {
                         UpdateStatus.Text = "SOFTWARE IS UP TO DATE";
                     }
                     else if (assemblyVersion != currentVersion){
-                        UpdateStatus.Text = " INDEV SOFTWARE IS OUTDATED. PLEASE UPDATE to" + currentVersion;
+                        UpdateStatus.Text = " INDEV SOFTWARE IS OUTDATED. PLEASE UPDATE TO " + currentVersion;
 
 
                     }
@@ -94,7 +95,7 @@ namespace projectzarina {
                         UpdateStatus.Text = "SOFTWARE IS UP TO DATE";
                     }
                     else if(assemblyVersion != currentVersion){
-                        UpdateStatus.Text = "SOFTWARE IS OUTDATED. PLEASE UPDATE to " + currentVersion;
+                        UpdateStatus.Text = "SOFTWARE IS OUTDATED. PLEASE UPDATE TO " + currentVersion;
 
 
 
@@ -160,13 +161,11 @@ namespace projectzarina {
         private async void validateLogin() {
             try
             {
-                if (File.Exists("UserSettings.xml"))
-                {
+                if (File.Exists("UserSettings.xml")){
                     var SettingXML = new Settings();
                     string token = SettingXML.getValue("token");
 
-                    if (token != "")
-                    {
+                    if (token != "") {
                         Console.WriteLine("token: " + token);
                         // "Angemeldet" => Anmeldung vorher prüfen mittels Validierung (auth/validate)
                         string url = "https://zarina.visualstatic.net/api/auth/validate?application=" + application;
@@ -203,9 +202,11 @@ namespace projectzarina {
                             ErrorBox.Text = "API is offline";
                         }
 
+                    }else if(token == "0"){
+                        var MainWindow = new MainWindow();
+                        MainWindow.Show();
+                        this.Close();
                     }
-                    // ANDERNFALLS: No, Session Key existiert nicht mehr, User muss abgemeldet sein.
-                    // LoginScreen verbleibt weiterhin offen, gibt dem User die Möglichkeit sich nochmal zu authentifizieren oder als Gast fortzufahren.
 
                 }
             }catch (Exception ex){
@@ -315,7 +316,11 @@ namespace projectzarina {
 
         private void CONTINUEASGUEST(object sender, RoutedEventArgs e)
         {
-            Console.WriteLine("test");
+            var SettingXML = new Settings();
+            SettingXML.updateValue("token", "0");
+            var MainWindow = new MainWindow();
+            MainWindow.Show();
+            this.Close();
         }
     }
 }

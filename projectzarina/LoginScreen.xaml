@@ -26,14 +26,15 @@
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition>
+            <ColumnDefinition Width="371*">
 
             </ColumnDefinition>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="151*"/>
+            <ColumnDefinition Width="219*"/>
         </Grid.ColumnDefinitions>
 
         <Grid Background="#313131"
-              Grid.ColumnSpan="2"
+              Grid.ColumnSpan="3"
               MouseDown="Grid_MouseDown">
 
             <Grid.ColumnDefinitions>
@@ -111,7 +112,7 @@
 
 
         <!-- small adjustment to pic with margin-->
-        <Grid Grid.Row="1" Grid.ColumnSpan="2" Margin="0,0,276,0">
+        <Grid Grid.Row="1" Grid.ColumnSpan="2" Margin="0,0,57,0">
             <Grid.Background>
                 <!-- BackgroundImageBlightCut-->
                 <ImageBrush ImageSource="/images/backgroundnew.png" Stretch="UniformToFill"></ImageBrush>
@@ -176,8 +177,7 @@
 
 
         <Grid Grid.Column="1"
-              Grid.RowSpan="2"
-              Margin="0,26,0,0">
+              Margin="0,1,0,0" Grid.ColumnSpan="2" Grid.Row="1">
 
             <StackPanel Margin="110,0,0,0">
                 <TextBlock
@@ -187,7 +187,7 @@
                 FontFamily="fonts/#Roboto-Regular"
                 TextAlignment="Center"
                 Text="SIGN IN"
-                HorizontalAlignment="Left"
+                HorizontalAlignment="Left" FontWeight="Bold"
                 />
                 <TextBlock
                 Margin="0,0,0,5"
@@ -201,6 +201,7 @@
                 <TextBox x:Name="emailorusername" Margin="0,0,0,20" 
                          Background="#1B1B1B"
                          Foreground="White"
+                         BorderBrush="#4E4E4E"
                          HorizontalAlignment="Left" Width="157"
                          />
 
@@ -217,7 +218,8 @@
                 <PasswordBox  x:Name="password" Margin="0,0,0,0"
                              Background="#1B1B1B"
                              Foreground="White"
-                              HorizontalAlignment="Left" Width="157"
+                             BorderBrush="#4E4E4E"
+                             HorizontalAlignment="Left" Width="157"
                               
                              />
                 <Button IsDefault="True" Content="SIGN IN" Margin="0,20,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Click="Button_Click" Background="#FF93855B" Foreground="Black" Height="31" FontWeight="Bold" Width="157"/>
