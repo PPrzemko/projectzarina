@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:projectzarina"
         mc:Ignorable="d"
-        Title="LoginScreen" Height="357" Width="741"
+        Title="LoginScreen" Height="470" Width="1000"
         WindowStyle="None"
         ResizeMode="NoResize"
         Background="#2B2B2B"
@@ -14,8 +14,8 @@
 
 
     <Window.Resources>
-        
-        
+
+
         <!--- Textbox outline -->
         <Style TargetType="TextBox">
             <Setter Property="Template">
@@ -33,6 +33,8 @@
                             </Trigger>
                             <Trigger Property="IsFocused" Value="true">
                                 <Setter Property="BorderBrush" TargetName="border" Value="#858585"/>
+                                <Setter Property="BorderThickness" TargetName="border" Value="2"/>
+                                <Setter Property="Margin" TargetName="border" Value="0,-0.5,0,-0.5"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -56,6 +58,8 @@
                             </Trigger>
                             <Trigger Property="IsFocused" Value="true">
                                 <Setter Property="BorderBrush" TargetName="border" Value="#858585"/>
+                                <Setter Property="BorderThickness" TargetName="border" Value="2"/>
+                                <Setter Property="Margin" TargetName="border" Value="0,-0.5,0,-0.5"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -73,42 +77,67 @@
         </LinearGradientBrush>
 
 
-        <Style x:Key="lol" TargetType="{x:Type Button}">
+        <Style x:Key="SignInButton" TargetType="{x:Type Button}">
             <Setter Property="Background" Value="{StaticResource SignInBackground1}"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
                         <Border Background="{TemplateBinding Background}">
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            
+
                         </Border>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-            
+
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
                     <Setter Property="Background" Value="{StaticResource SignInBackground2}" />
-                    
+                    <Setter Property="Cursor" Value="Hand"/>
+
                 </Trigger>
             </Style.Triggers>
         </Style>
-        <!---  test-->
-        
-   
+        <!--- Box Background-->
+        <LinearGradientBrush x:Key="BoxBackground" StartPoint="0,1" EndPoint="0,0">
+            <GradientStop Color="#111111" Offset="0"/>
+            <GradientStop Color="#202020" Offset="0.9"/>
+        </LinearGradientBrush>
+        <!-- Continue as Guest Button-->
+        <Style x:Key="GuestButton" TargetType="{x:Type Button}">
+            <Setter Property="Foreground" Value="#8A8A8A"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Foreground" Value="White" />
+                    <Setter Property="Cursor" Value="Hand"/>
+
+                </Trigger>
+            </Style.Triggers>
+        </Style>
 
 
     </Window.Resources>
-   
+
 
 
     <Grid>
 
         <Grid.Background>
-            <ImageBrush ImageSource="/images/well.png" Stretch="Fill" />
+            <ImageBrush ImageSource="/images/well.png" Stretch="Fill"  />
         </Grid.Background>
         <Grid.RowDefinitions>
-            <RowDefinition Height="25"/>
+            <RowDefinition Height="18.75"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
 
@@ -204,24 +233,24 @@
             </Grid.Background>
             <StackPanel
                 VerticalAlignment="Center"
-                        Margin="55,56,0,26" Height="282">
+                        Margin="55,0,0,26" Height="282">
                 <StackPanel>
                     <TextBlock
                         Foreground="white"
-                        FontSize="35"
+                        FontSize="45"
                         FontWeight="Medium"
                         FontFamily="/projectzarina;component/fonts/#Poppins"
                         Text="The Largest"></TextBlock>
                     <TextBlock
                         Margin="0,-16,0,-15"
                         Foreground="white"
-                        FontSize="35"
+                        FontSize="45"
                         FontWeight="Medium"
                         FontFamily="/projectzarina;component/fonts/#Poppins"
                         Text="Community"></TextBlock>
                     <TextBlock
                         Foreground="white"
-                        FontSize="35"
+                        FontSize="45"
                         FontWeight="Medium"
                         FontFamily="/projectzarina;component/fonts/#Poppins"
                         Text="Statistics DB"></TextBlock>
@@ -236,7 +265,7 @@
 
                     <TextBlock
                         Foreground="white"
-                        FontSize="14"
+                        FontSize="20"
                         FontWeight="Medium"
                         FontFamily="/projectzarina;component/fonts/#Roboto"
                         TextWrapping="Wrap"
@@ -272,7 +301,7 @@
                 FontFamily="fonts/#Roboto-Regular"
                 TextAlignment="Center"
                 Text="SIGN IN"
-                HorizontalAlignment="Left" FontWeight="Bold"
+                HorizontalAlignment="Left" FontWeight="Bold" Height="34" Width="94"
                 />
                 <TextBlock
                 Margin="0,0,0,0"
@@ -281,34 +310,34 @@
                 FontSize="12"
                 FontWeight="Medium"
                 FontFamily="fonts/#Roboto-Regular"
-                TextAlignment="Center" Height="16"
-                ><Span Foreground="#FF8A8A8A"><Run Text="USERNAME OR E-MAIL"/></Span><LineBreak/><Run Text=""/></TextBlock>
-                <TextBox x:Name="emailorusername" Margin="0,0,0,20" 
-                         Background="#1B1B1B"
+                TextAlignment="Center" Height="13" Width="127"
+                ><Span Foreground="#FF8A8A8A"><Run Text="USERNAME OR E-MAIL"/></Span></TextBlock>
+                <TextBox x:Name="emailorusername" Margin="0,0,0,0" 
+                         Background="{StaticResource BoxBackground}"
                          Foreground="White"
                          BorderBrush="#4E4E4E"
-                         HorizontalAlignment="Left" Width="157"
+                         HorizontalAlignment="Left" Width="330" Height="33"
                          />
 
 
 
                 <TextBlock
-                Margin="0,0,0,0"
+                Margin="0,20,0,0"
                 Foreground="#8A8A8A"
                 FontWeight="Medium"
                 FontFamily="fonts/#Roboto-Regular"
                 HorizontalAlignment="Left"
                 TextAlignment="Center"
-                Text="PASSWORD"/>
+                Text="PASSWORD" Height="16" Width="65"/>
                 <PasswordBox  x:Name="password" Margin="0,0,0,0"
-                             Background="#1B1B1B"
+                             Background="{StaticResource BoxBackground}"
                              Foreground="White"
                              BorderBrush="#4E4E4E"
-                             HorizontalAlignment="Left" Width="157"
+                             HorizontalAlignment="Left" Width="330" Height="33"
                               
                              />
-                <Button Style="{StaticResource lol}" IsDefault="True" Content="SIGN IN" Margin="0,20,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Click="Button_Click" Foreground="Black" Height="31" FontWeight="Bold" Width="157"/>
-                <Button Content="CONTINUE AS GUEST" Margin="0,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Click="CONTINUEASGUEST" BorderBrush="{x:Null}" Background="{x:Null}" Foreground="#8A8A8A" Height="31" Width="157" FontFamily="/projectzarina;component/fonts/#Roboto" FontSize="10"/>
+                <Button Style="{StaticResource SignInButton}" IsDefault="True" Content="SIGN IN" Margin="73,50,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Click="Button_Click" Foreground="Black" Height="40" FontWeight="Bold" Width="215"/>
+                <Button Style="{StaticResource GuestButton}" Content="CONTINUE AS GUEST" Margin="73,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Click="CONTINUEASGUEST" BorderBrush="{x:Null}" Background="{x:Null}" Height="48" Width="215" FontFamily="/projectzarina;component/fonts/#Roboto" FontSize="10"/>
 
 
             </StackPanel>
@@ -316,5 +345,5 @@
         </Grid>
 
     </Grid>
-    
+
 </Window>
