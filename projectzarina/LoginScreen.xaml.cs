@@ -136,42 +136,43 @@ namespace projectzarina {
                     string token = SettingXML.getValue("token");
 
                     if(token != "") {
-                        Console.WriteLine("token: " + token);
-                        // "Angemeldet" => Anmeldung vorher prüfen mittels Validierung (auth/validate)
-                        string url = "https://zarina.visualstatic.net/api/auth/validate?application=" + application;
+                        if (Int16.Parse(token) == 0){
+                            var MainWindow = new MainWindow();
+                            MainWindow.Show();
+                            this.Close();
+                        }else { 
+                            Console.WriteLine("token: " + token);
+                            // "Angemeldet" => Anmeldung vorher prüfen mittels Validierung (auth/validate)
+                            string url = "https://zarina.visualstatic.net/api/auth/validate?application=" + application;
 
-                        HttpClient client = new HttpClient();
-                        var values = new Dictionary<string, string> {
-                            { "token", token },
-                        };
+                            HttpClient client = new HttpClient();
+                            var values = new Dictionary<string, string> {
+                                { "token", token },
+                            };
 
-                        // DEBUG
-                        // Console.WriteLine("token: " + token);
+                            // DEBUG
+                            // Console.WriteLine("token: " + token);
 
-                        var content = new FormUrlEncodedContent(values);
-                        var response = await client.PostAsync(url, content);
-                        var result = response.Content.ReadAsStringAsync().Result;
+                            var content = new FormUrlEncodedContent(values);
+                            var response = await client.PostAsync(url, content);
+                            var result = response.Content.ReadAsStringAsync().Result;
 
-                        // DEBUG
-                        // Console.WriteLine("result: " + result);
+                            // DEBUG
+                            // Console.WriteLine("result: " + result);
 
-                        // TryCatch if API bwoke
+                            // TryCatch if API bwoke
 
-                        try {
-                            dynamic json = JsonConvert.DeserializeObject(result);
-                            if(json.success == "true") {
-                                var MainWindow = new MainWindow();
-                                MainWindow.Show();
-                                this.Close();
+                            try {
+                                dynamic json = JsonConvert.DeserializeObject(result);
+                                if(json.success == "true") {
+                                    var MainWindow = new MainWindow();
+                                    MainWindow.Show();
+                                    this.Close();
+                                }
+                            } catch(Exception) {
+                                ErrorBox.Text = "API is offline";
                             }
-                        } catch(Exception) {
-                            ErrorBox.Text = "API is offline";
                         }
-
-                    } else if(token == "0"){
-                        var MainWindow = new MainWindow();
-                        MainWindow.Show();
-                        this.Close();
                     }
 
                 }
