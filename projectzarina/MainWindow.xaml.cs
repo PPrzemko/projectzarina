@@ -117,13 +117,42 @@ namespace projectzarina {
         /// <param name="e"></param>
         private void assignPath(object sender, RoutedEventArgs e) {
             try{
-                System.Windows.Forms.FolderBrowserDialog openFileDlg = new System.Windows.Forms.FolderBrowserDialog();
+                
+                var openFolder = new CommonOpenFileDialog();
+                openFolder.AllowNonFileSystemItems = true;
+                openFolder.Multiselect = true;
+                openFolder.IsFolderPicker = true;
+                openFolder.Title = "Please select the Steam Screeshot folder";
 
+               
+
+                if (openFolder.ShowDialog() == CommonFileDialogResult.Ok){
+                    TextScreenshotPath.Text = openFolder.FileName;
+                }else{
+                    MessageBox.Show("No Folder selected");
+                    return;
+                }
+                
+
+
+                /*
+                var dialog = new CommonOpenFileDialog();
+                dialog.IsFolderPicker = true;
+                CommonFileDialogResult result = dialog.ShowDialog();
+                Console.WriteLine(result);
+                TextScreenshotPath.Text = result; */
+
+
+                /*
+                 * old path selector
+                System.Windows.Forms.FolderBrowserDialog openFileDlg = new System.Windows.Forms.FolderBrowserDialog();
                 //openFileDlg.SelectedPath = @"C:\Program Files (x86)\Steam\userdata\226359406\760\remote\381210\screenshots";
                 openFileDlg.ShowDialog();
                 var result = openFileDlg.SelectedPath;
                 TextScreenshotPath.Text = result;
-            }catch(Exception ex){ 
+                */
+            }
+            catch(Exception ex){ 
                 this.LogError(ex);}
         }
 
@@ -386,9 +415,7 @@ namespace projectzarina {
 
         private void Statsbutton(object sender, RoutedEventArgs e)
         {
-            var dialog = new CommonOpenFileDialog();
-            dialog.IsFolderPicker = true;
-            CommonFileDialogResult result = dialog.ShowDialog();
+            
         }
     }
 }

@@ -314,8 +314,9 @@
                 ><Span Foreground="#FF8A8A8A"><Run Text="USERNAME OR E-MAIL"/></Span></TextBlock>
                 <TextBox x:Name="emailorusername" Margin="0,0,0,0" 
                          Background="{StaticResource BoxBackground}"
-                         Foreground="White"
+                         Foreground="#AAA5A5"
                          BorderBrush="#4E4E4E"
+                         Padding="8,3,0,0"
                          HorizontalAlignment="Left" Width="330" Height="33" FontFamily="/projectzarina;component/fonts/#Roboto" FontSize="18" Text="test"
                          />
 
@@ -331,13 +332,14 @@
                 Text="PASSWORD" Height="16" Width="65"/>
                 <PasswordBox  x:Name="password" Margin="0,0,0,0"
                              Background="{StaticResource BoxBackground}"
-                             Foreground="White"
+                             Foreground="#AAA5A5"
+                             Padding="8,3,0,0"
                              BorderBrush="#4E4E4E"
                              HorizontalAlignment="Left" Width="330" Height="33" FontFamily="/projectzarina;component/fonts/#Roboto" FontSize="16"
                               
                              />
-                <Button Style="{StaticResource SignInButton}" IsDefault="True" Content="SIGN IN" Margin="73,50,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Click="Button_Click" Foreground="Black" Height="40" FontWeight="Bold" Width="215"/>
-                <Button Style="{StaticResource GuestButton}" Content="CONTINUE AS GUEST" Margin="73,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Click="CONTINUEASGUEST" BorderBrush="{x:Null}" Background="{x:Null}" Height="48" Width="215" FontFamily="/projectzarina;component/fonts/#Roboto" FontSize="10"/>
+                <Button Style="{StaticResource SignInButton}" IsDefault="True" Content="SIGN IN" Margin="73,50,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Click="Button_Click" Foreground="Black" Height="40" FontWeight="Bold" Width="215" FontFamily="/projectzarina;component/fonts/#Roboto" FontSize="14"/>
+                <Button Style="{StaticResource GuestButton}" Content="CONTINUE AS GUEST" Margin="73,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Click="CONTINUEASGUEST" BorderBrush="{x:Null}" Background="{x:Null}" Height="48" Width="215" FontFamily="/projectzarina;component/fonts/#Roboto" FontSize="12"/>
 
 
             </StackPanel>
