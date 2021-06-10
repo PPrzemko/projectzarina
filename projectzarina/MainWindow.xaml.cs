@@ -16,6 +16,7 @@ using System.Net.Http;
 using System.IO;
 using Newtonsoft.Json;
 using Microsoft.Toolkit.Uwp.Notifications;
+using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace projectzarina {
     
@@ -374,7 +375,20 @@ namespace projectzarina {
 
         private void NotificationCheckbox_Checked(object sender, RoutedEventArgs e)
         {
+            Console.WriteLine("NotInUse");
+        }
 
+        private void MyAccountbutton(object sender, RoutedEventArgs e)
+        {
+            Console.WriteLine("NotInUse");
+            System.Diagnostics.Process.Start("https://zarina.visualstatic.net/my-statistics");
+        }
+
+        private void Statsbutton(object sender, RoutedEventArgs e)
+        {
+            var dialog = new CommonOpenFileDialog();
+            dialog.IsFolderPicker = true;
+            CommonFileDialogResult result = dialog.ShowDialog();
         }
     }
 }

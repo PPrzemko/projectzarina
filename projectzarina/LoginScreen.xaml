@@ -193,7 +193,7 @@
                        VerticalAlignment="Center"
                        FontSize="10"
                        HorizontalAlignment="Center"
-                       FontFamily="fonts/#Roboto-Regular" Margin="12,4,12,3" Width="51" Click="MinimizeButton_Click"
+                       FontFamily="fonts/#Roboto-Regular" Width="83" Click="MinimizeButton_Click" Height="19"
                        />
             <Button x:Name="ExitProgramm"    Content="X"
                        Foreground="#D3D3D3"
@@ -202,7 +202,7 @@
                        Grid.Column="11"
                        VerticalAlignment="Center"
                        HorizontalAlignment="Center"
-                       FontFamily="fonts/#Roboto-Regular" Margin="27,3,7,4" Width="41" Click="ExitProgramm_Click"
+                       FontFamily="fonts/#Roboto-Regular" Width="83" Click="ExitProgramm_Click" Height="19"
                        />
 
 
@@ -297,11 +297,11 @@
                 <TextBlock
                 Margin="0,50,0,15"
                 Foreground="#D8C389"
-                FontSize="25"
+                FontSize="45"
                 FontFamily="fonts/#Roboto-Regular"
                 TextAlignment="Center"
                 Text="SIGN IN"
-                HorizontalAlignment="Left" FontWeight="Bold" Height="34" Width="94"
+                HorizontalAlignment="Left" FontWeight="Bold" Height="46" Width="167"
                 />
                 <TextBlock
                 Margin="0,0,0,0"
@@ -316,7 +316,7 @@
                          Background="{StaticResource BoxBackground}"
                          Foreground="White"
                          BorderBrush="#4E4E4E"
-                         HorizontalAlignment="Left" Width="330" Height="33"
+                         HorizontalAlignment="Left" Width="330" Height="33" FontFamily="/projectzarina;component/fonts/#Roboto" FontSize="18" Text="test"
                          />
 
 
@@ -333,7 +333,7 @@
                              Background="{StaticResource BoxBackground}"
                              Foreground="White"
                              BorderBrush="#4E4E4E"
-                             HorizontalAlignment="Left" Width="330" Height="33"
+                             HorizontalAlignment="Left" Width="330" Height="33" FontFamily="/projectzarina;component/fonts/#Roboto" FontSize="16"
                               
                              />
                 <Button Style="{StaticResource SignInButton}" IsDefault="True" Content="SIGN IN" Margin="73,50,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Click="Button_Click" Foreground="Black" Height="40" FontWeight="Bold" Width="215"/>
