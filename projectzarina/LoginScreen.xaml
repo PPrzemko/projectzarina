@@ -317,7 +317,7 @@
                          Foreground="#AAA5A5"
                          BorderBrush="#4E4E4E"
                          Padding="8,3,0,0"
-                         HorizontalAlignment="Left" Width="330" Height="33" FontFamily="/projectzarina;component/fonts/#Roboto" FontSize="18" Text="test"
+                         HorizontalAlignment="Left" Width="330" Height="33" FontFamily="/projectzarina;component/fonts/#Roboto" FontSize="18"
                          />
 
 

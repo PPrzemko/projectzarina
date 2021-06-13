@@ -101,6 +101,7 @@ namespace projectzarina {
 
                 string filename = System.IO.Path.GetFileName(e.FullPath);
                 Console.WriteLine("Erstellt: " + filename);
+
                 Console.WriteLine("FullPath: " + e.FullPath);
 
                 string fullPath = e.FullPath;
@@ -237,7 +238,9 @@ namespace projectzarina {
         /// <param name="file"> filename from OnCreated(from FSW) </param>
         /// <param name="fullPath"> Gets Path from OnCreated</param>
         private async void uploadImage(string file, string fullPath) {
-            try{ 
+            try{
+                await test.Dispatcher.BeginInvoke((Action)(() => test.AppendText("-----------------------------" + Environment.NewLine)));
+                await test.Dispatcher.BeginInvoke((Action)(() => test.AppendText(file + " wurde erstellt" + Environment.NewLine)));
                 string url = "https://zarina.visualstatic.net/api/forms/upload?application=" + application;
 
                 var config = new Settings();
@@ -248,7 +251,7 @@ namespace projectzarina {
 
                 Console.WriteLine("token: " + token);
                 Console.WriteLine("FullPath 2: " + fullPath);
-                
+                await Task.Delay(3000);
                 var upfilebytes = File.ReadAllBytes(fullPath);
 
                 // create new HttpClient combine picture and string into single content "codeproject.com/Questions/1228835/How-to-post-file-and-data-to-api-using-httpclient"
@@ -286,8 +289,8 @@ namespace projectzarina {
 
                 string time = DateTime.Now.ToString("HH:mm tt");
 
-                await test.Dispatcher.BeginInvoke((Action)(() => test.AppendText("-----------------------------" + Environment.NewLine)));
-                await test.Dispatcher.BeginInvoke((Action)(() => test.AppendText( time + ":  " + file + " has been submitted to your statistics" + Environment.NewLine)));
+
+                await test.Dispatcher.BeginInvoke((Action)(() => test.AppendText(time + ":  " + file + " has been submitted to your statistics" + Environment.NewLine)));
                 // DEBUG
                 await test.Dispatcher.BeginInvoke((Action)(() => test.AppendText( result + Environment.NewLine)));
                 await test.Dispatcher.BeginInvoke((Action)(() => test.AppendText("-----------------------------" + Environment.NewLine)));

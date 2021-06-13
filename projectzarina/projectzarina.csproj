@@ -186,5 +186,8 @@
   <ItemGroup>
     <Resource Include="images\backgroundnew.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\uploading.gif" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

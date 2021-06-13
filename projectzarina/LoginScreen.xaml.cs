@@ -133,15 +133,15 @@ namespace projectzarina {
             try {
                 if (File.Exists("UserSettings.xml")) {
                     var SettingXML = new Settings();
+                  
+                    
                     string token = SettingXML.getValue("token");
-
-                    if(token != "") {
-                        if (Int16.Parse(token) == 0){
+                    if (token != "") {
+                        if (String.Compare(token, "0") == 0 ){
                             var MainWindow = new MainWindow();
                             MainWindow.Show();
                             this.Close();
                         }else { 
-                            Console.WriteLine("token: " + token);
                             // "Angemeldet" => Anmeldung vorher prüfen mittels Validierung (auth/validate)
                             string url = "https://zarina.visualstatic.net/api/auth/validate?application=" + application;
 
