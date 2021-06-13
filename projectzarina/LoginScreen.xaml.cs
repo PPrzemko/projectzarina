@@ -60,7 +60,7 @@ namespace projectzarina {
                 int InDevStatus = 0;
                 InDevStatus = Int16.Parse(SettingXML.getValue("InDev"));
                 if(InDevStatus == 1){
-                    url = "https://update.visualstatic.net/api/zarina/indev";
+                    url = "https://update.visualstatic.net/api/zarina-portable/indev";
                     string currentVersion = string.Empty;
                     HttpWebRequest request = (HttpWebRequest) WebRequest.Create(url);
                     using(HttpWebResponse response = (HttpWebResponse) request.GetResponse())
@@ -77,7 +77,7 @@ namespace projectzarina {
                         UpdateStatus.Text = "SOFTWARE VERSION COULD NOT BE CHECKED";
                     }
                 } else{
-                    url = "https://update.visualstatic.net/api/zarina/stable";
+                    url = "https://update.visualstatic.net/api/zarina-portable/stable";
 
                     string currentVersion = string.Empty;
                     HttpWebRequest request = (HttpWebRequest) WebRequest.Create(url);
