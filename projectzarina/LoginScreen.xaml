@@ -8,8 +8,9 @@
         Title="LoginScreen" Height="470" Width="1000"
         WindowStyle="None"
         ResizeMode="NoResize"
-        Background="#2B2B2B"
+        Background="#000206"
         Icon="images/well.png"
+        
         >
 
 
@@ -134,7 +135,7 @@
     <Grid>
 
         <Grid.Background>
-            <ImageBrush ImageSource="/images/well.png" Stretch="Fill"  />
+            <ImageBrush ImageSource="/images/well.png" Stretch="Fill" Opacity="1"  />
         </Grid.Background>
         <Grid.RowDefinitions>
             <RowDefinition Height="18.75"/>
@@ -185,7 +186,7 @@
 
 
 
-            <Button x:Name="MinimizeButton"    Content="-"
+            <Button x:Name="MinimizeButton"    Content="🗕"
                        Foreground="#D3D3D3"
                        Background="{x:Null}"
                        BorderBrush="{x:Null}"
@@ -229,7 +230,7 @@
         <Grid Grid.Row="1" Grid.ColumnSpan="2" Margin="0,0,57,0">
             <Grid.Background>
                 <!-- BackgroundImageBlightCut-->
-                <ImageBrush ImageSource="/images/backgroundnew.png" Stretch="UniformToFill"></ImageBrush>
+                <ImageBrush ImageSource="/images/backgroundnew.png" Stretch="UniformToFill" ></ImageBrush>
             </Grid.Background>
             <StackPanel
                 VerticalAlignment="Center"

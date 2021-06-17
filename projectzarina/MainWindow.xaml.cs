@@ -70,7 +70,7 @@ namespace projectzarina {
                 watcher.Created += new FileSystemEventHandler(OnCreated);
 
                 watcher.EnableRaisingEvents = true;
-
+                
                 // DEBUG
                 // Console.WriteLine("new fsw on: " + path);
             } catch (System.ArgumentException ex) {
@@ -164,7 +164,8 @@ namespace projectzarina {
         /// <param name="e"></param>
         private void saveScreenshotPath(object sender, RoutedEventArgs e)
         {
-            try{ 
+            try{
+                
                 var SettingXML = new Settings();
                 int XMLNotification = Int16.Parse(SettingXML.getValue("Notification"));
                 string currentXMLpath = SettingXML.getValue("ScreenshotPath") + @"\";
@@ -321,29 +322,42 @@ namespace projectzarina {
             try{
                 var SettingXML = new Settings();
                 string token = SettingXML.getValue("token");
+                int tokenint = Int16.Parse(SettingXML.getValue("token"));
+                if (tokenint != 0) { 
+                    if(token != "") {
 
-                if(token != "") {
+                        // delete token in db
+                        string url = "https://zarina.visualstatic.net/api/auth/destroy?application=" + application;
 
-                    // delete token in db
-                    string url = "https://zarina.visualstatic.net/api/auth/destroy?application=" + application;
+                        HttpClient client = new HttpClient();
+                        var values = new Dictionary<string, string> {
+                            { "token", token },
+                        };
 
-                    HttpClient client = new HttpClient();
-                    var values = new Dictionary<string, string> {
-                        { "token", token },
-                    };
+                        var content = new FormUrlEncodedContent(values);
+                        await client.PostAsync(url, content);
 
-                    var content = new FormUrlEncodedContent(values);
-                    await client.PostAsync(url, content);
+                        // Weiterleitung auf Login & Token in XML löschen
+                        SettingXML.updateValue("token", "");
 
+                        var LoginScreen = new LoginScreen();
+                        LoginScreen.Show();
+                        this.Close();
+
+                    }
+
+                }
+                else if (tokenint == 0)
+                {
                     // Weiterleitung auf Login & Token in XML löschen
                     SettingXML.updateValue("token", "");
 
                     var LoginScreen = new LoginScreen();
                     LoginScreen.Show();
                     this.Close();
-
                 }
-            }catch (Exception ex){
+            }
+            catch (Exception ex){
                 this.LogError(ex);}
         }
 

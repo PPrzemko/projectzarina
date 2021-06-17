@@ -69,7 +69,7 @@ namespace projectzarina {
                         currentVersion = reader.ReadToEnd();
                     }
                     if(assemblyVersion == currentVersion) {
-                        UpdateStatus.Text = "SOFTWARE IS UP TO DATE";
+                        UpdateStatus.Text = "INDEV SOFTWARE IS UP TO DATE";
 
                     } else if(assemblyVersion != currentVersion) {
                         UpdateStatus.Text = " INDEV SOFTWARE IS OUTDATED. PLEASE UPDATE TO " + currentVersion;
