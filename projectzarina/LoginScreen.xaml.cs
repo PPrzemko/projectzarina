@@ -69,12 +69,14 @@ namespace projectzarina {
                         currentVersion = reader.ReadToEnd();
                     }
                     if(assemblyVersion == currentVersion) {
-                        UpdateStatus.Text = "INDEV SOFTWARE IS UP TO DATE";
+                        UpdateStatusBox.Text = "INDEV SOFTWARE IS UP TO DATE";
 
                     } else if(assemblyVersion != currentVersion) {
-                        UpdateStatus.Text = " INDEV SOFTWARE IS OUTDATED. PLEASE UPDATE TO " + currentVersion;
+                        UpdateStatusBox.Text = " INDEV SOFTWARE IS OUTDATED. PLEASE UPDATE TO " + currentVersion;
+                        DownloadBtn.Visibility = Visibility.Visible;
                     }  else {
-                        UpdateStatus.Text = "SOFTWARE VERSION COULD NOT BE CHECKED";
+                        UpdateStatusBox.Text = "SOFTWARE VERSION COULD NOT BE CHECKED";
+                        DownloadBtn.Visibility = Visibility.Visible;
                     }
                 } else{
                     url = "https://update.visualstatic.net/api/zarina-portable/stable";
@@ -88,11 +90,13 @@ namespace projectzarina {
                     }
 
                     if(assemblyVersion == currentVersion){
-                        UpdateStatus.Text = "SOFTWARE IS UP TO DATE";
+                        UpdateStatusBox.Text = "SOFTWARE IS UP TO DATE";
                     } else if(assemblyVersion != currentVersion){
-                        UpdateStatus.Text = "SOFTWARE IS OUTDATED. PLEASE UPDATE TO " + currentVersion;
+                        UpdateStatusBox.Text = "SOFTWARE IS OUTDATED. PLEASE UPDATE TO " + currentVersion;
+                        DownloadBtn.Visibility = Visibility.Visible;
                     } else {
-                        UpdateStatus.Text = "SOFTWARE VERSION COULD NOT BE CHECKED";
+                        UpdateStatusBox.Text = "SOFTWARE VERSION COULD NOT BE CHECKED";
+                        DownloadBtn.Visibility = Visibility.Visible;
                     }
                 }
 
@@ -118,6 +122,7 @@ namespace projectzarina {
         /// <param name="e"></param>
         private void Button_Click(object sender, RoutedEventArgs e) {
             try {
+                imgCircle.Visibility = Visibility.Visible;
                 string user = emailorusername.Text;
                 string passwd = password.Password;
                 postLogin(user, passwd);
@@ -133,15 +138,17 @@ namespace projectzarina {
             try {
                 if (File.Exists("UserSettings.xml")) {
                     var SettingXML = new Settings();
-                  
                     
+
                     string token = SettingXML.getValue("token");
                     if (token != "") {
                         if (String.Compare(token, "0") == 0 ){
+                            imgCircle.Visibility = Visibility.Visible;
                             var MainWindow = new MainWindow();
                             MainWindow.Show();
                             this.Close();
-                        }else { 
+                        }else {
+                            imgCircle.Visibility = Visibility.Visible;
                             // "Angemeldet" => Anmeldung vorher prüfen mittels Validierung (auth/validate)
                             string url = "https://zarina.visualstatic.net/api/auth/validate?application=" + application;
 
@@ -168,6 +175,9 @@ namespace projectzarina {
                                     var MainWindow = new MainWindow();
                                     MainWindow.Show();
                                     this.Close();
+                                }
+                                else{
+                                    imgCircle.Visibility = Visibility.Visible;
                                 }
                             } catch(Exception) {
                                 ErrorBox.Text = "API is offline";
@@ -205,6 +215,7 @@ namespace projectzarina {
                 dynamic json = JsonConvert.DeserializeObject(result);
 
                 if(json.success == "true") {
+                    imgCircle.Visibility = Visibility.Collapsed;
                     string token = json.unique_token;
 
                     var SettingXML = new Settings();
@@ -215,9 +226,16 @@ namespace projectzarina {
                     this.Close();
                 } else {
                     string feedback = json.errorMessage;
+                    imgCircle.Visibility = Visibility.Collapsed;
+                    ErrorBox.Text = "Try Again";
+                    emailorusername.BorderBrush = System.Windows.Media.Brushes.Red;
+                    password.BorderBrush = System.Windows.Media.Brushes.Red;
                 }
             } catch (Exception ex) {
                     this.LogError(ex);
+                imgCircle.Visibility = Visibility.Collapsed;
+                ErrorBox.Text = "Try Again";
+               
             }
 
         }
@@ -292,11 +310,9 @@ namespace projectzarina {
             this.Close();
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void DownloadBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            System.Diagnostics.Process.Start("https://zarina.visualstatic.net/downloads");
         }
-
-     
     }
 }

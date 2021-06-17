@@ -322,8 +322,8 @@ namespace projectzarina {
             try{
                 var SettingXML = new Settings();
                 string token = SettingXML.getValue("token");
-                int tokenint = Int16.Parse(SettingXML.getValue("token"));
-                if (tokenint != 0) { 
+                
+                if (String.Compare(token, "0") != 0 ) { 
                     if(token != "") {
 
                         // delete token in db
@@ -347,7 +347,7 @@ namespace projectzarina {
                     }
 
                 }
-                else if (tokenint == 0)
+                else if (String.Compare(token, "0") == 0)
                 {
                     // Weiterleitung auf Login & Token in XML löschen
                     SettingXML.updateValue("token", "");
