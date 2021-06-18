@@ -63,9 +63,9 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
-        <!-- NavButtons-->
-        <Style x:Key="NavButton" TargetType="{x:Type Button}">
-            <Setter Property="Foreground" Value="#8A8A8A"/>
+        <!-- ExitButton-->
+        <Style x:Key="ExitButton" TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="#212121"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
@@ -79,7 +79,29 @@
 
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Foreground" Value="#D3D3D3" />
+                    <Setter Property="Background" Value="#E81123" />
+                    <Setter Property="Cursor" Value="Hand"/>
+
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <!-- Minimize Button-->
+        <Style x:Key="MinimizeButton" TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="#212121"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#191919" />
                     <Setter Property="Cursor" Value="Hand"/>
 
                 </Trigger>
@@ -148,9 +170,9 @@
 
 
             <Button x:Name="MinimizeButton"    Content="    🗕    "
-                       Style="{StaticResource NavButton}"
+                       Style="{StaticResource MinimizeButton}"
                        
-                       Background="{x:Null}"
+                       Foreground="#8A8A8A"
                        BorderBrush="{x:Null}"
                        Grid.Column="10"
                        VerticalAlignment="Center"
@@ -158,10 +180,10 @@
                        HorizontalAlignment="Center"
                        FontFamily="fonts/#Roboto-Regular" Width="83" Click="MinimizeButton_Click" Height="19"
                        />
-            <Button x:Name="ExitProgramm"    Content="    ✖    "
-                       Style="{StaticResource NavButton}"
+            <Button x:Name="ExitProgramm"    Content="   ✕     "
+                       Style="{StaticResource ExitButton}"
                        
-                       Background="{x:Null}"
+                       Foreground="#8A8A8A"
                        BorderBrush="{x:Null}"
                        Grid.Column="11"
                        VerticalAlignment="Center"
