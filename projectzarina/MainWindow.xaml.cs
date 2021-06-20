@@ -227,7 +227,6 @@ namespace projectzarina {
             }catch (Exception ex){
             this.LogError(ex);}
         }
-            
 
 
 
@@ -242,6 +241,7 @@ namespace projectzarina {
             try{
                 await test.Dispatcher.BeginInvoke((Action)(() => test.AppendText("-----------------------------" + Environment.NewLine)));
                 await test.Dispatcher.BeginInvoke((Action)(() => test.AppendText(file + " wurde erstellt" + Environment.NewLine)));
+                await test.Dispatcher.BeginInvoke((Action)(() => test.ScrollToEnd()));
                 string url = "https://zarina.visualstatic.net/api/forms/upload?application=" + application;
 
                 var config = new Settings();
@@ -296,7 +296,9 @@ namespace projectzarina {
                 await test.Dispatcher.BeginInvoke((Action)(() => test.AppendText( result + Environment.NewLine)));
                 await test.Dispatcher.BeginInvoke((Action)(() => test.AppendText("-----------------------------" + Environment.NewLine)));
                 await test.Dispatcher.BeginInvoke((Action)(() => test.ScrollToEnd()));
-            }catch (Exception ex){
+                
+            }
+            catch (Exception ex){
                 this.LogError(ex);}
         }
 
@@ -362,41 +364,26 @@ namespace projectzarina {
         }
 
 
-
-
-        // Dragon Drop Funktion
-        private void Grid_MouseDown(object sender, MouseButtonEventArgs e) {
-            try{
-                if (e.LeftButton == MouseButtonState.Pressed) {
-                    DragMove();
-                }
-            }catch (Exception ex){
-                this.LogError(ex);}
+        /// <summary>
+        /// Function to display text in Activity log
+        /// </summary>
+        /// <param name="content"> content to display in activity log</param>
+        /// <param name="scroll">scrolls to end if true</param>
+        private async void LogToConsole(String content, bool scroll){
+            if (scroll == false){
+                await test.Dispatcher.BeginInvoke((Action)(() => test.AppendText(content + Environment.NewLine)));
+            }
+            else if (scroll == true){
+                await test.Dispatcher.BeginInvoke((Action)(() => test.AppendText(content + Environment.NewLine)));
+                await test.Dispatcher.BeginInvoke((Action)(() => test.ScrollToEnd()));
+            }
         }
-
-        // Exit Button
-        private void ExitProgramm_Click(object sender, RoutedEventArgs e) {
-            try{
-                this.Close();
-            }catch (Exception ex){
-                this.LogError(ex);}
-        }
-
-        // Minimize Button
-        private void MinimizeButton_Click(object sender, RoutedEventArgs e) {
-            try{
-                WindowState = WindowState.Minimized;
-             }catch (Exception ex){
-                this.LogError(ex);}
-        }
-        
 
         /// <summary>
         /// catches every exception and logs it to a file
         /// </summary>
         /// <param name="ex"> handed from any catch Exception</param>
-        private void LogError(Exception ex)
-        {
+        private void LogError(Exception ex){
             string message = string.Format("Time: {0}", DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss tt"));
             message += Environment.NewLine;
             message += "-----------------------------------------------------------";
@@ -433,6 +420,31 @@ namespace projectzarina {
         private void Statsbutton(object sender, RoutedEventArgs e)
         {
             
+        }
+         // Dragon Drop Funktion
+        private void Grid_MouseDown(object sender, MouseButtonEventArgs e) {
+            try{
+                if (e.LeftButton == MouseButtonState.Pressed) {
+                    DragMove();
+                }
+            }catch (Exception ex){
+                this.LogError(ex);}
+        }
+
+        // Exit Button
+        private void ExitProgramm_Click(object sender, RoutedEventArgs e) {
+            try{
+                this.Close();
+            }catch (Exception ex){
+                this.LogError(ex);}
+        }
+
+        // Minimize Button
+        private void MinimizeButton_Click(object sender, RoutedEventArgs e) {
+            try{
+                WindowState = WindowState.Minimized;
+             }catch (Exception ex){
+                this.LogError(ex);}
         }
     }
 }
