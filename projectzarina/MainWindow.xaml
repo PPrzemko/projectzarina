@@ -103,7 +103,7 @@
 
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="BorderBrush" Value="#4E4E4E" />
+                    <Setter Property="Background" Value="#4E4E4E" />
                     <Setter Property="Cursor" Value="Hand"/>
 
                 </Trigger>

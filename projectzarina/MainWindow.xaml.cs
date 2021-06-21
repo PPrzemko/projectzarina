@@ -296,7 +296,7 @@ namespace projectzarina {
                 await test.Dispatcher.BeginInvoke((Action)(() => test.AppendText( result + Environment.NewLine)));
                 await test.Dispatcher.BeginInvoke((Action)(() => test.AppendText("-----------------------------" + Environment.NewLine)));
                 await test.Dispatcher.BeginInvoke((Action)(() => test.ScrollToEnd()));
-                
+               
             }
             catch (Exception ex){
                 this.LogError(ex);}
@@ -369,7 +369,7 @@ namespace projectzarina {
         /// </summary>
         /// <param name="content"> content to display in activity log</param>
         /// <param name="scroll">scrolls to end if true</param>
-        private async void LogToConsole(String content, bool scroll){
+        private async void OutputToConsole(String content, bool scroll){
             if (scroll == false){
                 await test.Dispatcher.BeginInvoke((Action)(() => test.AppendText(content + Environment.NewLine)));
             }
