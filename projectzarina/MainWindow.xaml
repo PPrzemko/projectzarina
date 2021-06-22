@@ -109,9 +109,12 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
-
-
-
+        <!--- Activity Background-->
+        <LinearGradientBrush x:Key="ActivityBg" StartPoint="0,1" EndPoint="0,0">
+            <GradientStop Color="#111111" Offset="0"/>
+            <GradientStop Color="#202020" Offset="0.9"/>
+        </LinearGradientBrush>
+       
 
 
 
@@ -197,7 +200,7 @@
         <Button Style="{StaticResource ButtonsTOP}" Content="Logout" HorizontalAlignment="Left" Margin="797,64,0,0" Grid.Row="1" VerticalAlignment="Top" Width="129" Click="logoutButton" Background="{x:Null}" BorderBrush="{x:Null}" Height="48" FontFamily="/projectzarina;component/fonts/#Roboto" FontSize="20"/>
         <Button Style="{StaticResource ButtonsTOP}" Content="STATISTICS" HorizontalAlignment="Left" Margin="489,64,0,0" Grid.Row="1" VerticalAlignment="Top" Width="129" Click="Statsbutton" Background="{x:Null}" BorderBrush="{x:Null}" Height="48" FontFamily="/projectzarina;component/fonts/#Roboto" FontSize="20"/>
         <Button Style="{StaticResource ButtonsTOP}" Content="MY ACCOUNT" HorizontalAlignment="Left" Margin="648,64,0,0" Grid.Row="1" VerticalAlignment="Top" Width="144" Click="MyAccountbutton" Background="{x:Null}" BorderBrush="{x:Null}" Height="48" FontFamily="/projectzarina;component/fonts/#Roboto" FontSize="20"/>
-        <TextBox x:Name="test" HorizontalAlignment="Left" Height="237" Margin="50,112,0,0" Grid.Row="1" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="876" Foreground="White" Background="#202020" BorderBrush="#4E4E4E" RenderTransformOrigin="0.353,0.123" IsReadOnly="True"/>
+        <TextBox Style="{StaticResource test}" x:Name="test" HorizontalAlignment="Left" Height="237" Margin="50,112,0,0" Grid.Row="1" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="876" Foreground="White" Background="{StaticResource ActivityBg}" BorderBrush="#4E4E4E" BorderThickness="2" RenderTransformOrigin="0.353,0.123" IsReadOnly="True"/>
         <CheckBox x:Name="NotificationCheckbox" Content="Notify me on successful&#xD;&#xA;screenshot submission" HorizontalAlignment="Left" Margin="19,392,0,0" Grid.Row="1" VerticalAlignment="Top" Height="39" Width="161" Foreground="White" Checked="NotificationCheckbox_Checked"/>
         <Label Content="ACTIVITY LOG" HorizontalAlignment="Left" Margin="50,55,0,0" Grid.Row="1" VerticalAlignment="Top" Foreground="#D8C389" FontSize="28" FontFamily="/projectzarina;component/fonts/#Roboto" Height="70" Width="199"/>
         <Label Content="NOTIFICATIONS" HorizontalAlignment="Left" Margin="19,364,0,0" Grid.Row="1" VerticalAlignment="Top" FontFamily="/projectzarina;component/fonts/#Roboto" FontSize="11" Foreground="#8A8A8A" Height="23" Width="94"/>
