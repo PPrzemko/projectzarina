@@ -8,117 +8,19 @@
         Title="Zarina" Height="470" Width="1000"
         WindowStyle="None"
         ResizeMode="NoResize"
-        Background="#2B2B2B"
+        Background="#1a1a1a"
         Icon="images/well.png">
+
+
     <Window.Resources>
-        <!-- Login Style Button Account-->
-        <Style x:Key="ButtonsTOP" TargetType="{x:Type Button}">
-            <Setter Property="Foreground" Value="#8A8A8A"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Border Background="{TemplateBinding Background}">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Foreground" Value="white" />
-                    <Setter Property="Cursor" Value="Hand"/>
-
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-
-        <!-- Console Ooutput-->
-        <LinearGradientBrush x:Key="ConsoleBackground" StartPoint="0,1" EndPoint="0,0">
-            <GradientStop Color="#111111" Offset="0"/>
-            <GradientStop Color="#202020" Offset="0.9"/>
-        </LinearGradientBrush>
-        <Style x:Key="ConsoleOutput" TargetType="{x:Type TextBox}">
-            <Setter Property="Background" Value="{StaticResource ConsoleBackground}"/>
-            <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="BorderBrush" Value="#4E4E4E" />
-            <Setter Property="Foreground" Value="White" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type TextBox}">
-                        <Border Background="{TemplateBinding Background}">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="BorderThickness" Value="1" />
-                    <Setter Property="BorderBrush" Value="#4E4E4E" />
-                    <Setter Property="Foreground" Value="White" />
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-        <!-- ExitButton-->
-        <Style x:Key="ExitButton" TargetType="{x:Type Button}">
-            <Setter Property="Background" Value="#212121"/>
-            <Setter Property="Foreground" Value="#8A8A8A"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Border Background="{TemplateBinding Background}">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#E81123" />
-                    <Setter Property="Foreground" Value="White" />
-                    <Setter Property="Cursor" Value="Hand"/>
-
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-        <!-- Minimize Button-->
-        <Style x:Key="MinimizeButton" TargetType="{x:Type Button}">
-            <Setter Property="Background" Value="#212121"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Border Background="{TemplateBinding Background}">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#4E4E4E" />
-                    <Setter Property="Cursor" Value="Hand"/>
-
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-        <!--- Activity Background-->
-        <LinearGradientBrush x:Key="ActivityBg" StartPoint="0,1" EndPoint="0,0">
-            <GradientStop Color="#111111" Offset="0"/>
-            <GradientStop Color="#202020" Offset="0.9"/>
-        </LinearGradientBrush>
-       
-
-
-
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="MainStyle.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Window.Resources>
+
+    
     <Grid>
         <Grid.Background>
             <ImageBrush ImageSource="/images/well.png" Stretch="Fill" />
@@ -150,9 +52,6 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-
-
-
             <Rectangle Grid.Column="11" Grid.RowSpan="1000">
                 <Rectangle.Fill>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -167,10 +66,6 @@
                     </LinearGradientBrush>
                 </Rectangle.Fill>
             </Rectangle>
-
-
-
-
 
 
             <Button x:Name="MinimizeButton"    Content="    🗕    "
@@ -193,20 +88,22 @@
                        />
         </Grid>
 
-        <Button x:Name="nameassignPath" Content="BROWSE" HorizontalAlignment="Left" Margin="700,392,0,0" Grid.Row="1" VerticalAlignment="Top" Width="74" Click="assignPath" Foreground="White" Background="#363636" BorderBrush="{x:Null}" Height="37" />
-        <TextBox x:Name="TextScreenshotPath" HorizontalAlignment="Left" Height="37" Margin="185,392,0,0" Grid.Row="1" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="496" Background="#1B1B1B" Foreground="White" IsEnabled="True"/>
-        <Button x:Name="Button_SaveSettings" Content="SAVE" HorizontalAlignment="Left" Margin="804,386,0,0" Grid.Row="1" VerticalAlignment="Top" Width="122" Click="saveScreenshotPath" Foreground="Black" Background="#BDAD81" BorderBrush="{x:Null}" FontFamily="/projectzarina;component/fonts/#Roboto" Height="51"/>
-        <Label x:Name="SaveMessage" Content="" HorizontalAlignment="Left" Margin="185,354,0,0" Grid.Row="1" VerticalAlignment="Top" Foreground="White" Width="496" Height="33"/>
-        <Button Style="{StaticResource ButtonsTOP}" Content="Logout" HorizontalAlignment="Left" Margin="797,64,0,0" Grid.Row="1" VerticalAlignment="Top" Width="129" Click="logoutButton" Background="{x:Null}" BorderBrush="{x:Null}" Height="48" FontFamily="/projectzarina;component/fonts/#Roboto" FontSize="20"/>
-        <Button Style="{StaticResource ButtonsTOP}" Content="STATISTICS" HorizontalAlignment="Left" Margin="489,64,0,0" Grid.Row="1" VerticalAlignment="Top" Width="129" Click="Statsbutton" Background="{x:Null}" BorderBrush="{x:Null}" Height="48" FontFamily="/projectzarina;component/fonts/#Roboto" FontSize="20"/>
-        <Button Style="{StaticResource ButtonsTOP}" Content="MY ACCOUNT" HorizontalAlignment="Left" Margin="648,64,0,0" Grid.Row="1" VerticalAlignment="Top" Width="144" Click="MyAccountbutton" Background="{x:Null}" BorderBrush="{x:Null}" Height="48" FontFamily="/projectzarina;component/fonts/#Roboto" FontSize="20"/>
-        <TextBox Style="{StaticResource test}" x:Name="test" HorizontalAlignment="Left" Height="237" Margin="50,112,0,0" Grid.Row="1" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="876" Foreground="White" Background="{StaticResource ActivityBg}" BorderBrush="#4E4E4E" BorderThickness="2" RenderTransformOrigin="0.353,0.123" IsReadOnly="True"/>
-        <CheckBox x:Name="NotificationCheckbox" Content="Notify me on successful&#xD;&#xA;screenshot submission" HorizontalAlignment="Left" Margin="19,392,0,0" Grid.Row="1" VerticalAlignment="Top" Height="39" Width="161" Foreground="White" Checked="NotificationCheckbox_Checked"/>
-        <Label Content="ACTIVITY LOG" HorizontalAlignment="Left" Margin="50,55,0,0" Grid.Row="1" VerticalAlignment="Top" Foreground="#D8C389" FontSize="28" FontFamily="/projectzarina;component/fonts/#Roboto" Height="70" Width="199"/>
-        <Label Content="NOTIFICATIONS" HorizontalAlignment="Left" Margin="19,364,0,0" Grid.Row="1" VerticalAlignment="Top" FontFamily="/projectzarina;component/fonts/#Roboto" FontSize="11" Foreground="#8A8A8A" Height="23" Width="94"/>
+        <Button x:Name="nameassignPath" Content="BROWSE" HorizontalAlignment="Left" Margin="713,379,0,0" Grid.Row="1" VerticalAlignment="Top" Width="74" Click="assignPath" Foreground="#848484" Background="{StaticResource BrowseBg}" BorderBrush="{x:Null}" Height="37" />
+        <TextBox x:Name="TextScreenshotPath" HorizontalAlignment="Left" Height="37" Margin="232,379,0,0" Grid.Row="1" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="466" Background="{StaticResource ActivityBg}" BorderBrush="#4E4E4E" Foreground="White" IsEnabled="True"/>
+        <Button x:Name="Button_SaveSettings" Content="SAVE" HorizontalAlignment="Left" Margin="819,380,0,0" Grid.Row="1" VerticalAlignment="Top" Width="122" Click="saveScreenshotPath" Foreground="Black" Background="{StaticResource SaveBg}" BorderBrush="{x:Null}" FontFamily="/projectzarina;component/fonts/#Roboto" Height="36"/>
+        <Label x:Name="SaveMessage" Content="" HorizontalAlignment="Left" Margin="320,345,0,0" Grid.Row="1" VerticalAlignment="Top" Foreground="White" Width="343" Height="23"/>
+        <Button Style="{StaticResource ButtonsTOP}" Content="Logout" HorizontalAlignment="Left" Margin="812,24,0,0" Grid.Row="1" VerticalAlignment="Top" Width="129" Click="logoutButton" Background="{x:Null}" BorderBrush="{x:Null}" Height="48" FontFamily="/projectzarina;component/fonts/#Roboto" FontSize="20"/>
+        <Button Style="{StaticResource ButtonsTOP}" Content="STATISTICS" HorizontalAlignment="Left" Margin="534,24,0,0" Grid.Row="1" VerticalAlignment="Top" Width="129" Click="Statsbutton" Background="{x:Null}" BorderBrush="{x:Null}" Height="48" FontFamily="/projectzarina;component/fonts/#Roboto" FontSize="20"/>
+        <Button Style="{StaticResource ButtonsTOP}" Content="MY ACCOUNT" HorizontalAlignment="Left" Margin="668,24,0,0" Grid.Row="1" VerticalAlignment="Top" Width="144" Click="MyAccountbutton" Background="{x:Null}" BorderBrush="{x:Null}" Height="48" FontFamily="/projectzarina;component/fonts/#Roboto" FontSize="20"/>
+        <TextBox x:Name="test" HorizontalAlignment="Left" Height="259" Margin="50,72,0,0" Grid.Row="1" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="891" Foreground="White" Background="{StaticResource ActivityBg}" BorderBrush="#4E4E4E" BorderThickness="2" RenderTransformOrigin="0.353,0.123" IsReadOnly="True"/>
+        <CheckBox Background="{x:Null}" x:Name="NotificationCheckbox" Content="" HorizontalAlignment="Left" Margin="50,379,0,0" Grid.Row="1" VerticalAlignment="Top" Height="16" Width="18" Foreground="#707070" Checked="NotificationCheckbox_Checked"/>
+        <Label Content="ACTIVITY LOG" HorizontalAlignment="Left" Margin="50,24,0,0" Grid.Row="1" VerticalAlignment="Top" Foreground="#D8C389" FontSize="28" FontFamily="/projectzarina;component/fonts/#Roboto" Height="48" Width="199"/>
+        <Label Content="NOTIFICATIONS" HorizontalAlignment="Left" Margin="50,351,0,0" Grid.Row="1" VerticalAlignment="Top" FontFamily="/projectzarina;component/fonts/#Roboto" FontSize="11" Foreground="#8A8A8A" Height="23" Width="94"/>
+        <Label Content="SCREENSHOTS PATH" HorizontalAlignment="Left" Margin="232,351,0,0" Grid.Row="1" VerticalAlignment="Top" FontFamily="/projectzarina;component/fonts/#Roboto" FontSize="11" Foreground="#8A8A8A" Height="23" Width="130"/>
+        <Label Foreground="#676767" Content="Notify me on successful&#xA;screenshot submission" HorizontalAlignment="Left" Margin="73,380,0,0" Grid.Row="1" VerticalAlignment="Top" FontFamily="/projectzarina;component/fonts/#Roboto" FontSize="11" Height="36" Width="129"/>
 
 
-
+      
 
     </Grid>
 </Window>

@@ -99,7 +99,15 @@
       <DependentUpon>LoginScreen.xaml</DependentUpon>
     </Compile>
     <Compile Include="Settings.cs" />
+    <Page Include="LoginStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="LoginScreen.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
