@@ -11,6 +11,7 @@ using System.Xml;
 using System.Reflection;
 using System.Net;
 using Windows.UI.Xaml.Input;
+using System.Threading.Tasks;
 
 namespace projectzarina {
 
@@ -123,6 +124,13 @@ namespace projectzarina {
         private void Button_Click(object sender, RoutedEventArgs e) {
             try {
                 imgCircle.Visibility = Visibility.Visible;
+                emailorusernametxt.Visibility = Visibility.Hidden;
+                emailorusername.Visibility = Visibility.Hidden;
+                passwordtxt.Visibility = Visibility.Hidden;
+                password.Visibility = Visibility.Hidden;
+                SignInBtn.Visibility = Visibility.Hidden;
+                GuestBtn.Visibility = Visibility.Hidden;
+
                 string user = emailorusername.Text;
                 string passwd = password.Password;
                 postLogin(user, passwd);
@@ -198,6 +206,7 @@ namespace projectzarina {
         /// <param name="passwd"></param>
         private async void postLogin(string user, string passwd) {
             try {
+                await Task.Delay(800);
                 string url = "https://zarina.visualstatic.net/api/auth/signin?application=" + application;
 
                 HttpClient client = new HttpClient();
@@ -216,6 +225,12 @@ namespace projectzarina {
 
                 if(json.success == "true") {
                     imgCircle.Visibility = Visibility.Collapsed;
+                    emailorusernametxt.Visibility = Visibility.Visible;
+                    emailorusername.Visibility = Visibility.Visible;
+                    passwordtxt.Visibility = Visibility.Visible;
+                    password.Visibility = Visibility.Visible;
+                    SignInBtn.Visibility = Visibility.Visible;
+                    GuestBtn.Visibility = Visibility.Visible;
                     string token = json.unique_token;
 
                     var SettingXML = new Settings();
@@ -227,13 +242,29 @@ namespace projectzarina {
                 } else {
                     string feedback = json.errorMessage;
                     imgCircle.Visibility = Visibility.Collapsed;
+                    emailorusernametxt.Visibility = Visibility.Visible;
+                    emailorusername.Visibility = Visibility.Visible;
+                    passwordtxt.Visibility = Visibility.Visible;
+                    password.Visibility = Visibility.Visible;
+                    SignInBtn.Visibility = Visibility.Visible;
+                    GuestBtn.Visibility = Visibility.Visible;
+                    emailorusername.Text = user;
+                    password.Password = "";
                     ErrorBox.Text = "Try Again";
-                    emailorusername.BorderBrush = System.Windows.Media.Brushes.Red;
-                    password.BorderBrush = System.Windows.Media.Brushes.Red;
+                    /// emailorusername.BorderBrush = System.Windows.Media.Brushes.Red;
+                    /// password.BorderBrush = System.Windows.Media.Brushes.Red;
                 }
             } catch (Exception ex) {
                     this.LogError(ex);
                 imgCircle.Visibility = Visibility.Collapsed;
+                emailorusernametxt.Visibility = Visibility.Visible;
+                emailorusername.Visibility = Visibility.Visible;
+                passwordtxt.Visibility = Visibility.Visible;
+                password.Visibility = Visibility.Visible;
+                SignInBtn.Visibility = Visibility.Visible;
+                GuestBtn.Visibility = Visibility.Visible;
+                emailorusername.Text = user;
+                password.Password = "";
                 ErrorBox.Text = "Try Again";
                
             }

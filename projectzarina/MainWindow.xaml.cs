@@ -24,7 +24,7 @@ namespace projectzarina {
 
         protected string application = "MdhfE1eJ2L59n3mG3EPWQ23CIw4C5aUH";
         protected bool restartRequired = false;
-
+        protected int lol = 0;
 
         /// <summary>
         /// MainWindow
@@ -185,11 +185,11 @@ namespace projectzarina {
                     Button_SaveSettings.IsEnabled = false;
                     nameassignPath.IsEnabled = false;
                     NotificationCheckbox.IsEnabled = false;
-                    SaveMessage.Content = "Path has been updated. Please restart Application";
+                    OutputToConsole("Path has been updated. Please restart Application", true);
                 }
                 else
                 {
-                    SaveMessage.Content = "There is nothing to save1";
+                    OutputToConsole("There is nothing to save1", true);
                 }
 
 
@@ -198,11 +198,12 @@ namespace projectzarina {
                     SettingXML.updateValue("Notification", "1");
                     if (currentXMLpath != screenshotPath)
                     {
-                        SaveMessage.Content = "You will now receive Notification. Path has been updated. Please restart Application";
+                        OutputToConsole("You will now receive Notification. Path has been updated. Please restart Application", true);
+
                     }
                     else
                     {
-                        SaveMessage.Content = "You will now receive Notification.";
+                        OutputToConsole("You will now receive Notification.", true);
                     }
 
                 }
@@ -211,11 +212,11 @@ namespace projectzarina {
                     SettingXML.updateValue("Notification", "0");
                     if (currentXMLpath != screenshotPath)
                     {
-                        SaveMessage.Content = "You will no longer receive Notification. Path has been updated. Please restart Application";
+                        OutputToConsole("You will no longer receive Notification. Path has been updated. Please restart Application", true);
                     }
                     else
                     {
-                        SaveMessage.Content = "You will no longer receive Notification.";
+                        OutputToConsole("You will no longer receive Notification.", true);
                     }
                 }
                     /* else if(currentXMLpath != screenshotPath)
@@ -445,6 +446,17 @@ namespace projectzarina {
                 WindowState = WindowState.Minimized;
              }catch (Exception ex){
                 this.LogError(ex);}
+        }
+
+        private void ButtonLOL_Click(object sender, RoutedEventArgs e)
+        {
+            Console.WriteLine(this.lol);
+            this.lol = this.lol + 1;
+            if (this.lol == 10)
+            {
+                System.Diagnostics.Process.Start("https://youtu.be/dQw4w9WgXcQ");
+                this.lol = 0;
+            }
         }
     }
 }
