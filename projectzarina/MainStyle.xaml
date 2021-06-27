@@ -30,31 +30,30 @@
             <GradientStop Color="#111111" Offset="0"/>
             <GradientStop Color="#202020" Offset="0.9"/>
         </LinearGradientBrush>
-        <Style x:Key="ConsoleOutput" TargetType="{x:Type TextBox}">
-            <Setter Property="Background" Value="{StaticResource ConsoleBackground}"/>
-            <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="BorderBrush" Value="#4E4E4E" />
-            <Setter Property="Foreground" Value="White" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type TextBox}">
-                        <Border Background="{TemplateBinding Background}">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="BorderThickness" Value="1" />
-                    <Setter Property="BorderBrush" Value="#4E4E4E" />
-                    <Setter Property="Foreground" Value="White" />
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-        <!-- ExitButton-->
+    <Style TargetType="TextBox">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TextBox}">
+                    <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                        <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Opacity" TargetName="border" Value="0.56"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="BorderBrush" TargetName="border" Value="#858585"/>
+                        </Trigger>
+                        <Trigger Property="IsFocused" Value="true">
+                            <Setter Property="BorderBrush" TargetName="border" Value="#858585"/>
+                            <Setter Property="BorderThickness" TargetName="border" Value="1"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!-- ExitButton-->
         <Style x:Key="ExitButton" TargetType="{x:Type Button}">
             <Setter Property="Background" Value="#212121"/>
             <Setter Property="Foreground" Value="#8A8A8A"/>
@@ -105,16 +104,8 @@
             <GradientStop Color="#111111" Offset="0"/>
             <GradientStop Color="#202020" Offset="0.9"/>
         </LinearGradientBrush>
-        <!--- Save Background-->
-        <LinearGradientBrush x:Key="SaveBg" StartPoint="0,1" EndPoint="0,0">
-            <GradientStop Color="#776A42" Offset="0"/>
-            <GradientStop Color="#BDAD81" Offset="0.9"/>
-        </LinearGradientBrush>
-        <!--- Browse Background-->
-        <LinearGradientBrush x:Key="BrowseBg" StartPoint="0,1" EndPoint="0,0">
-            <GradientStop Color="#232323" Offset="0"/>
-            <GradientStop Color="#373737" Offset="0.9"/>
-        </LinearGradientBrush>
+        
+
 
 
 
@@ -172,6 +163,92 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
+
+
+
+
+
+
+    <!--- Save Background-->
+    <LinearGradientBrush x:Key="SaveBg" StartPoint="0,1" EndPoint="0,0">
+        <GradientStop Color="#776A42" Offset="0"/>
+        <GradientStop Color="#BDAD81" Offset="0.9"/>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="SaveBgHover" StartPoint="0,1" EndPoint="0,0">
+        <GradientStop Color="#776A42" Offset="0.4"/>
+        <GradientStop Color="#BDAD81" Offset="0.9"/>
+    </LinearGradientBrush>
+    <!--Save Button-->
+    <Style x:Key="SaveBtn" TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="{StaticResource SaveBg}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border Background="{TemplateBinding Background}">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{StaticResource SaveBgHover}" />
+                <Setter Property="Cursor" Value="Hand"/>
+
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+
+
+
+
+
+  
+    <!--- Browse Background-->
+    <LinearGradientBrush x:Key="BrowseBg" StartPoint="0,1" EndPoint="0,0">
+        <GradientStop Color="#232323" Offset="0"/>
+        <GradientStop Color="#373737" Offset="0.9"/>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="BrowseBgHover" StartPoint="0,1" EndPoint="0,0">
+        <GradientStop Color="#232323" Offset="0.4"/>
+        <GradientStop Color="#373737" Offset="0.9"/>
+    </LinearGradientBrush>
+    <!--Browse Button-->
+    <Style x:Key="BrowseBtn" TargetType="{x:Type Button}">
+        <Setter Property="Background" Value="{StaticResource BrowseBg}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border Background="{TemplateBinding Background}">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{StaticResource BrowseBgHover}" />
+                <Setter Property="Cursor" Value="Hand"/>
+
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+
+
+
+
+
+
+
+
+
 
 
 
