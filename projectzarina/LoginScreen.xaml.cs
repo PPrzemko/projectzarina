@@ -52,10 +52,12 @@ namespace projectzarina {
                     SettingXML.updateValue("Notification", "1");
                     SettingXML.updateValue("InDev", "0");
 
+
+
                 }
 
                 /** 
-                 * Automatic Updater
+                 * Automatic Version Check
                  */
                 string url = string.Empty;
                 int InDevStatus = 0;
@@ -194,6 +196,9 @@ namespace projectzarina {
                     }
 
                 }
+                else{
+                    
+                }
             } catch(Exception ex){
                 this.LogError(ex);
             }
@@ -202,45 +207,68 @@ namespace projectzarina {
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="user"></param>
-        /// <param name="passwd"></param>
+        /// <param name="user"> Username from Textbox</param>
+        /// <param name="passwd"> Password from Passwordbox</param>
         private async void postLogin(string user, string passwd) {
             try {
-                await Task.Delay(800);
-                string url = "https://zarina.visualstatic.net/api/auth/signin?application=" + application;
+                if (File.Exists("UserSettings.xml")){
+                    await Task.Delay(800);
+                    string url = "https://zarina.visualstatic.net/api/auth/signin?application=" + application;
 
-                HttpClient client = new HttpClient();
-                var values = new Dictionary<string, string> {
+                    HttpClient client = new HttpClient();
+                    var values = new Dictionary<string, string> {
                     { "user", user },
                     { "passwd", passwd }
-                };
+                    };
 
-                var content = new FormUrlEncodedContent(values);
-                var response = await client.PostAsync(url, content);
-                var result = response.Content.ReadAsStringAsync().Result;
+                    var content = new FormUrlEncodedContent(values);
+                    var response = await client.PostAsync(url, content);
+                    var result = response.Content.ReadAsStringAsync().Result;
 
 
-                // try catch server fehler 500
-                dynamic json = JsonConvert.DeserializeObject(result);
+                    // try catch server fehler 500
+                    dynamic json = JsonConvert.DeserializeObject(result);
 
-                if(json.success == "true") {
-                    imgCircle.Visibility = Visibility.Collapsed;
-                    emailorusernametxt.Visibility = Visibility.Visible;
-                    emailorusername.Visibility = Visibility.Visible;
-                    passwordtxt.Visibility = Visibility.Visible;
-                    password.Visibility = Visibility.Visible;
-                    SignInBtn.Visibility = Visibility.Visible;
-                    GuestBtn.Visibility = Visibility.Visible;
-                    string token = json.unique_token;
+                    if (json.success == "true"){
+                        imgCircle.Visibility = Visibility.Collapsed;
+                        emailorusernametxt.Visibility = Visibility.Visible;
+                        emailorusername.Visibility = Visibility.Visible;
+                        passwordtxt.Visibility = Visibility.Visible;
+                        password.Visibility = Visibility.Visible;
+                        SignInBtn.Visibility = Visibility.Visible;
+                        GuestBtn.Visibility = Visibility.Visible;
+                        string token = json.unique_token;
 
-                    var SettingXML = new Settings();
-                    SettingXML.updateValue("token", token);
-                    Console.WriteLine("token: " + token);
-                    var MainWindow = new MainWindow("Logged in as " + user);
-                    MainWindow.Show();
+                        var SettingXML = new Settings();
+                        SettingXML.updateValue("token", token);
+                        Console.WriteLine("token: " + token);
+                        var MainWindow = new MainWindow("Logged in as " + user);
+                        MainWindow.Show();
+                        this.Close();
+                    }
+                    else{
+                        string feedback = json.errorMessage;
+                        imgCircle.Visibility = Visibility.Collapsed;
+                        emailorusernametxt.Visibility = Visibility.Visible;
+                        emailorusername.Visibility = Visibility.Visible;
+                        passwordtxt.Visibility = Visibility.Visible;
+                        password.Visibility = Visibility.Visible;
+                        SignInBtn.Visibility = Visibility.Visible;
+                        GuestBtn.Visibility = Visibility.Visible;
+                        emailorusername.Text = user;
+                        password.Password = "";
+                        ErrorBox.Text = "Try Again";
+                        /// emailorusername.BorderBrush = System.Windows.Media.Brushes.Red;
+                        /// password.BorderBrush = System.Windows.Media.Brushes.Red;
+                    }
+                }
+                else{
+                    // if Usersettings.xml is not found = error
+                    MessageBox.Show("Do not start this application in a Zip archive");
                     this.Close();
-                } else {
-                    string feedback = json.errorMessage;
+                }
+            } catch (Exception ex) {
+                    this.LogError(ex);
                     imgCircle.Visibility = Visibility.Collapsed;
                     emailorusernametxt.Visibility = Visibility.Visible;
                     emailorusername.Visibility = Visibility.Visible;
@@ -251,21 +279,6 @@ namespace projectzarina {
                     emailorusername.Text = user;
                     password.Password = "";
                     ErrorBox.Text = "Try Again";
-                    /// emailorusername.BorderBrush = System.Windows.Media.Brushes.Red;
-                    /// password.BorderBrush = System.Windows.Media.Brushes.Red;
-                }
-            } catch (Exception ex) {
-                    this.LogError(ex);
-                imgCircle.Visibility = Visibility.Collapsed;
-                emailorusernametxt.Visibility = Visibility.Visible;
-                emailorusername.Visibility = Visibility.Visible;
-                passwordtxt.Visibility = Visibility.Visible;
-                password.Visibility = Visibility.Visible;
-                SignInBtn.Visibility = Visibility.Visible;
-                GuestBtn.Visibility = Visibility.Visible;
-                emailorusername.Text = user;
-                password.Password = "";
-                ErrorBox.Text = "Try Again";
                
             }
 

@@ -147,7 +147,8 @@ namespace projectzarina {
                 if (openFolder.ShowDialog() == CommonFileDialogResult.Ok){
                     TextScreenshotPath.Text = openFolder.FileName;
                 }else{
-                    MessageBox.Show("No Folder selected");
+                    //MessageBox.Show("No Folder selected");
+                    OutputToConsole("No Folder selcted", true);
                     return;
                 }
                 
