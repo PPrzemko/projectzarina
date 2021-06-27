@@ -17,6 +17,8 @@ using System.IO;
 using Newtonsoft.Json;
 using Microsoft.Toolkit.Uwp.Notifications;
 using Microsoft.WindowsAPICodePack.Dialogs;
+using System.Net;
+using System.Reflection;
 
 namespace projectzarina {
     
@@ -25,6 +27,7 @@ namespace projectzarina {
         protected string application = "MdhfE1eJ2L59n3mG3EPWQ23CIw4C5aUH";
         protected bool restartRequired = false;
         protected int lol = 0;
+        private string assemblyVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
         /// <summary>
         /// MainWindow
@@ -62,9 +65,74 @@ namespace projectzarina {
                 {
                     AutoRemChk.IsChecked = true;
                 }
+
                 createFSW();
 
-            }catch (Exception ex){
+
+
+                // Software version check output to activity log
+                string url = string.Empty;
+                int InDevStatus = 0;
+                InDevStatus = Int16.Parse(SettingXML.getValue("InDev"));
+                if (InDevStatus == 1)
+                {
+                    url = "https://update.visualstatic.net/api/zarina-portable/indev";
+                    string currentVersion = string.Empty;
+                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+                    using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                    using (Stream stream = response.GetResponseStream())
+                    using (StreamReader reader = new StreamReader(stream))
+                    {
+                        currentVersion = reader.ReadToEnd();
+                    }
+                    if (assemblyVersion == currentVersion)
+                    {
+                        OutputToConsole("INDEV SOFTWARE IS UP TO DATE", true);
+
+                    }
+                    else if (assemblyVersion != currentVersion)
+                    {
+                        OutputToConsole("INDEV SOFTWARE IS OUTDATED. PLEASE UPDATE TO " + currentVersion, true);
+                    }
+                    else
+                    {
+                        OutputToConsole("SOFTWARE VERSION COULD NOT BE CHECKED", true);
+                    }
+                }
+                else
+                {
+                    url = "https://update.visualstatic.net/api/zarina-portable/stable";
+
+                    string currentVersion = string.Empty;
+                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+                    using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                    using (Stream stream = response.GetResponseStream())
+                    using (StreamReader reader = new StreamReader(stream))
+                    {
+                        currentVersion = reader.ReadToEnd();
+                    }
+
+                    if (assemblyVersion == currentVersion)
+                    {
+                        OutputToConsole("SOFTWARE IS UP TO DATE", true);
+                    }
+                    else if (assemblyVersion != currentVersion)
+                    {
+                        OutputToConsole("SOFTWARE IS OUTDATED.PLEASE UPDATE TO " + currentVersion, true);
+                    }
+                    else
+                    {
+                        OutputToConsole("SOFTWARE VERSION COULD NOT BE CHECKED", true);
+
+                    }
+                }
+
+
+
+
+
+
+                }catch (Exception ex){
                 this.LogError(ex);}
         }
 
