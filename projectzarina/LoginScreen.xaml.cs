@@ -152,7 +152,7 @@ namespace projectzarina {
                     if (token != "") {
                         if (String.Compare(token, "0") == 0 ){
                             imgCircle.Visibility = Visibility.Visible;
-                            var MainWindow = new MainWindow();
+                            var MainWindow = new MainWindow("Auto: Logged in as Guest");
                             MainWindow.Show();
                             this.Close();
                         }else {
@@ -180,7 +180,7 @@ namespace projectzarina {
                             try {
                                 dynamic json = JsonConvert.DeserializeObject(result);
                                 if(json.success == "true") {
-                                    var MainWindow = new MainWindow();
+                                    var MainWindow = new MainWindow("Auto: Logged in as " + token);
                                     MainWindow.Show();
                                     this.Close();
                                 }
@@ -236,7 +236,7 @@ namespace projectzarina {
                     var SettingXML = new Settings();
                     SettingXML.updateValue("token", token);
                     Console.WriteLine("token: " + token);
-                    var MainWindow = new MainWindow();
+                    var MainWindow = new MainWindow("Logged in as " + user);
                     MainWindow.Show();
                     this.Close();
                 } else {
@@ -336,7 +336,7 @@ namespace projectzarina {
         private void CONTINUEASGUEST(object sender, RoutedEventArgs e) {
             var SettingXML = new Settings();
             SettingXML.updateValue("token", "0");
-            var MainWindow = new MainWindow();
+            var MainWindow = new MainWindow("Logged in as Guest");
             MainWindow.Show();
             this.Close();
         }

@@ -29,14 +29,31 @@ namespace projectzarina {
         /// <summary>
         /// MainWindow
         /// </summary>
-        public MainWindow() {
+        public MainWindow(string output) {
             try
             {
+
                 InitializeComponent();
+                OutputToConsole(output, true);
+                var SettingXML = new Settings();
+
+
+                // get and check token
+                string token = SettingXML.getValue("token");
+
+                if (String.Compare(token, "0") == 0)
+                {
+                    LogoutTxt.Content = "Login";
+
+                }
+
+
+
 
                 // get ScreenshotPath
-                var SettingXML = new Settings();
+
                 int Notification = Int16.Parse(SettingXML.getValue("Notification"));
+
                 if (Notification == 1)
                 {
                     NotificationCheckbox.IsChecked = true;
@@ -186,10 +203,13 @@ namespace projectzarina {
                     nameassignPath.IsEnabled = false;
                     NotificationCheckbox.IsEnabled = false;
                     OutputToConsole("Path has been updated. Please restart Application", true);
+                    var MainWindow = new MainWindow("Path has been updated.");
+                    MainWindow.Show();
+                    this.Close();
                 }
-                else
+                else if(currentXMLpath == screenshotPath & NotificationCheckbox.IsChecked == true & XMLNotification == 1)
                 {
-                    OutputToConsole("There is nothing to save1", true);
+                    OutputToConsole("There is nothing to save", true);
                 }
 
 
@@ -297,7 +317,20 @@ namespace projectzarina {
                 await test.Dispatcher.BeginInvoke((Action)(() => test.AppendText( result + Environment.NewLine)));
                 await test.Dispatcher.BeginInvoke((Action)(() => test.AppendText("-----------------------------" + Environment.NewLine)));
                 await test.Dispatcher.BeginInvoke((Action)(() => test.ScrollToEnd()));
-               
+
+
+                /*
+
+
+                await Task.Delay(3000);
+
+
+                if (File.Exists(fullPath))
+                {
+                    File.Delete(fullPath);
+                }
+                */
+
             }
             catch (Exception ex){
                 this.LogError(ex);}
