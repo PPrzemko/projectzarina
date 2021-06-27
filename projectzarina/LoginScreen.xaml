@@ -1,5 +1,6 @@
 ﻿<Window x:Class="projectzarina.LoginScreen"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:gif="http://wpfanimatedgif.codeplex.com"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -10,7 +11,7 @@
         ResizeMode="NoResize"
         Background="#1a1a1a"
         Icon="images/well.png"
-        xmlns:gif="http://wpfanimatedgif.codeplex.com"
+        WindowStartupLocation="Manual" 
         >
 
 

@@ -9,7 +9,9 @@
         WindowStyle="None"
         ResizeMode="NoResize"
         Background="#1a1a1a"
-        Icon="images/well.png">
+        Icon="images/well.png"
+        WindowStartupLocation="Manual" 
+        >
 
 
     <Window.Resources>
@@ -97,11 +99,13 @@
         <Button Style="{StaticResource ButtonsTOP}" Content="STATISTICS" HorizontalAlignment="Left" Margin="534,24,0,0" Grid.Row="1" VerticalAlignment="Top" Width="129" Click="Statsbutton" Background="{x:Null}" BorderBrush="{x:Null}" Height="48" FontFamily="/projectzarina;component/fonts/#Roboto" FontSize="20"/>
         <Button Style="{StaticResource ButtonsTOP}" Content="MY ACCOUNT" HorizontalAlignment="Left" Margin="668,24,0,0" Grid.Row="1" VerticalAlignment="Top" Width="144" Click="MyAccountbutton" Background="{x:Null}" BorderBrush="{x:Null}" Height="48" FontFamily="/projectzarina;component/fonts/#Roboto" FontSize="20"/>
         <TextBox x:Name="test" HorizontalAlignment="Left" Height="259" Margin="50,72,0,0" Grid.Row="1" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="891" Foreground="White" Background="{StaticResource ActivityBg}" BorderBrush="#4E4E4E" BorderThickness="2" RenderTransformOrigin="0.353,0.123" IsReadOnly="True"/>
-        <CheckBox Background="{x:Null}" x:Name="NotificationCheckbox" Content="" HorizontalAlignment="Left" Margin="50,380,0,0" Grid.Row="1" VerticalAlignment="Top" Height="14" Width="13" Foreground="#707070" Checked="NotificationCheckbox_Checked"/>
+        <CheckBox Background="{x:Null}" x:Name="NotificationCheckbox" Content="" HorizontalAlignment="Left" Margin="50,364,0,0" Grid.Row="1" VerticalAlignment="Top" Height="14" Width="13" Foreground="#707070" Checked="NotificationCheckbox_Checked"/>
         <Label Content="ACTIVITY LOG" HorizontalAlignment="Left" Margin="50,24,0,0" Grid.Row="1" VerticalAlignment="Top" Foreground="#D8C389" FontSize="28" FontFamily="/projectzarina;component/fonts/#Roboto" Height="48" Width="199"/>
-        <Label Content="NOTIFICATIONS" HorizontalAlignment="Left" Margin="50,351,0,0" Grid.Row="1" VerticalAlignment="Top" FontFamily="/projectzarina;component/fonts/#Roboto" FontSize="11" Foreground="#8A8A8A" Height="23" Width="92"/>
+        <Label Content="NOTIFICATIONS" HorizontalAlignment="Left" Margin="50,336,0,0" Grid.Row="1" VerticalAlignment="Top" FontFamily="/projectzarina;component/fonts/#Roboto" FontSize="11" Foreground="#8A8A8A" Height="23" Width="92"/>
         <Label Content="SCREENSHOTS PATH" HorizontalAlignment="Left" Margin="232,351,0,0" Grid.Row="1" VerticalAlignment="Top" FontFamily="/projectzarina;component/fonts/#Roboto" FontSize="11" Foreground="#8A8A8A" Height="23" Width="130"/>
-        <Label Foreground="#676767" Content="Notify me on successful&#xA;screenshot submission" HorizontalAlignment="Left" Margin="71,374,0,0" Grid.Row="1" VerticalAlignment="Top" FontFamily="/projectzarina;component/fonts/#Roboto" FontSize="11" Height="36" Width="129"/>
+        <Label Foreground="#676767" Content="Notify me on successful&#xA;screenshot submission" HorizontalAlignment="Left" Margin="71,359,0,0" Grid.Row="1" VerticalAlignment="Top" FontFamily="/projectzarina;component/fonts/#Roboto" FontSize="11" Height="36" Width="129"/>
+        <CheckBox Background="{x:Null}" x:Name="AutoRemChk" Content="" HorizontalAlignment="Left" Margin="50,410,0,0" Grid.Row="1" VerticalAlignment="Top" Height="14" Width="13" Foreground="#707070" Checked="AutoRemChk_Checked"/>
+        <Label Foreground="#676767" Content="Delete successful &#xD;&#xA;submissions" HorizontalAlignment="Left" Margin="68,400,0,0" Grid.Row="1" VerticalAlignment="Top" FontFamily="/projectzarina;component/fonts/#Roboto" FontSize="11" Height="36" Width="129"/>
 
 
 

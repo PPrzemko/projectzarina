@@ -44,14 +44,15 @@ namespace projectzarina {
                                 new XElement("token"),
                                 new XElement("ScreenshotPath"),
                                 new XElement("Notification"),
-                                new XElement("InDev")
+                                new XElement("InDev"),
+                                new XElement("AutoRem")
                             )
                         );
 
                     doc123.Save("UserSettings.xml");
                     SettingXML.updateValue("Notification", "1");
                     SettingXML.updateValue("InDev", "0");
-
+                    SettingXML.updateValue("AutoRem", "0");
 
 
                 }

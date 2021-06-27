@@ -53,12 +53,15 @@ namespace projectzarina {
                 // get ScreenshotPath
 
                 int Notification = Int16.Parse(SettingXML.getValue("Notification"));
-
+                int AutoRem = Int16.Parse(SettingXML.getValue("AutoRem"));
                 if (Notification == 1)
                 {
                     NotificationCheckbox.IsChecked = true;
                 }
-
+                if (AutoRem == 1)
+                {
+                    AutoRemChk.IsChecked = true;
+                }
                 createFSW();
 
             }catch (Exception ex){
@@ -184,9 +187,10 @@ namespace projectzarina {
         {
             try{
                 
-                var SettingXML = new Settings();
-                int XMLNotification = Int16.Parse(SettingXML.getValue("Notification"));
-                string currentXMLpath = SettingXML.getValue("ScreenshotPath") + @"\";
+                var config = new Settings();
+                int XMLNotification = Int16.Parse(config.getValue("Notification"));
+                string currentXMLpath = config.getValue("ScreenshotPath") + @"\";
+                int CurrentAutoRem = Int16.Parse(config.getValue("AutoRem"));
 
                 string screenshotPath = TextScreenshotPath.Text;
 
@@ -195,58 +199,74 @@ namespace projectzarina {
                     * 
                     * 
                     */
+                int SaveCounter = 0;
+
+                if (AutoRemChk.IsChecked == true & CurrentAutoRem == 0)
+                {
+                    config.updateValue("AutoRem", "1");
+                    OutputToConsole("Successful submitted pictures will now automatically be deleted.", true);
+                }
+                else if (AutoRemChk.IsChecked == false & CurrentAutoRem == 1)
+                {
+                    config.updateValue("AutoRem", "0");
+                    OutputToConsole("Successful submitted pictures will no longer be deleted.", true);
+                }
+                else
+                {
+                    SaveCounter = SaveCounter + 1;
+                }
+
+
+
+
+                if (NotificationCheckbox.IsChecked == true & XMLNotification == 0)
+                {
+                    config.updateValue("Notification", "1");
+                    OutputToConsole("You will now receive Notification.", true);
+                    
+
+                }
+                else if (NotificationCheckbox.IsChecked == false & XMLNotification == 1)
+                {
+                    config.updateValue("Notification", "0");
+                    OutputToConsole("You will no longer receive Notification.", true);
+
+                }
+                else
+                {
+                    SaveCounter = SaveCounter + 1;
+                }
+
+
+
+                // Path update
                 if (currentXMLpath != screenshotPath)
                 {
-                    SettingXML.updateValue("ScreenshotPath", screenshotPath);
+                    config.updateValue("ScreenshotPath", screenshotPath);
                     createFSW();
                     this.restartRequired = true;
                     Button_SaveSettings.IsEnabled = false;
                     nameassignPath.IsEnabled = false;
                     NotificationCheckbox.IsEnabled = false;
-                    OutputToConsole("Path has been updated. Please restart Application", true);
+                    OutputToConsole("Path has been updated.", true);
                     var MainWindow = new MainWindow("Path has been updated.");
                     MainWindow.Show();
                     this.Close();
                 }
-                else if(currentXMLpath == screenshotPath & NotificationCheckbox.IsChecked == true & XMLNotification == 1)
+                else
                 {
+                    SaveCounter = SaveCounter + 1;
+                }
+
+                // Display message if nothing is to save
+                if (SaveCounter == 3){
                     OutputToConsole("There is nothing to save", true);
+                    SaveCounter = 0;
                 }
 
 
-                if (NotificationCheckbox.IsChecked == true & XMLNotification == 0)
-                {
-                    SettingXML.updateValue("Notification", "1");
-                    if (currentXMLpath != screenshotPath)
-                    {
-                        OutputToConsole("You will now receive Notification. Path has been updated. Please restart Application", true);
-
-                    }
-                    else
-                    {
-                        OutputToConsole("You will now receive Notification.", true);
-                    }
-
-                }
-                else if (NotificationCheckbox.IsChecked == false & XMLNotification == 1)
-                {
-                    SettingXML.updateValue("Notification", "0");
-                    if (currentXMLpath != screenshotPath)
-                    {
-                        OutputToConsole("You will no longer receive Notification. Path has been updated. Please restart Application", true);
-                    }
-                    else
-                    {
-                        OutputToConsole("You will no longer receive Notification.", true);
-                    }
-                }
-                    /* else if(currentXMLpath != screenshotPath)
-                    {
-                        SaveMessage.Content = "There is nothing to save2";
-                    } */
-
-
-            }catch (Exception ex){
+            }
+            catch (Exception ex){
             this.LogError(ex);}
         }
 
@@ -300,15 +320,8 @@ namespace projectzarina {
 
                 // Windows Notification
 
-                int notification = Int16.Parse(config.getValue("Notification"));
-                if(notification == 1) {
-                    new ToastContentBuilder()
-                        .AddArgument("action", "viewConversation")
-                        .AddArgument("conversationId", 9813)
-                        .AddText("Your Stats have been updated")
-                        .AddText(file + " has been uploaded")
-                        .Show();
-                }
+               
+                
 
                 string time = DateTime.Now.ToString("HH:mm tt");
 
@@ -320,16 +333,91 @@ namespace projectzarina {
                 await test.Dispatcher.BeginInvoke((Action)(() => test.ScrollToEnd()));
 
 
-                /*
+
+                int notification = Int16.Parse(config.getValue("Notification"));
+                int AutoRem = Int16.Parse(config.getValue("AutoRem"));
+               
+              
+
+                dynamic json = JsonConvert.DeserializeObject(result);
+                if (AutoRem == 1) { 
+                    if (json.invalid == "false"){
+                        await Task.Delay(3000);
 
 
-                await Task.Delay(3000);
+                        if (File.Exists(fullPath))
+                        {
+                            File.Delete(fullPath);
+                        }
+                        await Task.Delay(1000);
 
+                        if (!File.Exists(fullPath))
+                        {
 
-                if (File.Exists(fullPath))
-                {
-                    File.Delete(fullPath);
+                            if (token != ""){
+                                if (String.Compare(token, "0") == 0)
+                                {
+                                    OutputToConsole("Picture deleted", true);
+                                    new ToastContentBuilder()
+                                    .AddText("Public Stats have been updated")
+                                    .AddText(file + " has been uploaded")
+                                    .Show();
+                                }
+                                else
+                                {
+                                    OutputToConsole("Picture deleted", true);
+                                    new ToastContentBuilder()
+                                   .AddText("Your personalized Profile Stats have been updated")
+                                   .AddText(file + " has been uploaded")
+                                   .Show();
+
+                                }
+                            } 
+                        }
+                        else
+                        {
+                            OutputToConsole("an error occurred removing the picture.", true);
+                        }
+                    }
+                    else{
+                            OutputToConsole("!!!!!!!!!!!!!!!!!!!!!!!!!!!", true);
+                            OutputToConsole("Picture is not an Endgame Screenshot", true);
+                            OutputToConsole("!!!!!!!!!!!!!!!!!!!!!!!!!!!", true);
+                        }
                 }
+                
+          
+
+
+
+
+                /*
+               if (notification == 1)
+                                {
+                                    new ToastContentBuilder()
+                                        .AddArgument("action", "viewConversation")
+                                        .AddArgument("conversationId", 9813)
+                                        .AddText("Your Stats have been updated")
+                                        .AddText(file + " has been uploaded")
+                                        .Show();
+                                }
+               
+
+
+
+
+                  if (token != "")
+                {
+                    if (String.Compare(token, "0") == 0)
+                    {
+
+
+
+
+
+
+
+
                 */
 
             }
@@ -445,6 +533,10 @@ namespace projectzarina {
         {
             Console.WriteLine("NotInUse");
         }
+        private void AutoRemChk_Checked(object sender, RoutedEventArgs e)
+        {
+            Console.WriteLine("NotInUse");
+        }
 
         private void MyAccountbutton(object sender, RoutedEventArgs e)
         {
@@ -492,5 +584,7 @@ namespace projectzarina {
                 this.lol = 0;
             }
         }
+
+      
     }
 }
