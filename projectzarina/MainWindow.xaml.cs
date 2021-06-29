@@ -404,8 +404,8 @@ namespace projectzarina {
 
                 int notification = Int16.Parse(config.getValue("Notification"));
                 int AutoRem = Int16.Parse(config.getValue("AutoRem"));
-               
-              
+                string path = config.getValue("ScreenshotPath");
+
 
                 dynamic json = JsonConvert.DeserializeObject(result);
                 if (AutoRem == 1) { 
@@ -416,6 +416,10 @@ namespace projectzarina {
                         if (File.Exists(fullPath))
                         {
                             File.Delete(fullPath);
+                            if(File.Exists(path+ @"\thumbnails\" + file))
+                            {
+                                File.Delete(path + @"\thumbnails\" + file);
+                            }
                         }
                         await Task.Delay(1000);
 
