@@ -79,7 +79,7 @@
 
 
 
-            <Button x:Name="MinimizeButton"    Content="    🗕    "
+            <Button x:Name="MinimizeButton"    Content="    —    "
                        Style="{StaticResource MinimizeButton}"
                        
                        Foreground="#8A8A8A"

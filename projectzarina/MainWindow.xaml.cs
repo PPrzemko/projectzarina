@@ -349,9 +349,8 @@ namespace projectzarina {
         /// <param name="fullPath"> Gets Path from OnCreated</param>
         private async void uploadImage(string file, string fullPath) {
             try{
-                await test.Dispatcher.BeginInvoke((Action)(() => test.AppendText("-----------------------------" + Environment.NewLine)));
-                await test.Dispatcher.BeginInvoke((Action)(() => test.AppendText(file + " wurde erstellt" + Environment.NewLine)));
-                await test.Dispatcher.BeginInvoke((Action)(() => test.ScrollToEnd()));
+                OutputToConsole("-----------------------------", true);
+                OutputToConsole(file + " wurde erstellt", true);
                 string url = "https://zarina.visualstatic.net/api/forms/upload?application=" + application;
 
                 var config = new Settings();
@@ -388,17 +387,22 @@ namespace projectzarina {
 
                 // Windows Notification
 
-               
-                
+
 
                 string time = DateTime.Now.ToString("HH:mm tt");
 
-
-                await test.Dispatcher.BeginInvoke((Action)(() => test.AppendText(time + ":  " + file + " has been submitted to your statistics" + Environment.NewLine)));
                 // DEBUG
-                await test.Dispatcher.BeginInvoke((Action)(() => test.AppendText( result + Environment.NewLine)));
-                await test.Dispatcher.BeginInvoke((Action)(() => test.AppendText("-----------------------------" + Environment.NewLine)));
-                await test.Dispatcher.BeginInvoke((Action)(() => test.ScrollToEnd()));
+                OutputToConsole(time + ":  " + file + " has been submitted to your statistics", true);
+
+
+
+                foreach (char token2 in result)
+                {
+                    
+                }
+                OutputToConsole(result, true);
+                OutputToConsole("-----------------------------", true);
+                /// await test.Dispatcher.BeginInvoke((Action)(() => test.ScrollToEnd()));
 
 
 
@@ -421,44 +425,61 @@ namespace projectzarina {
                                 File.Delete(path + @"\thumbnails\" + file);
                             }
                         }
+
                         await Task.Delay(1000);
 
-                        if (!File.Exists(fullPath))
-                        {
+                        
+                        if (token != ""){
+                            if (String.Compare(token, "0") == 0)
+                            {
+                                OutputToConsole("Picture deleted", true);
+                                new ToastContentBuilder()
+                                .AddText("Public Stats have been updated")
+                                .AddText(file + " has been uploaded")
+                                .Show();
+                            }
+                            else
+                            {
+                                OutputToConsole("Picture deleted", true);
+                                new ToastContentBuilder()
+                                .AddText("Your personalized Profile Stats have been updated")
+                                .AddText(file + " has been uploaded")
+                                .Show();
 
-                            if (token != ""){
-                                if (String.Compare(token, "0") == 0)
-                                {
-                                    OutputToConsole("Picture deleted", true);
-                                    new ToastContentBuilder()
-                                    .AddText("Public Stats have been updated")
-                                    .AddText(file + " has been uploaded")
-                                    .Show();
-                                }
-                                else
-                                {
-                                    OutputToConsole("Picture deleted", true);
-                                    new ToastContentBuilder()
-                                   .AddText("Your personalized Profile Stats have been updated")
-                                   .AddText(file + " has been uploaded")
-                                   .Show();
+                            }
+                        } 
+                   
 
-                                }
-                            } 
-                        }
-                        else
+
+                        await Task.Delay(1000);
+                        if (File.Exists(fullPath))
                         {
-                            OutputToConsole("an error occurred removing the picture.", true);
+                            OutputToConsole("an error occurred", true);
+                            OutputToConsole(fullPath + "couldn't be deleted", true);
                         }
+                        if (File.Exists(path + @"\thumbnails\" + file))
+                        {
+                            OutputToConsole("an error occurred", true);
+                            OutputToConsole(path + @"\thumbnails\" + file + "couldn't be deleted", true);
+                        }
+
+
                     }
                     else{
-                            OutputToConsole("!!!!!!!!!!!!!!!!!!!!!!!!!!!", true);
+                            OutputToConsole("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", true);
                             OutputToConsole("Picture is not an Endgame Screenshot", true);
-                            OutputToConsole("!!!!!!!!!!!!!!!!!!!!!!!!!!!", true);
+                            OutputToConsole("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", true);
                         }
+
+
+                   
                 }
-                
-          
+                else
+                {
+                    /// autorem not enabled
+                }
+
+
 
 
 
