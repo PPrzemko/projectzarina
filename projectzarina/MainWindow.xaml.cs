@@ -27,6 +27,7 @@ namespace projectzarina {
         protected string application = "MdhfE1eJ2L59n3mG3EPWQ23CIw4C5aUH";
         protected bool restartRequired = false;
         protected int lol = 0;
+        protected int AutoRemMessage = 0;
         private string assemblyVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
         /// <summary>
@@ -133,7 +134,7 @@ namespace projectzarina {
 
 
                 }catch (Exception ex){
-                this.LogError(ex);}
+                LogError(ex);}
         }
 
 
@@ -164,7 +165,7 @@ namespace projectzarina {
             } catch (System.ArgumentException ex) {
                 // DEBUG
                 // Console.WriteLine(ex.Message);
-                this.LogError(ex);
+                LogError(ex);
             }
 
 
@@ -195,7 +196,7 @@ namespace projectzarina {
                 string fullPath = e.FullPath;
                 uploadImage(filename, fullPath);
             }catch (Exception ex){
-                this.LogError(ex);
+                LogError(ex);
             }
         }
 
@@ -243,7 +244,7 @@ namespace projectzarina {
                 */
             }
             catch(Exception ex){ 
-                this.LogError(ex);}
+                LogError(ex);}
         }
 
         /// <summary>
@@ -335,7 +336,7 @@ namespace projectzarina {
 
             }
             catch (Exception ex){
-            this.LogError(ex);}
+            LogError(ex);}
         }
 
 
@@ -428,7 +429,7 @@ namespace projectzarina {
                         if (token != ""){
                             if (String.Compare(token, "0") == 0)
                             {
-                                OutputToConsole("Picture deleted", true);
+                                OutputToConsole("Screenshot successfully deleted.", true);
                                 new ToastContentBuilder()
                                 .AddText("Public Stats have been updated")
                                 .AddText(file + " has been uploaded")
@@ -436,7 +437,7 @@ namespace projectzarina {
                             }
                             else
                             {
-                                OutputToConsole("Picture deleted", true);
+                                OutputToConsole("Screenshot successfully deleted.", true);
                                 new ToastContentBuilder()
                                 .AddText("Your personalized Profile Stats have been updated")
                                 .AddText(file + " has been uploaded")
@@ -473,6 +474,14 @@ namespace projectzarina {
                 else
                 {
                     /// autorem not enabled
+                    Random rnd = new Random();
+                    int randomint = rnd.Next(0, 10);
+                    randomint = 8;
+                    this.AutoRemMessage = AutoRemMessage + 1;
+                    if (AutoRemMessage >= 3 & randomint == 8)
+                    {
+                        OutputToConsole("TIP: Make sure to activate auto remove screenshots to save space on your hard drive", true);
+                    }
                 }
 
 
@@ -511,7 +520,7 @@ namespace projectzarina {
 
             }
             catch (Exception ex){
-                this.LogError(ex);}
+                LogError(ex);}
         }
 
 
@@ -572,7 +581,7 @@ namespace projectzarina {
                 }
             }
             catch (Exception ex){
-                this.LogError(ex);}
+                LogError(ex);}
         }
 
 
@@ -644,7 +653,7 @@ namespace projectzarina {
                     DragMove();
                 }
             }catch (Exception ex){
-                this.LogError(ex);}
+                LogError(ex);}
         }
 
         // Exit Button
@@ -652,7 +661,7 @@ namespace projectzarina {
             try{
                 this.Close();
             }catch (Exception ex){
-                this.LogError(ex);}
+                LogError(ex);}
         }
 
         // Minimize Button
@@ -660,7 +669,7 @@ namespace projectzarina {
             try{
                 WindowState = WindowState.Minimized;
              }catch (Exception ex){
-                this.LogError(ex);}
+                LogError(ex);}
         }
 
         private void ButtonLOL_Click(object sender, RoutedEventArgs e)
