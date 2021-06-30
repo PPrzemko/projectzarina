@@ -396,10 +396,6 @@ namespace projectzarina {
 
 
 
-                foreach (char token2 in result)
-                {
-                    
-                }
                 OutputToConsole(result, true);
                 OutputToConsole("-----------------------------", true);
                 /// await test.Dispatcher.BeginInvoke((Action)(() => test.ScrollToEnd()));

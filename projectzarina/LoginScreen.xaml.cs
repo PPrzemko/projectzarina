@@ -112,7 +112,7 @@ namespace projectzarina {
                 // File.Delete("projectzarina.tmp");
 
             } catch(Exception ex){
-                this.LogError(ex);
+                LogError(ex);
             }
 
         }
@@ -140,7 +140,7 @@ namespace projectzarina {
 
                 // Console.WriteLine("test" + user + passwd); -- DEBUG
             } catch (Exception ex){
-                this.LogError(ex);
+                LogError(ex);
             }
         }
 
@@ -201,7 +201,7 @@ namespace projectzarina {
                     
                 }
             } catch(Exception ex){
-                this.LogError(ex);
+                LogError(ex);
             }
         }
         
@@ -213,7 +213,13 @@ namespace projectzarina {
         private async void postLogin(string user, string passwd) {
             try {
                 if (File.Exists("UserSettings.xml")){
-                    await Task.Delay(800);
+
+                    //delay
+                    Random rnd = new Random();
+                    int rnddelay = rnd.Next(600, 800);
+                    await Task.Delay(rnddelay);
+
+
                     string url = "https://zarina.visualstatic.net/api/auth/signin?application=" + application;
 
                     HttpClient client = new HttpClient();
@@ -269,7 +275,7 @@ namespace projectzarina {
                     this.Close();
                 }
             } catch (Exception ex) {
-                    this.LogError(ex);
+                    LogError(ex);
                     imgCircle.Visibility = Visibility.Collapsed;
                     emailorusernametxt.Visibility = Visibility.Visible;
                     emailorusername.Visibility = Visibility.Visible;
@@ -285,6 +291,49 @@ namespace projectzarina {
 
         }
 
+        private async void GuestLogin()
+        {
+            try { 
+                /// display loading gif
+                imgCircle.Visibility = Visibility.Visible;
+                emailorusernametxt.Visibility = Visibility.Hidden;
+                emailorusername.Visibility = Visibility.Hidden;
+                passwordtxt.Visibility = Visibility.Hidden;
+                password.Visibility = Visibility.Hidden;
+                SignInBtn.Visibility = Visibility.Hidden;
+                GuestBtn.Visibility = Visibility.Hidden;
+
+
+                /// delay
+                Random rnd = new Random();
+                int rnddelay = rnd.Next(500, 650);
+                await Task.Delay(rnddelay);
+
+
+                if (File.Exists("UserSettings.xml"))
+                {
+                    var SettingXML = new Settings();
+                    SettingXML.updateValue("token", "0");
+                    var MainWindow = new MainWindow("Logged in as Guest");
+                    MainWindow.Show();
+                    this.Close();
+                }
+                else
+                {
+                    // if Usersettings.xml is not found = error
+                    MessageBox.Show("Do not start this application in a Zip archive");
+                    this.Close();
+                }
+            }catch(Exception ex) {
+                LogError(ex);
+                }
+}
+
+
+
+
+
+
 
         // Dragon Drop Funktion
         private void Grid_MouseDown(object sender, MouseButtonEventArgs e) {
@@ -293,7 +342,7 @@ namespace projectzarina {
                     DragMove();
                 }
             } catch(Exception ex) {
-                this.LogError(ex);
+                LogError(ex);
             }
         }
 
@@ -302,7 +351,7 @@ namespace projectzarina {
             try {
                 this.Close();
             } catch(Exception ex) {
-                this.LogError(ex);
+                LogError(ex);
             }
         }
 
@@ -311,15 +360,37 @@ namespace projectzarina {
             try {
                 WindowState = WindowState.Minimized;
             } catch (Exception ex) {
-                this.LogError(ex);
+                LogError(ex);
             }
         }
+
+    
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CONTINUEASGUEST(object sender, RoutedEventArgs e) {
+            GuestLogin();
+            }
+
+
+
+
+
+
+        private void DownloadBtn_Click(object sender, RoutedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://zarina.visualstatic.net/downloads");
+        }
+
 
         /// <summary>
         /// catches every exception and logs it to a file
         /// </summary>
         /// <param name="ex"> handed from any catch Exception</param>
-        private void LogError(Exception ex) {
+        private void LogError(Exception ex)
+        {
             string message = string.Format("Time: {0}", DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss tt"));
             message += Environment.NewLine;
             message += "-----------------------------------------------------------";
@@ -336,28 +407,12 @@ namespace projectzarina {
             message += Environment.NewLine;
 
             string path = @"ErrorLogLogin.txt";
-            using(StreamWriter writer = new StreamWriter(path, true)) {
+            using (StreamWriter writer = new StreamWriter(path, true))
+            {
                 writer.WriteLine(message);
                 writer.Close();
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void CONTINUEASGUEST(object sender, RoutedEventArgs e) {
-            var SettingXML = new Settings();
-            SettingXML.updateValue("token", "0");
-            var MainWindow = new MainWindow("Logged in as Guest");
-            MainWindow.Show();
-            this.Close();
-        }
-
-        private void DownloadBtn_Click(object sender, RoutedEventArgs e)
-        {
-            System.Diagnostics.Process.Start("https://zarina.visualstatic.net/downloads");
-        }
     }
 }
