@@ -10,7 +10,7 @@
         WindowStyle="None"
         ResizeMode="NoResize"
         Background="#1a1a1a"
-        Icon="images/well.png"
+        Icon="favicon.ico"
         WindowStartupLocation="Manual" 
         >
 

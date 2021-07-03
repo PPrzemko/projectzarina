@@ -8,12 +8,12 @@ using System.Windows;
 // Attribute gesteuert. Ändern Sie diese Attributwerte, um die Informationen zu ändern,
 // die einer Assembly zugeordnet sind.
 [assembly: AssemblyTitle("projectzarina")]
-[assembly: AssemblyDescription("This is an application which can track your DeadByDaylight stats based on endgame screenshots.")]
+[assembly: AssemblyDescription("An application to automatically upload end game screenshots of the game Dead by Daylight in order to submit valuable statistics to Statistics From The Fog.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Zarina")]
+[assembly: AssemblyCompany("www.visualstatic.net")]
 [assembly: AssemblyProduct("projectzarina")]
-[assembly: AssemblyCopyright("Copyright ©  2021")]
-[assembly: AssemblyTrademark("Made in Germany")]
+[assembly: AssemblyCopyright("Copyright 2021 © visualstatic")]
+[assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
 // Durch Festlegen von ComVisible auf FALSE werden die Typen in dieser Assembly
@@ -51,5 +51,5 @@ using System.Windows;
 // Sie können alle Werte angeben oder Standardwerte für die Build- und Revisionsnummern verwenden,
 // indem Sie "*" wie unten gezeigt eingeben:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("0.8.6.3")]
+[assembly: AssemblyVersion("0.8.6.4")]
 

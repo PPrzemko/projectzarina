@@ -126,13 +126,7 @@ namespace projectzarina {
         /// <param name="e"></param>
         private void Button_Click(object sender, RoutedEventArgs e) {
             try {
-                imgCircle.Visibility = Visibility.Visible;
-                emailorusernametxt.Visibility = Visibility.Hidden;
-                emailorusername.Visibility = Visibility.Hidden;
-                passwordtxt.Visibility = Visibility.Hidden;
-                password.Visibility = Visibility.Hidden;
-                SignInBtn.Visibility = Visibility.Hidden;
-                GuestBtn.Visibility = Visibility.Hidden;
+                GIF(true);
 
                 string user = emailorusername.Text;
                 string passwd = password.Password;
@@ -154,12 +148,13 @@ namespace projectzarina {
                     string token = SettingXML.getValue("token");
                     if (token != "") {
                         if (String.Compare(token, "0") == 0 ){
-                            imgCircle.Visibility = Visibility.Visible;
+                            GIF(true);
                             var MainWindow = new MainWindow("Auto: Logged in as Guest");
                             MainWindow.Show();
                             this.Close();
                         }else {
-                            imgCircle.Visibility = Visibility.Visible;
+
+                            GIF(true);
                             // "Angemeldet" => Anmeldung vorher prüfen mittels Validierung (auth/validate)
                             string url = "https://zarina.visualstatic.net/api/auth/validate?application=" + application;
 
@@ -191,7 +186,7 @@ namespace projectzarina {
                                     imgCircle.Visibility = Visibility.Visible;
                                 }
                             } catch(Exception) {
-                                ErrorBox.Text = "API is offline";
+                                ErrorBox.Text = "API is offline.";
                             }
                         }
                     }
@@ -237,13 +232,6 @@ namespace projectzarina {
                     dynamic json = JsonConvert.DeserializeObject(result);
 
                     if (json.success == "true"){
-                        imgCircle.Visibility = Visibility.Collapsed;
-                        emailorusernametxt.Visibility = Visibility.Visible;
-                        emailorusername.Visibility = Visibility.Visible;
-                        passwordtxt.Visibility = Visibility.Visible;
-                        password.Visibility = Visibility.Visible;
-                        SignInBtn.Visibility = Visibility.Visible;
-                        GuestBtn.Visibility = Visibility.Visible;
                         string token = json.unique_token;
 
                         var SettingXML = new Settings();
@@ -255,13 +243,7 @@ namespace projectzarina {
                     }
                     else{
                         string feedback = json.errorMessage;
-                        imgCircle.Visibility = Visibility.Collapsed;
-                        emailorusernametxt.Visibility = Visibility.Visible;
-                        emailorusername.Visibility = Visibility.Visible;
-                        passwordtxt.Visibility = Visibility.Visible;
-                        password.Visibility = Visibility.Visible;
-                        SignInBtn.Visibility = Visibility.Visible;
-                        GuestBtn.Visibility = Visibility.Visible;
+                        GIF(false);
                         emailorusername.Text = user;
                         password.Password = "";
                         ErrorBox.Text = "Try Again";
@@ -276,13 +258,7 @@ namespace projectzarina {
                 }
             } catch (Exception ex) {
                     LogError(ex);
-                    imgCircle.Visibility = Visibility.Collapsed;
-                    emailorusernametxt.Visibility = Visibility.Visible;
-                    emailorusername.Visibility = Visibility.Visible;
-                    passwordtxt.Visibility = Visibility.Visible;
-                    password.Visibility = Visibility.Visible;
-                    SignInBtn.Visibility = Visibility.Visible;
-                    GuestBtn.Visibility = Visibility.Visible;
+                    GIF(false);
                     emailorusername.Text = user;
                     password.Password = "";
                     ErrorBox.Text = "Try Again";
@@ -293,15 +269,9 @@ namespace projectzarina {
 
         private async void GuestLogin()
         {
-            try { 
+            try {
                 /// display loading gif
-                imgCircle.Visibility = Visibility.Visible;
-                emailorusernametxt.Visibility = Visibility.Hidden;
-                emailorusername.Visibility = Visibility.Hidden;
-                passwordtxt.Visibility = Visibility.Hidden;
-                password.Visibility = Visibility.Hidden;
-                SignInBtn.Visibility = Visibility.Hidden;
-                GuestBtn.Visibility = Visibility.Hidden;
+                GIF(true);
 
 
                 /// delay
@@ -413,6 +383,39 @@ namespace projectzarina {
                 writer.Close();
             }
         }
+
+
+        private void GIF(bool loading)
+        {
+            if (loading == true)
+            {
+                // display loading gif and hide other fields
+                imgCircle.Visibility = Visibility.Visible;
+                emailorusernametxt.Visibility = Visibility.Hidden;
+                emailorusername.Visibility = Visibility.Hidden;
+                passwordtxt.Visibility = Visibility.Hidden;
+                password.Visibility = Visibility.Hidden;
+                SignInBtn.Visibility = Visibility.Hidden;
+                GuestBtn.Visibility = Visibility.Hidden;
+            }
+            else if(loading == false)
+            {
+                imgCircle.Visibility = Visibility.Collapsed;
+                emailorusernametxt.Visibility = Visibility.Visible;
+                emailorusername.Visibility = Visibility.Visible;
+                passwordtxt.Visibility = Visibility.Visible;
+                password.Visibility = Visibility.Visible;
+                SignInBtn.Visibility = Visibility.Visible;
+                GuestBtn.Visibility = Visibility.Visible;
+            }
+        }
+
+
+
+
+
+
+
 
     }
 }

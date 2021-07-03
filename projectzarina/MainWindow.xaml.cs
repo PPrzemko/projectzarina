@@ -36,7 +36,6 @@ namespace projectzarina {
         public MainWindow(string output) {
             try
             {
-
                 InitializeComponent();
                 OutputToConsole(output, true);
                 var SettingXML = new Settings();
@@ -463,9 +462,7 @@ namespace projectzarina {
 
                     }
                     else{
-                            OutputToConsole("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", true);
-                            OutputToConsole("Picture is not an Endgame Screenshot", true);
-                            OutputToConsole("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", true);
+                            OutputToConsole(" !!! : Picture is not an Endgame Screenshot", true);
                         }
 
 
@@ -476,9 +473,8 @@ namespace projectzarina {
                     /// autorem not enabled
                     Random rnd = new Random();
                     int randomint = rnd.Next(0, 10);
-                    randomint = 8;
                     this.AutoRemMessage = AutoRemMessage + 1;
-                    if (AutoRemMessage >= 3 & randomint == 8)
+                    if (AutoRemMessage >= 2 & randomint == 8)
                     {
                         OutputToConsole("TIP: Make sure to activate auto remove screenshots to save space on your hard drive", true);
                     }
