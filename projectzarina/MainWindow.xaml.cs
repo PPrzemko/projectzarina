@@ -399,6 +399,33 @@ namespace projectzarina {
                 OutputToConsole(result, true);
                 OutputToConsole("-----------------------------", true);
                 /// await test.Dispatcher.BeginInvoke((Action)(() => test.ScrollToEnd()));
+                /// 
+
+
+
+                dynamic json = JsonConvert.DeserializeObject(result);
+                // Notifcation
+                if (json.invalid == "false")
+                {
+                    if (token != "")
+                    {
+                        if (String.Compare(token, "0") == 0)
+                        {
+                            new ToastContentBuilder()
+                            .AddText("Public Stats have been updated")
+                            .AddText(file + " has been uploaded")
+                            .Show();
+                        }
+                        else
+                        {
+                            new ToastContentBuilder()
+                            .AddText("Your personalized Profile Stats have been updated")
+                            .AddText(file + " has been uploaded")
+                            .Show();
+
+                        }
+                    }
+                }
 
 
 
@@ -407,7 +434,7 @@ namespace projectzarina {
                 string path = config.getValue("ScreenshotPath");
 
 
-                dynamic json = JsonConvert.DeserializeObject(result);
+               
                 if (AutoRem == 1) { 
                     if (json.invalid == "false"){
                         await Task.Delay(3000);
@@ -424,26 +451,9 @@ namespace projectzarina {
 
                         await Task.Delay(1000);
 
-                        
-                        if (token != ""){
-                            if (String.Compare(token, "0") == 0)
-                            {
-                                OutputToConsole("Screenshot successfully deleted.", true);
-                                new ToastContentBuilder()
-                                .AddText("Public Stats have been updated")
-                                .AddText(file + " has been uploaded")
-                                .Show();
-                            }
-                            else
-                            {
-                                OutputToConsole("Screenshot successfully deleted.", true);
-                                new ToastContentBuilder()
-                                .AddText("Your personalized Profile Stats have been updated")
-                                .AddText(file + " has been uploaded")
-                                .Show();
-
-                            }
-                        } 
+         
+                       OutputToConsole("Screenshot successfully deleted.", true);
+                   
                    
 
 
@@ -481,7 +491,7 @@ namespace projectzarina {
                 }
 
 
-
+        
 
 
 
