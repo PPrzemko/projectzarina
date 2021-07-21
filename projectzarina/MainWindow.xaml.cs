@@ -251,8 +251,7 @@ namespace projectzarina {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void saveScreenshotPath(object sender, RoutedEventArgs e)
-        {
+        private void saveScreenshotPath(object sender, RoutedEventArgs e){
             try{
                 
                 var config = new Settings();
@@ -392,12 +391,10 @@ namespace projectzarina {
                 string time = DateTime.Now.ToString("HH:mm tt");
 
                 // DEBUG
-                OutputToConsole(time + ":  " + file + " has been submitted to your statistics", true);
+               
 
 
 
-                OutputToConsole(result, true);
-                OutputToConsole("-----------------------------", true);
                 /// await test.Dispatcher.BeginInvoke((Action)(() => test.ScrollToEnd()));
                 /// 
 
@@ -415,6 +412,8 @@ namespace projectzarina {
                             .AddText("Public Stats have been updated")
                             .AddText(file + " has been uploaded")
                             .Show();
+
+                            OutputToConsole(time + ":  " + file + " has been submitted", true);
                         }
                         else
                         {
@@ -423,9 +422,19 @@ namespace projectzarina {
                             .AddText(file + " has been uploaded")
                             .Show();
 
+                            OutputToConsole(time + ":  " + file + " has been submitted to your statistics", true);
+
                         }
                     }
                 }
+
+
+
+
+                OutputToConsole(result, true);
+                OutputToConsole("-----------------------------", true);
+
+
 
 
 
