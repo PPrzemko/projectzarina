@@ -69,7 +69,7 @@ namespace projectzarina {
                 createFSW();
 
 
-                //oof
+
                 // Software version check output to activity log
                 string url = string.Empty;
                 int InDevStatus = 0;
