@@ -138,7 +138,7 @@ namespace projectzarina {
 
 
       /// <summary>
-      /// 
+      /// Creates Filesystemwatcher
       /// </summary>
         private void createFSW() {
             try{
@@ -391,18 +391,20 @@ namespace projectzarina {
                 string time = DateTime.Now.ToString("HH:mm tt");
 
                 // DEBUG
-               
+
 
 
 
                 /// await test.Dispatcher.BeginInvoke((Action)(() => test.ScrollToEnd()));
                 /// 
 
-
-
+                // Erorr if pic is named wrong need fix
                 dynamic json = JsonConvert.DeserializeObject(result);
+               
+
+
                 // Notifcation
-                if (json.invalid == "false")
+            if (json.invalid == "false")
                 {
                     if (token != "")
                     {
