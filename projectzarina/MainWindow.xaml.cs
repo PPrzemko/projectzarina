@@ -175,7 +175,7 @@ namespace projectzarina {
        
 
         /// <summary>
-        /// 
+        /// Checks if file created
         /// </summary>
         /// <param name="sender"> source of event.</param>
         /// <param name="e"> contains event data.</param>
